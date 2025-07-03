@@ -1,3 +1,4 @@
+import 'package:dingtalk_auth/dingtalk_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,10 +14,17 @@ class DiscoveryView extends GetView<DiscoveryController> {
         title: const Text('DiscoveryView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'DiscoveryView is working',
-          style: TextStyle(fontSize: 20),
+      body: Center(
+        child: TextButton(
+          onPressed: () async {
+            const params = DingTalkAuthParam(
+              appId: 'dingkbjfwewqmbaiz9uj',
+              redirectUrl: 'http://192.168.1.11:5173/login',
+            );
+            final authCode = await DingtalkAuth.auth(params);
+            print('>>>>>>>> authCode: $authCode');
+          },
+          child: Text('登录'),
         ),
       ),
     );

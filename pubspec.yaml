@@ -44,6 +44,7 @@ dependencies:
   extended_tabs: ^4.1.0
   flutter_svg: ^2.0.16
   event_bus: ^2.0.1
+  dingtalk_auth: ^0.0.3
 
 dev_dependencies:
   flutter_test:
