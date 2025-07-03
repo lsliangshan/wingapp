@@ -39,14 +39,17 @@ class HomeView extends GetView<HomeController> {
           return AnimatedBottomNavigationBar.builder(
             backgroundColor: Colors.white,
             itemCount: tabs.length,
+            gapWidth: 0,
             tabBuilder: (int index, bool isActive) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    tabs[index]['icon'],
-                    width: (index == 2 || index == 1) ? 26 : 22,
-                    height: (index == 2 || index == 1) ? 26 : 22,
+                    isActive
+                        ? tabs[index]['icon_selected']
+                        : tabs[index]['icon'],
+                    width: 26,
+                    height: 26,
                     colorFilter: isActive
                         ? ColorFilter.mode(
                             Get.theme.primaryColor,
@@ -57,19 +60,22 @@ class HomeView extends GetView<HomeController> {
                             BlendMode.srcIn,
                           ),
                   ),
-                  // const SizedBox(
-                  //   height: 4,
-                  // ),
-                  // Text(tabs[index]['label'] as String),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    tabs[index]['label'] as String,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isActive ? Get.theme.primaryColor : Colors.grey,
+                      fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                    ),
+                  ),
                 ],
               );
             },
             height: 64,
             activeIndex: controller.selectedTabIndex.value,
-            gapLocation: GapLocation.center,
-            notchSmoothness: NotchSmoothness.defaultEdge,
-            leftCornerRadius: 0,
-            rightCornerRadius: 0,
             onTap: controller.changeTab,
           );
         },
