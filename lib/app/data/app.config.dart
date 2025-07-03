@@ -1,34 +1,50 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:get/get_utils/get_utils.dart';
+import 'package:wingapp/app/modules/class/views/class_view.dart';
+import 'package:wingapp/app/modules/discovery/views/discovery_view.dart';
+import 'package:wingapp/app/modules/profile/views/profile_view.dart';
+import 'package:wingapp/app/modules/schedule/views/schedule_view.dart';
+import 'package:wingapp/app/modules/student/views/student_view.dart';
 import 'package:wingapp/types/types.dart';
 
-// List tabs = [
-//   {
-//     "icon": "assets/svgs/tab_gift.svg",
-//     "label": 'page.title.gift'.tr,
-//     "name": TabName.gift,
-//     "page": const GiftView(),
-//   },
-//   {
-//     "icon": "assets/svgs/tab_events.svg",
-//     "label": 'page.title.events'.tr,
-//     "name": TabName.events,
-//     "page": const EventsView(),
-//   },
-//   {
-//     "icon": "assets/svgs/tab_contact.svg",
-//     "label": 'page.title.contact'.tr,
-//     "name": TabName.contact,
-//     "page": const ContactView(),
-//   },
-//   {
-//     "icon": "assets/svgs/tab_profile.svg",
-//     "label": 'page.title.profile'.tr,
-//     "name": TabName.profile,
-//     "page": const ProfileView(),
-//   },
-// ];
+List tabs = [
+  {
+    "icon": "assets/svgs/tab_home_unselected.svg",
+    "icon_selected": "assets/svgs/tab_home_selected.svg",
+    "label": 'page.title.home'.tr,
+    "name": TabName.home,
+    "page": const DiscoveryView(),
+  },
+  {
+    "icon": "assets/svgs/tab_class_unselected.svg",
+    "icon_selected": "assets/svgs/tab_class_selected.svg",
+    "label": 'page.title.class'.tr,
+    "name": TabName.tclass,
+    "page": const ClassView(),
+  },
+  {
+    "icon": "assets/svgs/tab_student_unselected.svg",
+    "icon_selected": "assets/svgs/tab_student_selected.svg",
+    "label": 'page.title.student'.tr,
+    "name": TabName.student,
+    "page": const StudentView(),
+  },
+  {
+    "icon": "assets/svgs/tab_schedule_unselected.svg",
+    "icon_selected": "assets/svgs/tab_schedule_selected.svg",
+    "label": 'page.title.schedule'.tr,
+    "name": TabName.schedule,
+    "page": const ScheduleView(),
+  },
+  {
+    "icon": "assets/svgs/tab_profile_unselected.svg",
+    "icon_selected": "assets/svgs/tab_profile_selected.svg",
+    "label": 'page.title.profile'.tr,
+    "name": TabName.profile,
+    "page": const ProfileView(),
+  },
+];
 
 List<Map<String, String>> languages = [
   {

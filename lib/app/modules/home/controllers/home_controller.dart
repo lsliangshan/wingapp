@@ -1,23 +1,85 @@
+import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/events/events.dart';
 
-class HomeController extends GetxController {
-  //TODO: Implement HomeController
+class HomeController extends GetxController with GetTickerProviderStateMixin {
+  EventBus eventBus = Get.find<EventBus>();
 
-  final count = 0.obs;
+  late PageController pageController;
+
+  Rx<int> selectedTabIndex = 0.obs;
+
+  RxList<String> initialedView = <String>[].obs;
+
+  late TabController tabController;
+
   @override
   void onInit() {
     super.onInit();
+
+    pageController = PageController(
+      initialPage: selectedTabIndex.value,
+    );
+
+    initViewController();
+
+    tabController = TabController(length: tabs.length, vsync: this);
+
+    tabController.addListener(() {
+      changePage(tabController.index);
+      if (tabController.index == 3) {
+        eventBus.fire(TabChangeEvent(name: tabs[3]['name']));
+      }
+    });
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void changePage(value) {
+    selectedTabIndex.value = value;
+    update(['update-selected-tab']);
+    initViewController();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void changeTab(value) {
+    changePage(value);
+    // initViewController();
+    tabController.animateTo(value, duration: Duration.zero);
   }
 
-  void increment() => count.value++;
+  void initViewController() {
+    // if (!initialedView.contains("GiftView")) {
+    //   initialedView.add('GiftView');
+    //   Get.put<GiftController>(
+    //     GiftController(),
+    //   );
+    // }
+    // if (!initialedView.contains("EventsView")) {
+    //   initialedView.add('EventsView');
+    //   Get.put<EventsController>(
+    //     EventsController(),
+    //   );
+    // }
+    // if (!initialedView.contains("ContactView")) {
+    //   initialedView.add('ContactView');
+    //   Get.put<ContactController>(
+    //     ContactController(),
+    //   );
+    // }
+    // if (!initialedView.contains("ProfileView")) {
+    //   initialedView.add('ProfileView');
+    //   Get.put<ProfileController>(
+    //     ProfileController(),
+    //   );
+    // }
+  }
+
+  void gotoCreateSpeech() {
+    // Get.toNamed(Routes.CREATE_SPEECH);
+  }
+
+  void gotoAddGift() async {
+    // await Get.toNamed(Routes.ADD_GIFT);
+    // TODO: 刷新页面
+  }
 }

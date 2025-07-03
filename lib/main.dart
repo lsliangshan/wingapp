@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,6 +14,9 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initServices();
+
   LocalstorageService localstorageService = LocalstorageService();
   String? localLanguage = await localstorageService.getString(LocalLanguageKey);
   if (localLanguage == null || localLanguage.isEmpty) {
@@ -39,4 +43,9 @@ void main() async {
           defaultTransition: Transition.rightToLeft,
         ),
       ));
+}
+
+Future<void> initServices() async {
+  EventBus eventBus = EventBus();
+  Get.put<EventBus>(eventBus);
 }

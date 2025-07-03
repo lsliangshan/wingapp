@@ -1,7 +1,8 @@
 enum TabName {
-  gift,
-  events,
-  contact,
+  home,
+  tclass,
+  student,
+  schedule,
   profile,
 }
 
