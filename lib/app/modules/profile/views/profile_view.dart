@@ -221,7 +221,12 @@ class ProfileView extends GetView<ProfileController> {
                     vertical: 8,
                   ),
                   child: ListTile(
-                    leading: const Icon(Icons.school_outlined),
+                    leading: SvgPicture.asset(
+                      'assets/svgs/tab_schedule_selected.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    horizontalTitleGap: 6,
                     title: const Text('课表管理'),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 12,
