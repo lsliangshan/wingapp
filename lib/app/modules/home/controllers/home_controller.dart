@@ -9,7 +9,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   late PageController pageController;
 
-  Rx<int> selectedTabIndex = 0.obs;
+  Rx<int> selectedTabIndex = 4.obs;
 
   RxList<String> initialedView = <String>[].obs;
 
@@ -25,7 +25,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
     initViewController();
 
-    tabController = TabController(length: tabs.length, vsync: this);
+    tabController = TabController(
+        initialIndex: selectedTabIndex.value, length: tabs.length, vsync: this);
 
     tabController.addListener(() {
       changePage(tabController.index);
