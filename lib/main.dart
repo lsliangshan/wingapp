@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/database/daos/teacher.dao.dart';
+import 'package:wingapp/database/database.dart';
 import 'package:wingapp/locale/locale.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/theme.dart';
@@ -25,6 +27,13 @@ void main() async {
         : 'en_US';
 
     await localstorageService.setString(LocalLanguageKey, localLanguage);
+  }
+
+  String? localRole = await localstorageService.getString(LocalRoleKey);
+  if (localRole == null || localRole.isEmpty) {
+    localRole = 'teacher';
+
+    await localstorageService.setString(LocalRoleKey, localRole);
   }
   Locale locale =
       Locale(localLanguage.split('_')[0], localLanguage.split('_')[1]);
@@ -48,4 +57,8 @@ void main() async {
 Future<void> initServices() async {
   EventBus eventBus = EventBus();
   Get.put<EventBus>(eventBus);
+
+  AppDatabase db = AppDatabase();
+  TeacherDao teacherDao = TeacherDao(db);
+  Get.put<TeacherDao>(teacherDao);
 }

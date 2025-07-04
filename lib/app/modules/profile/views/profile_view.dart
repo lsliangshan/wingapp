@@ -214,12 +214,60 @@ class ProfileView extends GetView<ProfileController> {
                     ],
                   ),
                 ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 0,
+                  ),
+                  title: Text(
+                    '通用功能',
+                    style: Get.theme.textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Get.theme.disabledColor,
+                    ),
+                  ),
+                ),
                 Card(
                   elevation: 0,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 8,
                   ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: ListTile(
+                    leading: SvgPicture.asset(
+                      'assets/svgs/icon_swap.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    horizontalTitleGap: 6,
+                    title: const Text('身份切换'),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
+                    trailing: SvgPicture.asset(
+                      'assets/svgs/icon_arrow_right.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    onTap: () {
+                      // TODO: 跳转老师管理页
+                    },
+                  ),
+                ),
+                Card(
+                  elevation: 0,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 8,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  clipBehavior: Clip.hardEdge,
                   child: ListTile(
                     leading: SvgPicture.asset(
                       'assets/svgs/tab_schedule_selected.svg',

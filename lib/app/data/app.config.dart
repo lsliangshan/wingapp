@@ -60,3 +60,8 @@ List<Map<String, String>> languages = [
 ];
 
 String LocalLanguageKey = 'current-language';
+
+// 当前角色
+// teacher
+// student
+String LocalRoleKey = 'current-role';

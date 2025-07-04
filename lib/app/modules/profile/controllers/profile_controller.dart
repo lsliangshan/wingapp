@@ -1,23 +1,23 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/services/localstorage.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  final LocalstorageService localstorageService =
+      Get.find<LocalstorageService>();
 
-  final count = 0.obs;
+  RxString role = 'teacher'.obs;
+
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void initRole() async {
+    String? localRole = await localstorageService.getString(LocalRoleKey);
+    if (localRole == null || localRole.isEmpty) {
+      localRole = 'teacher';
+    }
+    role.value = localRole;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
