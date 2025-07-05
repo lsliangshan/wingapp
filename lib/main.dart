@@ -48,7 +48,7 @@ void main() async {
           getPages: AppPages.routes,
           debugShowCheckedModeBanner: false,
           translations: Messages(),
-          locale: Locale('en', 'US'), // locale,
+          locale: locale,
           fallbackLocale: const Locale('en', 'US'),
           theme: darkTheme(),
           themeMode: ThemeMode.light,

@@ -76,7 +76,7 @@ class TeacherDao extends DatabaseAccessor<AppDatabase> with _$TeacherDaoMixin {
       );
     }
 
-    int id = await into(teachers).insert(TeachersCompanion(
+    await into(teachers).insert(TeachersCompanion(
       id: Value(user.id),
       unionId: Value(user.unionId),
       openId: Value(user.openId),

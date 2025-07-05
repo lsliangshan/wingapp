@@ -11,9 +11,6 @@ class Messages extends Translations {
           'tab.schedule': '课表',
           'tab.profile': '我的',
 
-          // 老师管理页面
-          'page.teacher.title': '老师管理',
-
           // 我的页面
           'profile.summary.class': '班级总数',
           'profile.summary.class.short': '班级',
@@ -21,7 +18,7 @@ class Messages extends Translations {
           'profile.summary.student.short': '学生',
           'profile.summary.teacher': '老师总数',
           'profile.summary.teacher.short': '老师',
-          'profile.summary.general.function': '通用功能',
+          'profile.setting.general.function': '通用功能',
           'profile.setting.teacher.manage': '老师管理',
           'profile.setting.schedule.manage': '课表管理',
           'profile.setting.class.manage': '班级管理',
@@ -32,11 +29,22 @@ class Messages extends Translations {
           'profile.setting.login.not.logged.in': '未登录',
           'profile.setting.personal.center': '个人中心',
 
+          // 老师管理页面
+          'teacher.title': '老师管理',
+          'teacher.btn.add': '添加老师',
+          'teacher.tip.empty': '暂无数据',
+
+          // 添加老师页面
+          'add_teacher.title': '添加老师',
+
           // Toast
           'toast.login.success': '登录成功',
           'toast.login.failed': '登录失败',
           'toast.logout.success': '退出成功',
           'toast.logout.failed': '退出失败',
+
+          // 加载更多
+          'load_more.tips.no_more': '没有更多数据了',
         },
         'en_US': {
           // 页面
@@ -45,9 +53,6 @@ class Messages extends Translations {
           'tab.student': 'Student',
           'tab.schedule': 'Schedule',
           'tab.profile': 'Profile',
-
-          // 老师管理页面
-          'page.teacher.title': 'Teacher Management',
 
           // 我的页面
           'profile.summary.class': 'Class Total',
@@ -67,11 +72,22 @@ class Messages extends Translations {
           'profile.setting.login.not.logged.in': 'Not Logged In',
           'profile.setting.personal.center': 'Personal Center',
 
+          // 老师管理页面
+          'teacher.title': 'Teacher Management',
+          'teacher.btn.add': 'Add Teacher',
+          'teacher.tip.empty': 'No Data',
+
+          // 添加老师页面
+          'add_teacher.title': 'Add Teacher',
+
           // Toast
           'toast.login.success': 'Login Success',
           'toast.login.failed': 'Login Failed',
           'toast.logout.success': 'Logout Success',
           'toast.logout.failed': 'Logout Failed',
+
+          // 加载更多
+          'load_more.tips.no_more': 'No More Data',
         }
       };
 }
