@@ -24,6 +24,8 @@ class ProfileController extends GetxController {
 
   RxBool isDingTalkLogining = false.obs;
 
+  RxBool get isAdminTeacher => true.obs; // (loginInfo.value?.admin == '1').obs;
+
   @override
   void onInit() {
     super.onInit();

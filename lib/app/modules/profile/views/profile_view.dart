@@ -9,6 +9,127 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
+  Widget _buildSummaryCard({
+    required String type,
+    required String count,
+    required bool isAdminTeacher,
+  }) {
+    String iconPath = '';
+    String label = '';
+    switch (type) {
+      case 'class':
+        iconPath = 'assets/svgs/tab_class_unselected.svg';
+        label = isAdminTeacher ? '班级' : '班级总数';
+        break;
+      case 'student':
+        iconPath = 'assets/svgs/tab_student_unselected.svg';
+        label = isAdminTeacher ? '学生' : '学生总数';
+        break;
+      case 'teacher':
+        iconPath = 'assets/svgs/tab_profile_unselected.svg';
+        label = isAdminTeacher ? '老师' : '老师总数';
+        break;
+      default:
+        iconPath = 'assets/svgs/tab_class_unselected.svg';
+        label = isAdminTeacher ? '班级' : '班级总数';
+        break;
+    }
+
+    return Card(
+      elevation: 1,
+      shadowColor: Color(0xFFfefefe),
+      child: Container(
+        // width: 150,
+        height: 80,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: isAdminTeacher ? 6 : 16,
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              width: isAdminTeacher ? 24 : 32,
+              height: isAdminTeacher ? 24 : 32,
+              colorFilter: const ColorFilter.mode(
+                Color(0xFFB59F9D),
+                BlendMode.srcIn,
+              ),
+            ),
+            VerticalDivider(
+              color: const Color(0xFFB59F9D).withValues(
+                alpha: 0.4,
+              ),
+              thickness: 0.7,
+              width: 1,
+              indent: 28,
+              endIndent: 28,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    count,
+                    style: Get.theme.textTheme.titleMedium?.copyWith(
+                      color: Get.theme.primaryColor,
+                      fontSize: 26,
+                    ),
+                  ),
+                  Text(
+                    label,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFFB59F9D),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSettingItem({
+    required String title,
+    required String iconPath,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 0,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: ListTile(
+        leading: SvgPicture.asset(
+          iconPath,
+          width: 20,
+          height: 20,
+        ),
+        horizontalTitleGap: 6,
+        title: Text(title),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12,
+        ),
+        trailing: SvgPicture.asset(
+          'assets/svgs/icon_arrow_right.svg',
+          width: 20,
+          height: 20,
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,16 +187,18 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (controller.isLoggedIn.isFalse ||
-                                controller.loginInfo.value?.avatar == null)
-                              Image.asset(
-                                'assets/images/default_avatar.png',
+                            if (controller.isLoggedIn.isTrue &&
+                                controller.loginInfo.value != null &&
+                                controller.loginInfo.value!.avatar != null &&
+                                controller.loginInfo.value!.avatar!.isNotEmpty)
+                              Image.network(
+                                controller.loginInfo.value!.avatar!,
                                 width: 80,
                                 height: 80,
                               )
                             else
-                              Image.network(
-                                controller.loginInfo.value?.avatar ?? '',
+                              Image.asset(
+                                'assets/images/default_avatar.png',
                                 width: 80,
                                 height: 80,
                               ),
@@ -137,136 +260,49 @@ class ProfileView extends GetView<ProfileController> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Container(
-                  width: Get.width,
-                  height: 120,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 16,
-                    children: [
-                      Card(
-                        elevation: 1,
-                        shadowColor: Color(0xFFfefefe),
-                        child: Container(
-                          width: 150,
-                          height: 80,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: 16,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/svgs/tab_class_unselected.svg',
-                                width: 32,
-                                height: 32,
-                                colorFilter: const ColorFilter.mode(
-                                  Color(0xFFB59F9D),
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                              VerticalDivider(
-                                color: const Color(0xFFB59F9D).withValues(
-                                  alpha: 0.4,
-                                ),
-                                thickness: 0.7,
-                                width: 1,
-                                indent: 28,
-                                endIndent: 28,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      '10',
-                                      style: Get.theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                        color: Get.theme.primaryColor,
-                                        fontSize: 26,
-                                      ),
-                                    ),
-                                    Text(
-                                      '班级总数',
-                                      style: Get.theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: const Color(0xFFB59F9D),
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                GetBuilder(
+                  id: 'update-login-info',
+                  init: controller,
+                  builder: (_) {
+                    return Container(
+                      width: Get.width,
+                      height: 120,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(
+                        horizontal: controller.isAdminTeacher.value ? 0 : 16,
                       ),
-                      Card(
-                        elevation: 1,
-                        shadowColor: Color(0xFFfefefe),
-                        child: Container(
-                          width: 150,
-                          height: 80,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: 16,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/svgs/tab_student_unselected.svg',
-                                width: 32,
-                                height: 32,
-                                colorFilter: const ColorFilter.mode(
-                                  Color(0xFFB59F9D),
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                              VerticalDivider(
-                                color: const Color(0xFFB59F9D).withValues(
-                                  alpha: 0.4,
-                                ),
-                                thickness: 0.7,
-                                width: 1,
-                                indent: 28,
-                                endIndent: 28,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      '37',
-                                      style: Get.theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                        color: Get.theme.primaryColor,
-                                        fontSize: 26,
-                                      ),
-                                    ),
-                                    Text(
-                                      '学生总数',
-                                      style: Get.theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: const Color(0xFFB59F9D),
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: controller.isAdminTeacher.value ? 0 : 12,
+                        children: [
+                          Expanded(
+                            child: _buildSummaryCard(
+                              type: 'class',
+                              count: '10',
+                              isAdminTeacher: controller.isAdminTeacher.value,
+                            ),
                           ),
-                        ),
+                          if (controller.isAdminTeacher.value)
+                            Expanded(
+                              child: _buildSummaryCard(
+                                type: 'teacher',
+                                count: '10',
+                                isAdminTeacher: controller.isAdminTeacher.value,
+                              ),
+                            ),
+                          Expanded(
+                            child: _buildSummaryCard(
+                              type: 'student',
+                              count: '32',
+                              isAdminTeacher: controller.isAdminTeacher.value,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
@@ -281,67 +317,38 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                 ),
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 8,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  clipBehavior: Clip.hardEdge,
-                  child: ListTile(
-                    leading: SvgPicture.asset(
-                      'assets/svgs/icon_swap.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    horizontalTitleGap: 6,
-                    title: const Text('身份切换'),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
-                    trailing: SvgPicture.asset(
-                      'assets/svgs/icon_arrow_right.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    onTap: () {
-                      // TODO: 跳转老师管理页
-                    },
-                  ),
+                _buildSettingItem(
+                  title: '老师管理',
+                  iconPath: 'assets/svgs/icon_teacher_manage.svg',
+                  onTap: () {
+                    // TODO: 跳转老师管理页
+                  },
                 ),
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 8,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  clipBehavior: Clip.hardEdge,
-                  child: ListTile(
-                    leading: SvgPicture.asset(
-                      'assets/svgs/tab_schedule_selected.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    horizontalTitleGap: 6,
-                    title: const Text('课表管理'),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
-                    trailing: SvgPicture.asset(
-                      'assets/svgs/icon_arrow_right.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    onTap: () {
-                      // TODO: 跳转老师管理页
-                    },
-                  ),
+                const Divider(
+                  height: 1,
+                  indent: 30,
+                  endIndent: 30,
+                  color: Color(0xFFF8F8F8),
+                ),
+                _buildSettingItem(
+                  title: '身份切换',
+                  iconPath: 'assets/svgs/icon_swap.svg',
+                  onTap: () {
+                    // TODO: 跳转老师管理页
+                  },
+                ),
+                const Divider(
+                  height: 1,
+                  indent: 30,
+                  endIndent: 30,
+                  color: Color(0xFFF8F8F8),
+                ),
+                _buildSettingItem(
+                  title: '课表管理',
+                  iconPath: 'assets/svgs/tab_schedule_selected.svg',
+                  onTap: () {
+                    // TODO: 跳转老师管理页
+                  },
                 ),
                 GetBuilder(
                   id: 'update-login-info',
