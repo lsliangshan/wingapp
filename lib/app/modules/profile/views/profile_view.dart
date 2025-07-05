@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:wingapp/components/custom_loader/custom_loader.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -17,7 +18,7 @@ class ProfileView extends GetView<ProfileController> {
           SliverAppBar(
             pinned: true,
             stretch: true,
-            expandedHeight: 220,
+            expandedHeight: 230,
             backgroundColor: Get.theme.primaryColor,
             flexibleSpace: LayoutBuilder(
               builder: (context, constraints) {
@@ -31,51 +32,104 @@ class ProfileView extends GetView<ProfileController> {
                 // 只有当已折叠（或几乎折叠）时才显示标题
                 final bool showTitle = currentHeight <= collapsedHeight + 1;
 
-                return FlexibleSpaceBar(
-                  // ↓ 折叠后才给 title
-                  title: showTitle ? const Text('个人中心') : null,
-                  centerTitle: false,
-                  titlePadding: EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 16,
-                  ),
-                  stretchModes: const [
-                    StretchMode.zoomBackground,
-                    StretchMode.fadeTitle,
-                  ],
-                  background: Container(
-                    padding: EdgeInsets.only(
-                      top: kToolbarHeight + 24,
-                      bottom: 16,
-                    ),
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          'assets/images/default_avatar.png',
-                          width: 80,
-                          height: 80,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          '张老师',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(color: Colors.white),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '138-0013-8000',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: Colors.white70),
-                        ),
+                return GetBuilder(
+                  id: 'update-login-info',
+                  init: controller,
+                  builder: (_) {
+                    return FlexibleSpaceBar(
+                      // ↓ 折叠后才给 title
+                      title: showTitle
+                          ? Text(
+                              controller.isLoggedIn.value
+                                  ? '${controller.loginInfo.value?.enName ?? controller.loginInfo.value?.name}'
+                                  : '个人中心',
+                              style: Get.theme.textTheme.titleLarge?.copyWith(
+                                color: Colors.white,
+                              ),
+                            )
+                          : null,
+                      centerTitle: false,
+                      titlePadding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 16,
+                      ),
+                      stretchModes: const [
+                        StretchMode.zoomBackground,
+                        StretchMode.fadeTitle,
                       ],
-                    ),
-                  ),
+                      background: Container(
+                        padding: EdgeInsets.only(
+                          top: kToolbarHeight + 24,
+                          bottom: 16,
+                        ),
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (controller.isLoggedIn.isFalse ||
+                                controller.loginInfo.value?.avatar == null)
+                              Image.asset(
+                                'assets/images/default_avatar.png',
+                                width: 80,
+                                height: 80,
+                              )
+                            else
+                              Image.network(
+                                controller.loginInfo.value?.avatar ?? '',
+                                width: 80,
+                                height: 80,
+                              ),
+                            const SizedBox(height: 12),
+                            Text(
+                              controller.isLoggedIn.value
+                                  ? '${controller.loginInfo.value?.enName ?? controller.loginInfo.value?.name}'
+                                  : "未登录",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                            const SizedBox(height: 4),
+                            if (controller.isLoggedIn.value)
+                              Text(
+                                controller.loginInfo.value?.mobile ?? '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white70),
+                              )
+                            else
+                              ElevatedButton(
+                                onPressed: controller.isDingTalkLogining.value
+                                    ? null
+                                    : () {
+                                        controller.dingTalkLogin();
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  disabledBackgroundColor: Colors.green,
+                                ),
+                                child: controller.isDingTalkLogining.value
+                                    ? CustomLoader(
+                                        size: 8,
+                                        color: Get.theme.disabledColor,
+                                      )
+                                    : Text(
+                                        '钉钉授权登录',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(color: Colors.black),
+                                      ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
@@ -288,6 +342,38 @@ class ProfileView extends GetView<ProfileController> {
                       // TODO: 跳转老师管理页
                     },
                   ),
+                ),
+                GetBuilder(
+                  id: 'update-login-info',
+                  init: controller,
+                  builder: (_) {
+                    if (controller.isLoggedIn.value) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.logout();
+                        },
+                        child: Container(
+                          width: Get.width,
+                          height: 64,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '退出登录',
+                                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                                  color: Get.theme.colorScheme.error,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
                 ),
               ],
             ),

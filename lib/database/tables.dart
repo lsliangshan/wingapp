@@ -12,7 +12,7 @@ class Teachers extends Table {
   /// 教师类型
   /// 1. full-time 全职老师
   /// 2. part-time 兼职老师
-  TextColumn get type => text()();
+  TextColumn get type => text().withDefault(const Constant('全职老师'))();
   // 登录名
   TextColumn get username => text().nullable()();
   // 国家码
@@ -36,16 +36,20 @@ class Teachers extends Table {
   TextColumn get admin => text().withDefault(const Constant('0'))();
 
   // 最后登录时间
-  Int64Column get lastLoginTime => int64().withDefault(
-      Constant(BigInt.from(DateTime.now().millisecondsSinceEpoch)))();
+  TextColumn get lastLoginTime => text().nullable().withDefault(
+      Constant(DateTime.now().millisecondsSinceEpoch.toString()))();
   TextColumn get lastLoginIp => text().nullable()();
-  Int64Column get birthday =>
-      int64().withDefault(Constant(BigInt.from(1548720488000)))();
+  TextColumn get birthday => text()
+      .nullable()
+      .withDefault(Constant(BigInt.from(1548720488000).toString()))();
   TextColumn get homepage => text().nullable()();
-  TextColumn get token => text()();
+  TextColumn get token => text().nullable()();
 
   // 登录方式， google、github、emailAndPassword、usernameAndPassword、dingtalk
   TextColumn get loginType => text().withDefault(const Constant('dingtalk'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
 }
 
 mixin AutoIncrementingPrimaryKey on Table {

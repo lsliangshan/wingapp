@@ -28,7 +28,9 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   @override
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
       'type', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('全职老师'));
   static const VerificationMeta _usernameMeta =
       const VerificationMeta('username');
   @override
@@ -92,12 +94,11 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _lastLoginTimeMeta =
       const VerificationMeta('lastLoginTime');
   @override
-  late final GeneratedColumn<BigInt> lastLoginTime = GeneratedColumn<BigInt>(
-      'last_login_time', aliasedName, false,
-      type: DriftSqlType.bigInt,
+  late final GeneratedColumn<String> lastLoginTime = GeneratedColumn<String>(
+      'last_login_time', aliasedName, true,
+      type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue:
-          Constant(BigInt.from(DateTime.now().millisecondsSinceEpoch)));
+      defaultValue: Constant(DateTime.now().millisecondsSinceEpoch.toString()));
   static const VerificationMeta _lastLoginIpMeta =
       const VerificationMeta('lastLoginIp');
   @override
@@ -107,11 +108,11 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _birthdayMeta =
       const VerificationMeta('birthday');
   @override
-  late final GeneratedColumn<BigInt> birthday = GeneratedColumn<BigInt>(
-      'birthday', aliasedName, false,
-      type: DriftSqlType.bigInt,
+  late final GeneratedColumn<String> birthday = GeneratedColumn<String>(
+      'birthday', aliasedName, true,
+      type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: Constant(BigInt.from(1548720488000)));
+      defaultValue: Constant(BigInt.from(1548720488000).toString()));
   static const VerificationMeta _homepageMeta =
       const VerificationMeta('homepage');
   @override
@@ -121,8 +122,8 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _tokenMeta = const VerificationMeta('token');
   @override
   late final GeneratedColumn<String> token = GeneratedColumn<String>(
-      'token', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'token', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _loginTypeMeta =
       const VerificationMeta('loginType');
   @override
@@ -184,8 +185,6 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
     if (data.containsKey('type')) {
       context.handle(
           _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
-    } else if (isInserting) {
-      context.missing(_typeMeta);
     }
     if (data.containsKey('username')) {
       context.handle(_usernameMeta,
@@ -252,8 +251,6 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
     if (data.containsKey('token')) {
       context.handle(
           _tokenMeta, token.isAcceptableOrUnknown(data['token']!, _tokenMeta));
-    } else if (isInserting) {
-      context.missing(_tokenMeta);
     }
     if (data.containsKey('login_type')) {
       context.handle(_loginTypeMeta,
@@ -263,7 +260,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Teacher map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -296,16 +293,16 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
           .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
       admin: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}admin'])!,
-      lastLoginTime: attachedDatabase.typeMapping.read(
-          DriftSqlType.bigInt, data['${effectivePrefix}last_login_time'])!,
+      lastLoginTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_login_time']),
       lastLoginIp: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}last_login_ip']),
       birthday: attachedDatabase.typeMapping
-          .read(DriftSqlType.bigInt, data['${effectivePrefix}birthday'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}birthday']),
       homepage: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}homepage']),
       token: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}token'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}token']),
       loginType: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}login_type'])!,
     );
@@ -336,11 +333,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   final String gender;
   final String status;
   final String admin;
-  final BigInt lastLoginTime;
+  final String? lastLoginTime;
   final String? lastLoginIp;
-  final BigInt birthday;
+  final String? birthday;
   final String? homepage;
-  final String token;
+  final String? token;
   final String loginType;
   const Teacher(
       {required this.id,
@@ -357,11 +354,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       required this.gender,
       required this.status,
       required this.admin,
-      required this.lastLoginTime,
+      this.lastLoginTime,
       this.lastLoginIp,
-      required this.birthday,
+      this.birthday,
       this.homepage,
-      required this.token,
+      this.token,
       required this.loginType});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -390,15 +387,21 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     map['gender'] = Variable<String>(gender);
     map['status'] = Variable<String>(status);
     map['admin'] = Variable<String>(admin);
-    map['last_login_time'] = Variable<BigInt>(lastLoginTime);
+    if (!nullToAbsent || lastLoginTime != null) {
+      map['last_login_time'] = Variable<String>(lastLoginTime);
+    }
     if (!nullToAbsent || lastLoginIp != null) {
       map['last_login_ip'] = Variable<String>(lastLoginIp);
     }
-    map['birthday'] = Variable<BigInt>(birthday);
+    if (!nullToAbsent || birthday != null) {
+      map['birthday'] = Variable<String>(birthday);
+    }
     if (!nullToAbsent || homepage != null) {
       map['homepage'] = Variable<String>(homepage);
     }
-    map['token'] = Variable<String>(token);
+    if (!nullToAbsent || token != null) {
+      map['token'] = Variable<String>(token);
+    }
     map['login_type'] = Variable<String>(loginType);
     return map;
   }
@@ -424,15 +427,20 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       gender: Value(gender),
       status: Value(status),
       admin: Value(admin),
-      lastLoginTime: Value(lastLoginTime),
+      lastLoginTime: lastLoginTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastLoginTime),
       lastLoginIp: lastLoginIp == null && nullToAbsent
           ? const Value.absent()
           : Value(lastLoginIp),
-      birthday: Value(birthday),
+      birthday: birthday == null && nullToAbsent
+          ? const Value.absent()
+          : Value(birthday),
       homepage: homepage == null && nullToAbsent
           ? const Value.absent()
           : Value(homepage),
-      token: Value(token),
+      token:
+          token == null && nullToAbsent ? const Value.absent() : Value(token),
       loginType: Value(loginType),
     );
   }
@@ -455,11 +463,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       gender: serializer.fromJson<String>(json['gender']),
       status: serializer.fromJson<String>(json['status']),
       admin: serializer.fromJson<String>(json['admin']),
-      lastLoginTime: serializer.fromJson<BigInt>(json['lastLoginTime']),
+      lastLoginTime: serializer.fromJson<String?>(json['lastLoginTime']),
       lastLoginIp: serializer.fromJson<String?>(json['lastLoginIp']),
-      birthday: serializer.fromJson<BigInt>(json['birthday']),
+      birthday: serializer.fromJson<String?>(json['birthday']),
       homepage: serializer.fromJson<String?>(json['homepage']),
-      token: serializer.fromJson<String>(json['token']),
+      token: serializer.fromJson<String?>(json['token']),
       loginType: serializer.fromJson<String>(json['loginType']),
     );
   }
@@ -481,11 +489,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       'gender': serializer.toJson<String>(gender),
       'status': serializer.toJson<String>(status),
       'admin': serializer.toJson<String>(admin),
-      'lastLoginTime': serializer.toJson<BigInt>(lastLoginTime),
+      'lastLoginTime': serializer.toJson<String?>(lastLoginTime),
       'lastLoginIp': serializer.toJson<String?>(lastLoginIp),
-      'birthday': serializer.toJson<BigInt>(birthday),
+      'birthday': serializer.toJson<String?>(birthday),
       'homepage': serializer.toJson<String?>(homepage),
-      'token': serializer.toJson<String>(token),
+      'token': serializer.toJson<String?>(token),
       'loginType': serializer.toJson<String>(loginType),
     };
   }
@@ -505,11 +513,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
           String? gender,
           String? status,
           String? admin,
-          BigInt? lastLoginTime,
+          Value<String?> lastLoginTime = const Value.absent(),
           Value<String?> lastLoginIp = const Value.absent(),
-          BigInt? birthday,
+          Value<String?> birthday = const Value.absent(),
           Value<String?> homepage = const Value.absent(),
-          String? token,
+          Value<String?> token = const Value.absent(),
           String? loginType}) =>
       Teacher(
         id: id ?? this.id,
@@ -526,11 +534,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
         gender: gender ?? this.gender,
         status: status ?? this.status,
         admin: admin ?? this.admin,
-        lastLoginTime: lastLoginTime ?? this.lastLoginTime,
+        lastLoginTime:
+            lastLoginTime.present ? lastLoginTime.value : this.lastLoginTime,
         lastLoginIp: lastLoginIp.present ? lastLoginIp.value : this.lastLoginIp,
-        birthday: birthday ?? this.birthday,
+        birthday: birthday.present ? birthday.value : this.birthday,
         homepage: homepage.present ? homepage.value : this.homepage,
-        token: token ?? this.token,
+        token: token.present ? token.value : this.token,
         loginType: loginType ?? this.loginType,
       );
   Teacher copyWithCompanion(TeachersCompanion data) {
@@ -651,11 +660,11 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
   final Value<String> gender;
   final Value<String> status;
   final Value<String> admin;
-  final Value<BigInt> lastLoginTime;
+  final Value<String?> lastLoginTime;
   final Value<String?> lastLoginIp;
-  final Value<BigInt> birthday;
+  final Value<String?> birthday;
   final Value<String?> homepage;
-  final Value<String> token;
+  final Value<String?> token;
   final Value<String> loginType;
   final Value<int> rowid;
   const TeachersCompanion({
@@ -685,7 +694,7 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
     required String id,
     required String unionId,
     required String openId,
-    required String type,
+    this.type = const Value.absent(),
     this.username = const Value.absent(),
     this.stateCode = const Value.absent(),
     required String mobile,
@@ -700,15 +709,13 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
     this.lastLoginIp = const Value.absent(),
     this.birthday = const Value.absent(),
     this.homepage = const Value.absent(),
-    required String token,
+    this.token = const Value.absent(),
     this.loginType = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         unionId = Value(unionId),
         openId = Value(openId),
-        type = Value(type),
-        mobile = Value(mobile),
-        token = Value(token);
+        mobile = Value(mobile);
   static Insertable<Teacher> custom({
     Expression<String>? id,
     Expression<String>? unionId,
@@ -724,9 +731,9 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
     Expression<String>? gender,
     Expression<String>? status,
     Expression<String>? admin,
-    Expression<BigInt>? lastLoginTime,
+    Expression<String>? lastLoginTime,
     Expression<String>? lastLoginIp,
-    Expression<BigInt>? birthday,
+    Expression<String>? birthday,
     Expression<String>? homepage,
     Expression<String>? token,
     Expression<String>? loginType,
@@ -772,11 +779,11 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
       Value<String>? gender,
       Value<String>? status,
       Value<String>? admin,
-      Value<BigInt>? lastLoginTime,
+      Value<String?>? lastLoginTime,
       Value<String?>? lastLoginIp,
-      Value<BigInt>? birthday,
+      Value<String?>? birthday,
       Value<String?>? homepage,
-      Value<String>? token,
+      Value<String?>? token,
       Value<String>? loginType,
       Value<int>? rowid}) {
     return TeachersCompanion(
@@ -850,13 +857,13 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
       map['admin'] = Variable<String>(admin.value);
     }
     if (lastLoginTime.present) {
-      map['last_login_time'] = Variable<BigInt>(lastLoginTime.value);
+      map['last_login_time'] = Variable<String>(lastLoginTime.value);
     }
     if (lastLoginIp.present) {
       map['last_login_ip'] = Variable<String>(lastLoginIp.value);
     }
     if (birthday.present) {
-      map['birthday'] = Variable<BigInt>(birthday.value);
+      map['birthday'] = Variable<String>(birthday.value);
     }
     if (homepage.present) {
       map['homepage'] = Variable<String>(homepage.value);
@@ -918,7 +925,7 @@ typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
   required String id,
   required String unionId,
   required String openId,
-  required String type,
+  Value<String> type,
   Value<String?> username,
   Value<String> stateCode,
   required String mobile,
@@ -929,11 +936,11 @@ typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
   Value<String> gender,
   Value<String> status,
   Value<String> admin,
-  Value<BigInt> lastLoginTime,
+  Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
-  Value<BigInt> birthday,
+  Value<String?> birthday,
   Value<String?> homepage,
-  required String token,
+  Value<String?> token,
   Value<String> loginType,
   Value<int> rowid,
 });
@@ -952,11 +959,11 @@ typedef $$TeachersTableUpdateCompanionBuilder = TeachersCompanion Function({
   Value<String> gender,
   Value<String> status,
   Value<String> admin,
-  Value<BigInt> lastLoginTime,
+  Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
-  Value<BigInt> birthday,
+  Value<String?> birthday,
   Value<String?> homepage,
-  Value<String> token,
+  Value<String?> token,
   Value<String> loginType,
   Value<int> rowid,
 });
@@ -1012,13 +1019,13 @@ class $$TeachersTableFilterComposer
   ColumnFilters<String> get admin => $composableBuilder(
       column: $table.admin, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<BigInt> get lastLoginTime => $composableBuilder(
+  ColumnFilters<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get lastLoginIp => $composableBuilder(
       column: $table.lastLoginIp, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<BigInt> get birthday => $composableBuilder(
+  ColumnFilters<String> get birthday => $composableBuilder(
       column: $table.birthday, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get homepage => $composableBuilder(
@@ -1082,14 +1089,14 @@ class $$TeachersTableOrderingComposer
   ColumnOrderings<String> get admin => $composableBuilder(
       column: $table.admin, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<BigInt> get lastLoginTime => $composableBuilder(
+  ColumnOrderings<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime,
       builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get lastLoginIp => $composableBuilder(
       column: $table.lastLoginIp, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<BigInt> get birthday => $composableBuilder(
+  ColumnOrderings<String> get birthday => $composableBuilder(
       column: $table.birthday, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get homepage => $composableBuilder(
@@ -1153,13 +1160,13 @@ class $$TeachersTableAnnotationComposer
   GeneratedColumn<String> get admin =>
       $composableBuilder(column: $table.admin, builder: (column) => column);
 
-  GeneratedColumn<BigInt> get lastLoginTime => $composableBuilder(
+  GeneratedColumn<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime, builder: (column) => column);
 
   GeneratedColumn<String> get lastLoginIp => $composableBuilder(
       column: $table.lastLoginIp, builder: (column) => column);
 
-  GeneratedColumn<BigInt> get birthday =>
+  GeneratedColumn<String> get birthday =>
       $composableBuilder(column: $table.birthday, builder: (column) => column);
 
   GeneratedColumn<String> get homepage =>
@@ -1209,11 +1216,11 @@ class $$TeachersTableTableManager extends RootTableManager<
             Value<String> gender = const Value.absent(),
             Value<String> status = const Value.absent(),
             Value<String> admin = const Value.absent(),
-            Value<BigInt> lastLoginTime = const Value.absent(),
+            Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
-            Value<BigInt> birthday = const Value.absent(),
+            Value<String?> birthday = const Value.absent(),
             Value<String?> homepage = const Value.absent(),
-            Value<String> token = const Value.absent(),
+            Value<String?> token = const Value.absent(),
             Value<String> loginType = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -1244,7 +1251,7 @@ class $$TeachersTableTableManager extends RootTableManager<
             required String id,
             required String unionId,
             required String openId,
-            required String type,
+            Value<String> type = const Value.absent(),
             Value<String?> username = const Value.absent(),
             Value<String> stateCode = const Value.absent(),
             required String mobile,
@@ -1255,11 +1262,11 @@ class $$TeachersTableTableManager extends RootTableManager<
             Value<String> gender = const Value.absent(),
             Value<String> status = const Value.absent(),
             Value<String> admin = const Value.absent(),
-            Value<BigInt> lastLoginTime = const Value.absent(),
+            Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
-            Value<BigInt> birthday = const Value.absent(),
+            Value<String?> birthday = const Value.absent(),
             Value<String?> homepage = const Value.absent(),
-            required String token,
+            Value<String?> token = const Value.absent(),
             Value<String> loginType = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>

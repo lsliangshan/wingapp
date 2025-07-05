@@ -13,9 +13,9 @@ class LoginInfo {
   String? gender;
   String? status;
   String? admin;
-  BigInt? lastLoginTime;
+  String? lastLoginTime;
   String? lastLoginIp;
-  BigInt? birthday;
+  String? birthday;
   String? homepage;
   String? token;
   String? loginType;
@@ -56,9 +56,9 @@ class LoginInfo {
     name = json['name'];
     avatar = json['avatar'];
     homepage = json['homepage'];
-    lastLoginTime = BigInt.from(json['lastLoginTime'].toInt());
+    lastLoginTime = json['lastLoginTime'];
     lastLoginIp = json['lastLoginIp'];
-    birthday = BigInt.from(json['birthday'].toInt());
+    birthday = json['birthday'];
     gender = json['gender'];
     status = json['status'];
     admin = json['admin'];
