@@ -19,19 +19,27 @@ class ProfileView extends GetView<ProfileController> {
     switch (type) {
       case 'class':
         iconPath = 'assets/svgs/tab_class_unselected.svg';
-        label = isAdminTeacher ? '班级' : '班级总数';
+        label = isAdminTeacher
+            ? 'profile.summary.class.short'.tr
+            : 'profile.summary.class'.tr;
         break;
       case 'student':
         iconPath = 'assets/svgs/tab_student_unselected.svg';
-        label = isAdminTeacher ? '学生' : '学生总数';
+        label = isAdminTeacher
+            ? 'profile.summary.student.short'.tr
+            : 'profile.summary.student'.tr;
         break;
       case 'teacher':
         iconPath = 'assets/svgs/tab_profile_unselected.svg';
-        label = isAdminTeacher ? '老师' : '老师总数';
+        label = isAdminTeacher
+            ? 'profile.summary.teacher.short'.tr
+            : 'profile.summary.teacher'.tr;
         break;
       default:
         iconPath = 'assets/svgs/tab_class_unselected.svg';
-        label = isAdminTeacher ? '班级' : '班级总数';
+        label = isAdminTeacher
+            ? 'profile.summary.class.short'.tr
+            : 'profile.summary.class'.tr;
         break;
     }
 
@@ -163,7 +171,7 @@ class ProfileView extends GetView<ProfileController> {
                           ? Text(
                               controller.isLoggedIn.value
                                   ? '${controller.loginInfo.value?.enName ?? controller.loginInfo.value?.name}'
-                                  : '个人中心',
+                                  : 'profile.setting.personal.center'.tr,
                               style: Get.theme.textTheme.titleLarge?.copyWith(
                                 color: Colors.white,
                               ),
@@ -206,7 +214,7 @@ class ProfileView extends GetView<ProfileController> {
                             Text(
                               controller.isLoggedIn.value
                                   ? '${controller.loginInfo.value?.enName ?? controller.loginInfo.value?.name}'
-                                  : "未登录",
+                                  : 'profile.setting.login.not.logged.in'.tr,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -241,7 +249,8 @@ class ProfileView extends GetView<ProfileController> {
                                         color: Get.theme.disabledColor,
                                       )
                                     : Text(
-                                        '钉钉授权登录',
+                                        'profile.setting.login.with.dingtalk'
+                                            .tr,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
@@ -310,7 +319,7 @@ class ProfileView extends GetView<ProfileController> {
                     vertical: 0,
                   ),
                   title: Text(
-                    '通用功能',
+                    'profile.setting.general.function'.tr,
                     style: Get.theme.textTheme.titleMedium?.copyWith(
                       fontSize: 14,
                       color: Get.theme.disabledColor,
@@ -318,10 +327,10 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                 ),
                 _buildSettingItem(
-                  title: '老师管理',
+                  title: 'profile.setting.teacher.manage'.tr,
                   iconPath: 'assets/svgs/icon_teacher_manage.svg',
                   onTap: () {
-                    // TODO: 跳转老师管理页
+                    controller.navigateToTeacherManage();
                   },
                 ),
                 const Divider(
@@ -331,7 +340,7 @@ class ProfileView extends GetView<ProfileController> {
                   color: Color(0xFFF8F8F8),
                 ),
                 _buildSettingItem(
-                  title: '身份切换',
+                  title: 'profile.setting.identity.switch'.tr,
                   iconPath: 'assets/svgs/icon_swap.svg',
                   onTap: () {
                     // TODO: 跳转老师管理页
@@ -344,7 +353,7 @@ class ProfileView extends GetView<ProfileController> {
                   color: Color(0xFFF8F8F8),
                 ),
                 _buildSettingItem(
-                  title: '课表管理',
+                  title: 'profile.setting.schedule.manage'.tr,
                   iconPath: 'assets/svgs/tab_schedule_selected.svg',
                   onTap: () {
                     // TODO: 跳转老师管理页
@@ -369,7 +378,7 @@ class ProfileView extends GetView<ProfileController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '退出登录',
+                                'profile.setting.logout'.tr,
                                 style: Get.theme.textTheme.bodyMedium?.copyWith(
                                   color: Get.theme.colorScheme.error,
                                 ),

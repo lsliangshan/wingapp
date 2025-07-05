@@ -2,6 +2,7 @@ import 'package:dingtalk_auth/dingtalk_auth.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/events/events.dart';
 import 'package:wingapp/models/login_info.model.dart';
 import 'package:wingapp/services/dingtalk.dart';
@@ -80,9 +81,10 @@ class ProfileController extends GetxController {
           stateCode: userInfo.data?['stateCode'] ?? '',
           mobile: userInfo.data?['mobile'] ?? '',
         );
-        toastService.showSuccess(message: '登录成功');
+        toastService.showSuccess(message: 'toast.login.success'.tr);
       } else {
-        toastService.showError(message: userInfo.message ?? '登录失败，请稍后再试');
+        toastService.showError(
+            message: userInfo.message ?? 'toast.login.failed'.tr);
       }
     }
     // await teacherService.dingTalkLogin();
@@ -92,7 +94,7 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await teacherService.logout();
-    toastService.showSuccess(message: '退出成功');
+    toastService.showSuccess(message: 'toast.logout.success'.tr);
     update(['update-login-info']);
   }
 
@@ -102,5 +104,9 @@ class ProfileController extends GetxController {
       localRole = 'teacher';
     }
     role.value = localRole;
+  }
+
+  void navigateToTeacherManage() {
+    Get.toNamed(Routes.TEACHER);
   }
 }
