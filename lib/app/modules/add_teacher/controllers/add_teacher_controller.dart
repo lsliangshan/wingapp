@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
@@ -10,6 +11,11 @@ class AddTeacherFormData {
   String? genderName;
   String? type;
   String? typeName;
+  String? id;
+  String? avatar;
+  String? mobile;
+  String? unionId;
+  String? openId;
 
   AddTeacherFormData({
     this.name,
@@ -18,11 +24,18 @@ class AddTeacherFormData {
     this.genderName,
     this.type,
     this.typeName,
+    this.id,
+    this.avatar,
+    this.mobile,
+    this.unionId,
+    this.openId,
   });
 }
 
 class AddTeacherController extends GetxController {
   final formKey = GlobalKey<FormState>();
+
+  InAppWebViewController? webViewController;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController enNameController = TextEditingController();
@@ -40,6 +53,28 @@ class AddTeacherController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void onWebViewCreated(InAppWebViewController controller) {
+    webViewController = controller;
+
+    controller.addJavaScriptHandler(
+      handlerName: 'dingtalkLoginCallback',
+      callback: (args) {
+        print('>>>>> dingtalkLoginCallback: ${args[0]}');
+        if (args[0]['code'] == 200 && args[0]['data'] != null) {
+          formData.value.id = args[0]['data']['id'] ?? '';
+          formData.value.avatar = args[0]['data']['avatar'] ?? '';
+          formData.value.mobile = args[0]['data']['mobile'] ?? '';
+          formData.value.unionId = args[0]['data']['unionId'] ?? '';
+          formData.value.openId = args[0]['data']['openId'] ?? '';
+          update(['update-dingtalk-login']);
+        }
+        return {
+          "code": 200,
+        };
+      },
+    );
   }
 
   void chooseGender() {

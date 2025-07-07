@@ -44,6 +44,7 @@ class Messages extends Translations {
           'add_teacher.form_data.gender.hint': '请选择老师性别',
           'add_teacher.form_data.type': '类型',
           'add_teacher.form_data.type.hint': '请选择老师类型',
+          'add_teacher.form_data.dingtalk.login': '钉钉登录',
 
           // Toast
           'toast.login.success': '登录成功',
@@ -109,6 +110,7 @@ class Messages extends Translations {
               'Please select the teacher gender',
           'add_teacher.form_data.type': 'Type',
           'add_teacher.form_data.type.hint': 'Please select the teacher type',
+          'add_teacher.form_data.dingtalk.login': 'Dingtalk Login',
 
           // Toast
           'toast.login.success': 'Login Success',

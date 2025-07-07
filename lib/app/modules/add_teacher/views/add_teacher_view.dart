@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                 tileColor: Colors.white,
                 dense: true,
                 leading: SizedBox(
-                  width: 64,
+                  width: 100,
                   height: 48,
                   child: Row(
                     children: [
@@ -123,7 +124,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                 tileColor: Colors.white,
                 dense: true,
                 leading: SizedBox(
-                  width: 64,
+                  width: 100,
                   height: 48,
                   child: Row(
                     children: [
@@ -218,7 +219,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   controller.chooseGender();
                 },
                 leading: SizedBox(
-                  width: 64,
+                  width: 100,
                   height: 48,
                   child: Row(
                     children: [
@@ -294,7 +295,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   controller.chooseTeacherType();
                 },
                 leading: SizedBox(
-                  width: 64,
+                  width: 100,
                   height: 48,
                   child: Row(
                     children: [
@@ -348,6 +349,80 @@ class AddTeacherView extends GetView<AddTeacherController> {
                                   height: 20,
                                 ),
                               ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                visualDensity: VisualDensity.compact,
+              ),
+              Divider(
+                height: 1,
+                color: Get.theme.dividerColor.withValues(alpha: 0.02),
+              ),
+              ListTile(
+                tileColor: Colors.white,
+                dense: true,
+                titleAlignment: ListTileTitleAlignment.top,
+                leading: SizedBox(
+                  width: 100,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Text(
+                        'add_teacher.form_data.dingtalk.login'.tr,
+                        style: Get.theme.textTheme.labelLarge?.copyWith(
+                          color: Get.theme.hintColor,
+                        ),
+                      ),
+                      // const SizedBox(
+                      //   width: 4,
+                      // ),
+                      // Text(
+                      //   '*',
+                      //   style: Get.theme.textTheme.labelLarge?.copyWith(
+                      //     color: Colors.red,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                title: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GetBuilder(
+                      id: 'update-dingtalk-login',
+                      init: controller,
+                      builder: (_) {
+                        return Expanded(
+                          child: Container(
+                            color: Colors.black12,
+                            height: 200,
+                            child: InAppWebView(
+                              // key: UniqueKey(),
+                              initialUrlRequest: URLRequest(
+                                  url: WebUri(
+                                      'http://10.2.6.210:5173/dingtalk/login')),
+                              // initialUrlRequest: URLRequest(url: WebUri('http://127.0.0.1:5173')),
+                              initialSettings: InAppWebViewSettings(
+                                javaScriptEnabled: true,
+                                transparentBackground: true,
+                              ),
+                              onWebViewCreated: controller.onWebViewCreated,
+                              onLoadStop: (ctrl, url) async {
+                                // await Future.delayed(Duration(milliseconds: 100));
+                                // await ctrl.evaluateJavascript(source: controller.initDataStr);
+                              },
+                              onConsoleMessage: (controller, consoleMessage) {
+                                print(
+                                    '>>>>> consoleMessage: ${consoleMessage.message}');
+                                // it will print: {message: {"foo":1,"bar":false}, messageLevel: 1}
+                              },
                             ),
                           ),
                         );
