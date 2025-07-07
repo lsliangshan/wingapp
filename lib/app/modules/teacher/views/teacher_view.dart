@@ -105,8 +105,8 @@ class TeacherView extends GetView<TeacherController> {
             },
             icon: SvgPicture.asset(
               'assets/svgs/icon_plus.svg',
-              width: 28,
-              height: 28,
+              width: 24,
+              height: 24,
             ),
           ),
           const SizedBox(width: 12),

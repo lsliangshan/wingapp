@@ -36,6 +36,14 @@ class Messages extends Translations {
 
           // 添加老师页面
           'add_teacher.title': '添加老师',
+          'add_teacher.form_data.name': '姓名',
+          'add_teacher.form_data.name.hint': '请输入老师姓名',
+          'add_teacher.form_data.en_name': '英文名',
+          'add_teacher.form_data.en_name.hint': '请输入老师英文名',
+          'add_teacher.form_data.gender': '性别',
+          'add_teacher.form_data.gender.hint': '请选择老师性别',
+          'add_teacher.form_data.type': '类型',
+          'add_teacher.form_data.type.hint': '请选择老师类型',
 
           // Toast
           'toast.login.success': '登录成功',
@@ -45,6 +53,18 @@ class Messages extends Translations {
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
+
+          // 底部弹窗
+          'bottom_sheet.choose_gender.title': '选择性别',
+          'bottom_sheet.choose_type.title': '选择老师类型',
+
+          // 性别
+          'gender.male': '男',
+          'gender.female': '女',
+
+          // 类型
+          'type.full_time': '全职老师',
+          'type.part_time': '兼职老师',
         },
         'en_US': {
           // 页面
@@ -79,6 +99,16 @@ class Messages extends Translations {
 
           // 添加老师页面
           'add_teacher.title': 'Add Teacher',
+          'add_teacher.form_data.name': 'Teacher Name',
+          'add_teacher.form_data.name.hint': 'Please enter the teacher name',
+          'add_teacher.form_data.en_name': 'English Name',
+          'add_teacher.form_data.en_name.hint':
+              'Please enter the teacher English name',
+          'add_teacher.form_data.gender': 'Gender',
+          'add_teacher.form_data.gender.hint':
+              'Please select the teacher gender',
+          'add_teacher.form_data.type': 'Type',
+          'add_teacher.form_data.type.hint': 'Please select the teacher type',
 
           // Toast
           'toast.login.success': 'Login Success',
@@ -88,6 +118,18 @@ class Messages extends Translations {
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
+
+          // 底部弹窗
+          'bottom_sheet.choose_gender.title': 'Choose Gender',
+          'bottom_sheet.choose_type.title': 'Choose Teacher Type',
+
+          // 性别
+          'gender.male': 'Male',
+          'gender.female': 'Female',
+
+          // 类型
+          'type.full_time': 'Full-time Teacher',
+          'type.part_time': 'Part-time Teacher',
         }
       };
 }

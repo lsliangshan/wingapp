@@ -21,6 +21,16 @@ enum MemberActionType {
   detailedDataStatistics,
 }
 
+class TeacherType {
+  static const fullTime = 'full-time';
+  static const partTime = 'part-time';
+}
+
+class Gender {
+  static const male = 'male';
+  static const female = 'female';
+}
+
 class CustomPurchaseStatus {
   static const purchaseCanceled = 'PURCHASE_CANCELLED';
   static const purchaseFailed = 'purchase_failed';

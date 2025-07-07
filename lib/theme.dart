@@ -21,7 +21,7 @@ ThemeData darkTheme() {
     ),
     scaffoldBackgroundColor: const Color(0xFFF8F8F8),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFFF8F8F8),
+      backgroundColor: Colors.white,
       elevation: 0,
     ),
     useMaterial3: true,

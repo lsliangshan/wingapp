@@ -65,3 +65,25 @@ String LocalLanguageKey = 'current-language';
 // teacher
 // student
 String LocalRoleKey = 'current-role';
+
+List<Map<String, String>> genders = [
+  {
+    "label": "gender.male".tr,
+    "value": Gender.male,
+  },
+  {
+    "label": "gender.female".tr,
+    "value": Gender.female,
+  },
+];
+
+List<Map<String, String>> teacherTypes = [
+  {
+    "label": "type.full_time".tr,
+    "value": TeacherType.fullTime,
+  },
+  {
+    "label": "type.part_time".tr,
+    "value": TeacherType.partTime,
+  },
+];
