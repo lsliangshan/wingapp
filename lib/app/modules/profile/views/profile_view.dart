@@ -270,7 +270,7 @@ class ProfileView extends GetView<ProfileController> {
             delegate: SliverChildListDelegate(
               [
                 GetBuilder(
-                  id: 'update-login-info',
+                  id: 'update-summary-counts',
                   init: controller,
                   builder: (_) {
                     return Container(
@@ -289,7 +289,10 @@ class ProfileView extends GetView<ProfileController> {
                           Expanded(
                             child: _buildSummaryCard(
                               type: 'class',
-                              count: '10',
+                              count: controller
+                                      .summaryCounts.value?['classCount']
+                                      ?.toString() ??
+                                  '0',
                               isAdminTeacher: controller.isAdminTeacher.value,
                             ),
                           ),
@@ -297,14 +300,20 @@ class ProfileView extends GetView<ProfileController> {
                             Expanded(
                               child: _buildSummaryCard(
                                 type: 'teacher',
-                                count: '10',
+                                count: controller
+                                        .summaryCounts.value?['teacherCount']
+                                        ?.toString() ??
+                                    '0',
                                 isAdminTeacher: controller.isAdminTeacher.value,
                               ),
                             ),
                           Expanded(
                             child: _buildSummaryCard(
                               type: 'student',
-                              count: '32',
+                              count: controller
+                                      .summaryCounts.value?['studentCount']
+                                      ?.toString() ??
+                                  '0',
                               isAdminTeacher: controller.isAdminTeacher.value,
                             ),
                           ),

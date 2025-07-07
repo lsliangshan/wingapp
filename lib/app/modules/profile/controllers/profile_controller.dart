@@ -27,6 +27,8 @@ class ProfileController extends GetxController {
 
   RxBool get isAdminTeacher => true.obs; // (loginInfo.value?.admin == '1').obs;
 
+  Rx<Map<String, dynamic>?> summaryCounts = Rx<Map<String, dynamic>?>(null);
+
   @override
   void onInit() {
     super.onInit();
@@ -48,6 +50,7 @@ class ProfileController extends GetxController {
 
   Future<void> initData() async {
     await initLoginInfo();
+    await initSummaryCounts();
   }
 
   Future<void> initLoginInfo() async {
@@ -55,6 +58,21 @@ class ProfileController extends GetxController {
     isLoggedIn.value = await teacherService.isLoggedIn();
 
     update(['update-login-info']);
+  }
+
+  Future<void> initSummaryCounts() async {
+    final response = await teacherService.getSummayCounts();
+    if (response.code == 200) {
+      summaryCounts.value = response.data;
+    } else {
+      summaryCounts.value = {
+        'teacherCount': '0',
+        'studentCount': '0',
+        'classCount': '0',
+        'scheduleCount': '0',
+      };
+    }
+    update(['update-summary-counts']);
   }
 
   void dingTalkLogin() async {
