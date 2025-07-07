@@ -44,6 +44,42 @@ class TeacherService extends GetxService {
     return NormalResponse.fromJson(data);
   }
 
+  Future<NormalResponse> addTeacher({
+    required String name,
+    required String enName,
+    required String gender,
+    required String type,
+    required String mobile,
+    String? stateCode,
+    String? unionId,
+    String? openId,
+    String? avatar,
+    String? id,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse('https://wf.liangqy.com/webhook-test/add-teacher'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id ?? '',
+        'unionId': unionId ?? '',
+        'openId': openId ?? '',
+        'name': name,
+        'enName': enName,
+        'stateCode': stateCode ?? '86',
+        'mobile': mobile,
+        'gender': gender,
+        'type': type,
+        'avatar': avatar ?? '',
+        'status': 'active',
+      }),
+    );
+    final data = json.decode(response.body);
+    print('>>>>>>>> addTeacher: ${data}');
+    return NormalResponse.fromJson(data);
+  }
+
   Future<NormalResponse> loginWithDingtalk({
     required String id,
     required String unionId,

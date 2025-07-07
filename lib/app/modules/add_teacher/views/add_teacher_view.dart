@@ -433,6 +433,30 @@ class AddTeacherView extends GetView<AddTeacherController> {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 visualDensity: VisualDensity.compact,
               ),
+              const SizedBox(height: 16),
+              Container(
+                width: Get.width,
+                height: 48,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        controller.saveTeacher(back: true);
+                      },
+                      child: Text('add_teacher.form_data.btn.saveAndBack'.tr),
+                    ),
+                    const SizedBox(width: 16),
+                    FilledButton(
+                      onPressed: () {
+                        controller.saveTeacher(back: false);
+                      },
+                      child: Text('add_teacher.form_data.btn.save'.tr),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

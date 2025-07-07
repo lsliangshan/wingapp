@@ -45,12 +45,18 @@ class Messages extends Translations {
           'add_teacher.form_data.type': '类型',
           'add_teacher.form_data.type.hint': '请选择老师类型',
           'add_teacher.form_data.dingtalk.login': '钉钉登录',
+          'add_teacher.form_data.btn.save': '保存',
+          'add_teacher.form_data.btn.saveAndBack': '保存并返回',
 
           // Toast
           'toast.login.success': '登录成功',
           'toast.login.failed': '登录失败',
           'toast.logout.success': '退出成功',
           'toast.logout.failed': '退出失败',
+          'toast.add_teacher.name_required': '老师姓名不能为空',
+          'toast.add_teacher.en_name_required': '老师英文名不能为空',
+          'toast.add_teacher.save.success': '保存成功',
+          'toast.add_teacher.save.fail': '保存失败',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -111,12 +117,18 @@ class Messages extends Translations {
           'add_teacher.form_data.type': 'Type',
           'add_teacher.form_data.type.hint': 'Please select the teacher type',
           'add_teacher.form_data.dingtalk.login': 'Dingtalk Login',
-
+          'add_teacher.form_data.btn.save': 'Save',
+          'add_teacher.form_data.btn.saveAndBack': 'Save and Back',
           // Toast
           'toast.login.success': 'Login Success',
           'toast.login.failed': 'Login Failed',
           'toast.logout.success': 'Logout Success',
           'toast.logout.failed': 'Logout Failed',
+          'toast.add_teacher.name_required': 'Teacher name cannot be empty',
+          'toast.add_teacher.en_name_required':
+              'Teacher English name cannot be empty',
+          'toast.add_teacher.save.success': 'Save Success',
+          'toast.add_teacher.save.fail': 'Save Failed',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',

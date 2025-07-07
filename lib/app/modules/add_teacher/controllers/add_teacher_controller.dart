@@ -3,6 +3,9 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/services/teacher.dart';
+import 'package:wingapp/services/toast.dart';
 
 class AddTeacherFormData {
   String? name;
@@ -33,6 +36,9 @@ class AddTeacherFormData {
 }
 
 class AddTeacherController extends GetxController {
+  ToastService toastService = Get.find<ToastService>();
+  TeacherService teacherService = Get.find<TeacherService>();
+
   final formKey = GlobalKey<FormState>();
 
   InAppWebViewController? webViewController;
@@ -48,11 +54,22 @@ class AddTeacherController extends GetxController {
     genderName: genders[0]['label'],
     type: teacherTypes[0]['value'],
     typeName: teacherTypes[0]['label'],
+    mobile: '18311032722',
+    unionId: 'ONPkBJmOOeQii1n1v9BGAngiEiE',
+    openId: 'hVhMdM4QLofJRgNOBXzziPQiEiE',
+    avatar: '',
+    id: 'ONPkBJmOOeQii1n1v9BGAngiEiE',
   ).obs;
 
   @override
   void onInit() {
     super.onInit();
+    nameController.addListener(() {
+      formData.value.name = nameController.text;
+    });
+    enNameController.addListener(() {
+      formData.value.enName = enNameController.text;
+    });
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
@@ -226,5 +243,65 @@ class AddTeacherController extends GetxController {
         ),
       ),
     );
+  }
+
+  void clearFormData() {
+    formData.value = AddTeacherFormData(
+      gender: genders[0]['value'],
+      genderName: genders[0]['label'],
+      type: teacherTypes[0]['value'],
+      typeName: teacherTypes[0]['label'],
+      mobile: '',
+      unionId: '',
+      openId: '',
+      id: '',
+      avatar: '',
+    );
+  }
+
+  Future<void> saveTeacher({
+    bool back = false,
+  }) async {
+    if (formData.value.name == null || formData.value.name!.isEmpty) {
+      toastService.showError(
+        message: 'toast.add_teacher.name_required'.tr,
+      );
+      nameFocusNode.requestFocus();
+      return;
+    }
+    if (formData.value.enName == null || formData.value.enName!.isEmpty) {
+      toastService.showError(
+        message: 'toast.add_teacher.en_name_required'.tr,
+      );
+      enNameFocusNode.requestFocus();
+      return;
+    }
+    print('>>>>>>>> saveTeacher: ${formData.value}');
+
+    NormalResponse response = await teacherService.addTeacher(
+      name: formData.value.name!,
+      enName: formData.value.enName!,
+      gender: formData.value.gender!,
+      type: formData.value.type!,
+      mobile: formData.value.mobile ?? '',
+      unionId: formData.value.unionId ?? '',
+      openId: formData.value.openId ?? '',
+      avatar: formData.value.avatar ?? '',
+      id: formData.value.id ?? formData.value.unionId ?? '',
+    );
+
+    if (response.code == 200) {
+      toastService.showSuccess(
+        message: 'toast.add_teacher.save.success'.tr,
+      );
+
+      if (back) {
+        Get.back();
+      }
+    } else {
+      toastService.showError(
+        message: 'toast.add_teacher.save.fail'.tr,
+      );
+    }
   }
 }
