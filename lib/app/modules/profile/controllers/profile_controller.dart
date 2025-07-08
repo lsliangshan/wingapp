@@ -124,7 +124,8 @@ class ProfileController extends GetxController {
     role.value = localRole;
   }
 
-  void navigateToTeacherManage() {
-    Get.toNamed(Routes.TEACHER);
+  void navigateToTeacherManage() async {
+    await Get.toNamed(Routes.TEACHER);
+    initSummaryCounts();
   }
 }

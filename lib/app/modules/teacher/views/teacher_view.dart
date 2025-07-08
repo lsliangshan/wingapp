@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
 
@@ -15,12 +14,29 @@ class TeacherView extends GetView<TeacherController> {
   Widget _buildItemData(BuildContext context, int index) {
     return ListTile(
       onTap: () {},
-      leading: controller.teachers[index].avatar != null
-          ? CachedNetworkImage(
-              imageUrl: controller.teachers[index].avatar!,
+      leading: controller.teachers[index].avatar != null &&
+              controller.teachers[index].avatar!.isNotEmpty
+          ? Container(
               width: 40,
               height: 40,
-              fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                color: Get.theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              clipBehavior: Clip.hardEdge,
+              child: CachedNetworkImage(
+                imageUrl: controller.teachers[index].avatar!,
+                width: 40,
+                height: 40,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) {
+                  return SvgPicture.asset(
+                    'assets/svgs/tab_profile_selected.svg',
+                    width: 32,
+                    height: 32,
+                  );
+                },
+              ),
             )
           : Container(
               width: 40,
@@ -62,7 +78,11 @@ class TeacherView extends GetView<TeacherController> {
       return SizedBox(
         width: Get.width,
         height: Get.height - 300,
-        child: const EmptyResult(),
+        child: EmptyResult(
+          onPressed: () {
+            controller.gotoAddTeacher();
+          },
+        ),
       );
     }
     if (controller.totalPage.value == controller.pageIndex.value &&
@@ -101,7 +121,7 @@ class TeacherView extends GetView<TeacherController> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.ADD_TEACHER);
+              controller.gotoAddTeacher();
             },
             icon: SvgPicture.asset(
               'assets/svgs/icon_plus.svg',

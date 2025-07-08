@@ -27,7 +27,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
-      'type', aliasedName, false,
+      'type', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('全职老师'));
@@ -41,7 +41,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       const VerificationMeta('stateCode');
   @override
   late final GeneratedColumn<String> stateCode = GeneratedColumn<String>(
-      'state_code', aliasedName, false,
+      'state_code', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('86'));
@@ -73,21 +73,21 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _genderMeta = const VerificationMeta('gender');
   @override
   late final GeneratedColumn<String> gender = GeneratedColumn<String>(
-      'gender', aliasedName, false,
+      'gender', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('男'));
   static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
   late final GeneratedColumn<String> status = GeneratedColumn<String>(
-      'status', aliasedName, false,
+      'status', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('在职'));
   static const VerificationMeta _adminMeta = const VerificationMeta('admin');
   @override
   late final GeneratedColumn<String> admin = GeneratedColumn<String>(
-      'admin', aliasedName, false,
+      'admin', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('0'));
@@ -128,7 +128,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       const VerificationMeta('loginType');
   @override
   late final GeneratedColumn<String> loginType = GeneratedColumn<String>(
-      'login_type', aliasedName, false,
+      'login_type', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('dingtalk'));
@@ -272,11 +272,11 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       openId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}open_id'])!,
       type: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}type']),
       username: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}username']),
       stateCode: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}state_code'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}state_code']),
       mobile: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}mobile'])!,
       email: attachedDatabase.typeMapping
@@ -288,11 +288,11 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       avatar: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}avatar']),
       gender: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}gender'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}gender']),
       status: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}status']),
       admin: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}admin'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}admin']),
       lastLoginTime: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}last_login_time']),
       lastLoginIp: attachedDatabase.typeMapping
@@ -304,7 +304,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       token: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}token']),
       loginType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}login_type'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}login_type']),
     );
   }
 
@@ -322,55 +322,59 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   /// 教师类型
   /// 1. full-time 全职老师
   /// 2. part-time 兼职老师
-  final String type;
+  final String? type;
   final String? username;
-  final String stateCode;
+  final String? stateCode;
   final String mobile;
   final String? email;
   final String? enName;
   final String? name;
   final String? avatar;
-  final String gender;
-  final String status;
-  final String admin;
+  final String? gender;
+  final String? status;
+  final String? admin;
   final String? lastLoginTime;
   final String? lastLoginIp;
   final String? birthday;
   final String? homepage;
   final String? token;
-  final String loginType;
+  final String? loginType;
   const Teacher(
       {required this.id,
       required this.unionId,
       required this.openId,
-      required this.type,
+      this.type,
       this.username,
-      required this.stateCode,
+      this.stateCode,
       required this.mobile,
       this.email,
       this.enName,
       this.name,
       this.avatar,
-      required this.gender,
-      required this.status,
-      required this.admin,
+      this.gender,
+      this.status,
+      this.admin,
       this.lastLoginTime,
       this.lastLoginIp,
       this.birthday,
       this.homepage,
       this.token,
-      required this.loginType});
+      this.loginType});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['union_id'] = Variable<String>(unionId);
     map['open_id'] = Variable<String>(openId);
-    map['type'] = Variable<String>(type);
+    if (!nullToAbsent || type != null) {
+      map['type'] = Variable<String>(type);
+    }
     if (!nullToAbsent || username != null) {
       map['username'] = Variable<String>(username);
     }
-    map['state_code'] = Variable<String>(stateCode);
+    if (!nullToAbsent || stateCode != null) {
+      map['state_code'] = Variable<String>(stateCode);
+    }
     map['mobile'] = Variable<String>(mobile);
     if (!nullToAbsent || email != null) {
       map['email'] = Variable<String>(email);
@@ -384,9 +388,15 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     if (!nullToAbsent || avatar != null) {
       map['avatar'] = Variable<String>(avatar);
     }
-    map['gender'] = Variable<String>(gender);
-    map['status'] = Variable<String>(status);
-    map['admin'] = Variable<String>(admin);
+    if (!nullToAbsent || gender != null) {
+      map['gender'] = Variable<String>(gender);
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] = Variable<String>(status);
+    }
+    if (!nullToAbsent || admin != null) {
+      map['admin'] = Variable<String>(admin);
+    }
     if (!nullToAbsent || lastLoginTime != null) {
       map['last_login_time'] = Variable<String>(lastLoginTime);
     }
@@ -402,7 +412,9 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     if (!nullToAbsent || token != null) {
       map['token'] = Variable<String>(token);
     }
-    map['login_type'] = Variable<String>(loginType);
+    if (!nullToAbsent || loginType != null) {
+      map['login_type'] = Variable<String>(loginType);
+    }
     return map;
   }
 
@@ -411,11 +423,13 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       id: Value(id),
       unionId: Value(unionId),
       openId: Value(openId),
-      type: Value(type),
+      type: type == null && nullToAbsent ? const Value.absent() : Value(type),
       username: username == null && nullToAbsent
           ? const Value.absent()
           : Value(username),
-      stateCode: Value(stateCode),
+      stateCode: stateCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(stateCode),
       mobile: Value(mobile),
       email:
           email == null && nullToAbsent ? const Value.absent() : Value(email),
@@ -424,9 +438,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
       avatar:
           avatar == null && nullToAbsent ? const Value.absent() : Value(avatar),
-      gender: Value(gender),
-      status: Value(status),
-      admin: Value(admin),
+      gender:
+          gender == null && nullToAbsent ? const Value.absent() : Value(gender),
+      status:
+          status == null && nullToAbsent ? const Value.absent() : Value(status),
+      admin:
+          admin == null && nullToAbsent ? const Value.absent() : Value(admin),
       lastLoginTime: lastLoginTime == null && nullToAbsent
           ? const Value.absent()
           : Value(lastLoginTime),
@@ -441,7 +458,9 @@ class Teacher extends DataClass implements Insertable<Teacher> {
           : Value(homepage),
       token:
           token == null && nullToAbsent ? const Value.absent() : Value(token),
-      loginType: Value(loginType),
+      loginType: loginType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(loginType),
     );
   }
 
@@ -452,23 +471,23 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       id: serializer.fromJson<String>(json['id']),
       unionId: serializer.fromJson<String>(json['unionId']),
       openId: serializer.fromJson<String>(json['openId']),
-      type: serializer.fromJson<String>(json['type']),
+      type: serializer.fromJson<String?>(json['type']),
       username: serializer.fromJson<String?>(json['username']),
-      stateCode: serializer.fromJson<String>(json['stateCode']),
+      stateCode: serializer.fromJson<String?>(json['stateCode']),
       mobile: serializer.fromJson<String>(json['mobile']),
       email: serializer.fromJson<String?>(json['email']),
       enName: serializer.fromJson<String?>(json['enName']),
       name: serializer.fromJson<String?>(json['name']),
       avatar: serializer.fromJson<String?>(json['avatar']),
-      gender: serializer.fromJson<String>(json['gender']),
-      status: serializer.fromJson<String>(json['status']),
-      admin: serializer.fromJson<String>(json['admin']),
+      gender: serializer.fromJson<String?>(json['gender']),
+      status: serializer.fromJson<String?>(json['status']),
+      admin: serializer.fromJson<String?>(json['admin']),
       lastLoginTime: serializer.fromJson<String?>(json['lastLoginTime']),
       lastLoginIp: serializer.fromJson<String?>(json['lastLoginIp']),
       birthday: serializer.fromJson<String?>(json['birthday']),
       homepage: serializer.fromJson<String?>(json['homepage']),
       token: serializer.fromJson<String?>(json['token']),
-      loginType: serializer.fromJson<String>(json['loginType']),
+      loginType: serializer.fromJson<String?>(json['loginType']),
     );
   }
   @override
@@ -478,23 +497,23 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       'id': serializer.toJson<String>(id),
       'unionId': serializer.toJson<String>(unionId),
       'openId': serializer.toJson<String>(openId),
-      'type': serializer.toJson<String>(type),
+      'type': serializer.toJson<String?>(type),
       'username': serializer.toJson<String?>(username),
-      'stateCode': serializer.toJson<String>(stateCode),
+      'stateCode': serializer.toJson<String?>(stateCode),
       'mobile': serializer.toJson<String>(mobile),
       'email': serializer.toJson<String?>(email),
       'enName': serializer.toJson<String?>(enName),
       'name': serializer.toJson<String?>(name),
       'avatar': serializer.toJson<String?>(avatar),
-      'gender': serializer.toJson<String>(gender),
-      'status': serializer.toJson<String>(status),
-      'admin': serializer.toJson<String>(admin),
+      'gender': serializer.toJson<String?>(gender),
+      'status': serializer.toJson<String?>(status),
+      'admin': serializer.toJson<String?>(admin),
       'lastLoginTime': serializer.toJson<String?>(lastLoginTime),
       'lastLoginIp': serializer.toJson<String?>(lastLoginIp),
       'birthday': serializer.toJson<String?>(birthday),
       'homepage': serializer.toJson<String?>(homepage),
       'token': serializer.toJson<String?>(token),
-      'loginType': serializer.toJson<String>(loginType),
+      'loginType': serializer.toJson<String?>(loginType),
     };
   }
 
@@ -502,45 +521,45 @@ class Teacher extends DataClass implements Insertable<Teacher> {
           {String? id,
           String? unionId,
           String? openId,
-          String? type,
+          Value<String?> type = const Value.absent(),
           Value<String?> username = const Value.absent(),
-          String? stateCode,
+          Value<String?> stateCode = const Value.absent(),
           String? mobile,
           Value<String?> email = const Value.absent(),
           Value<String?> enName = const Value.absent(),
           Value<String?> name = const Value.absent(),
           Value<String?> avatar = const Value.absent(),
-          String? gender,
-          String? status,
-          String? admin,
+          Value<String?> gender = const Value.absent(),
+          Value<String?> status = const Value.absent(),
+          Value<String?> admin = const Value.absent(),
           Value<String?> lastLoginTime = const Value.absent(),
           Value<String?> lastLoginIp = const Value.absent(),
           Value<String?> birthday = const Value.absent(),
           Value<String?> homepage = const Value.absent(),
           Value<String?> token = const Value.absent(),
-          String? loginType}) =>
+          Value<String?> loginType = const Value.absent()}) =>
       Teacher(
         id: id ?? this.id,
         unionId: unionId ?? this.unionId,
         openId: openId ?? this.openId,
-        type: type ?? this.type,
+        type: type.present ? type.value : this.type,
         username: username.present ? username.value : this.username,
-        stateCode: stateCode ?? this.stateCode,
+        stateCode: stateCode.present ? stateCode.value : this.stateCode,
         mobile: mobile ?? this.mobile,
         email: email.present ? email.value : this.email,
         enName: enName.present ? enName.value : this.enName,
         name: name.present ? name.value : this.name,
         avatar: avatar.present ? avatar.value : this.avatar,
-        gender: gender ?? this.gender,
-        status: status ?? this.status,
-        admin: admin ?? this.admin,
+        gender: gender.present ? gender.value : this.gender,
+        status: status.present ? status.value : this.status,
+        admin: admin.present ? admin.value : this.admin,
         lastLoginTime:
             lastLoginTime.present ? lastLoginTime.value : this.lastLoginTime,
         lastLoginIp: lastLoginIp.present ? lastLoginIp.value : this.lastLoginIp,
         birthday: birthday.present ? birthday.value : this.birthday,
         homepage: homepage.present ? homepage.value : this.homepage,
         token: token.present ? token.value : this.token,
-        loginType: loginType ?? this.loginType,
+        loginType: loginType.present ? loginType.value : this.loginType,
       );
   Teacher copyWithCompanion(TeachersCompanion data) {
     return Teacher(
@@ -649,23 +668,23 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
   final Value<String> id;
   final Value<String> unionId;
   final Value<String> openId;
-  final Value<String> type;
+  final Value<String?> type;
   final Value<String?> username;
-  final Value<String> stateCode;
+  final Value<String?> stateCode;
   final Value<String> mobile;
   final Value<String?> email;
   final Value<String?> enName;
   final Value<String?> name;
   final Value<String?> avatar;
-  final Value<String> gender;
-  final Value<String> status;
-  final Value<String> admin;
+  final Value<String?> gender;
+  final Value<String?> status;
+  final Value<String?> admin;
   final Value<String?> lastLoginTime;
   final Value<String?> lastLoginIp;
   final Value<String?> birthday;
   final Value<String?> homepage;
   final Value<String?> token;
-  final Value<String> loginType;
+  final Value<String?> loginType;
   final Value<int> rowid;
   const TeachersCompanion({
     this.id = const Value.absent(),
@@ -768,23 +787,23 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
       {Value<String>? id,
       Value<String>? unionId,
       Value<String>? openId,
-      Value<String>? type,
+      Value<String?>? type,
       Value<String?>? username,
-      Value<String>? stateCode,
+      Value<String?>? stateCode,
       Value<String>? mobile,
       Value<String?>? email,
       Value<String?>? enName,
       Value<String?>? name,
       Value<String?>? avatar,
-      Value<String>? gender,
-      Value<String>? status,
-      Value<String>? admin,
+      Value<String?>? gender,
+      Value<String?>? status,
+      Value<String?>? admin,
       Value<String?>? lastLoginTime,
       Value<String?>? lastLoginIp,
       Value<String?>? birthday,
       Value<String?>? homepage,
       Value<String?>? token,
-      Value<String>? loginType,
+      Value<String?>? loginType,
       Value<int>? rowid}) {
     return TeachersCompanion(
       id: id ?? this.id,
@@ -925,46 +944,46 @@ typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
   required String id,
   required String unionId,
   required String openId,
-  Value<String> type,
+  Value<String?> type,
   Value<String?> username,
-  Value<String> stateCode,
+  Value<String?> stateCode,
   required String mobile,
   Value<String?> email,
   Value<String?> enName,
   Value<String?> name,
   Value<String?> avatar,
-  Value<String> gender,
-  Value<String> status,
-  Value<String> admin,
+  Value<String?> gender,
+  Value<String?> status,
+  Value<String?> admin,
   Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
   Value<String?> birthday,
   Value<String?> homepage,
   Value<String?> token,
-  Value<String> loginType,
+  Value<String?> loginType,
   Value<int> rowid,
 });
 typedef $$TeachersTableUpdateCompanionBuilder = TeachersCompanion Function({
   Value<String> id,
   Value<String> unionId,
   Value<String> openId,
-  Value<String> type,
+  Value<String?> type,
   Value<String?> username,
-  Value<String> stateCode,
+  Value<String?> stateCode,
   Value<String> mobile,
   Value<String?> email,
   Value<String?> enName,
   Value<String?> name,
   Value<String?> avatar,
-  Value<String> gender,
-  Value<String> status,
-  Value<String> admin,
+  Value<String?> gender,
+  Value<String?> status,
+  Value<String?> admin,
   Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
   Value<String?> birthday,
   Value<String?> homepage,
   Value<String?> token,
-  Value<String> loginType,
+  Value<String?> loginType,
   Value<int> rowid,
 });
 
@@ -1205,23 +1224,23 @@ class $$TeachersTableTableManager extends RootTableManager<
             Value<String> id = const Value.absent(),
             Value<String> unionId = const Value.absent(),
             Value<String> openId = const Value.absent(),
-            Value<String> type = const Value.absent(),
+            Value<String?> type = const Value.absent(),
             Value<String?> username = const Value.absent(),
-            Value<String> stateCode = const Value.absent(),
+            Value<String?> stateCode = const Value.absent(),
             Value<String> mobile = const Value.absent(),
             Value<String?> email = const Value.absent(),
             Value<String?> enName = const Value.absent(),
             Value<String?> name = const Value.absent(),
             Value<String?> avatar = const Value.absent(),
-            Value<String> gender = const Value.absent(),
-            Value<String> status = const Value.absent(),
-            Value<String> admin = const Value.absent(),
+            Value<String?> gender = const Value.absent(),
+            Value<String?> status = const Value.absent(),
+            Value<String?> admin = const Value.absent(),
             Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
             Value<String?> birthday = const Value.absent(),
             Value<String?> homepage = const Value.absent(),
             Value<String?> token = const Value.absent(),
-            Value<String> loginType = const Value.absent(),
+            Value<String?> loginType = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               TeachersCompanion(
@@ -1251,23 +1270,23 @@ class $$TeachersTableTableManager extends RootTableManager<
             required String id,
             required String unionId,
             required String openId,
-            Value<String> type = const Value.absent(),
+            Value<String?> type = const Value.absent(),
             Value<String?> username = const Value.absent(),
-            Value<String> stateCode = const Value.absent(),
+            Value<String?> stateCode = const Value.absent(),
             required String mobile,
             Value<String?> email = const Value.absent(),
             Value<String?> enName = const Value.absent(),
             Value<String?> name = const Value.absent(),
             Value<String?> avatar = const Value.absent(),
-            Value<String> gender = const Value.absent(),
-            Value<String> status = const Value.absent(),
-            Value<String> admin = const Value.absent(),
+            Value<String?> gender = const Value.absent(),
+            Value<String?> status = const Value.absent(),
+            Value<String?> admin = const Value.absent(),
             Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
             Value<String?> birthday = const Value.absent(),
             Value<String?> homepage = const Value.absent(),
             Value<String?> token = const Value.absent(),
-            Value<String> loginType = const Value.absent(),
+            Value<String?> loginType = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               TeachersCompanion.insert(

@@ -57,12 +57,12 @@ class TeacherService extends GetxService {
     String? id,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('https://wf.liangqy.com/webhook-test/add-teacher'),
+      Uri.parse('https://wf.liangqy.com/webhook/add-teacher'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'id': id ?? '',
+        'id': (id == null || id.isEmpty) ? (unionId ?? '') : id,
         'unionId': unionId ?? '',
         'openId': openId ?? '',
         'name': name,
@@ -76,7 +76,6 @@ class TeacherService extends GetxService {
       }),
     );
     final data = json.decode(response.body);
-    print('>>>>>>>> addTeacher: ${data}');
     return NormalResponse.fromJson(data);
   }
 

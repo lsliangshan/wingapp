@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/teacher.dart';
@@ -41,6 +42,17 @@ class TeacherController extends GetxController {
     if (pageIndex.value < totalPage.value) {
       pageIndex.value++;
       getTeachers();
+    }
+  }
+
+  void gotoAddTeacher() async {
+    var newTeachers = await Get.toNamed(
+      Routes.ADD_TEACHER,
+    );
+    if (newTeachers != null && newTeachers.isNotEmpty) {
+      teachers.insertAll(0, newTeachers);
+      totalCount.value = (totalCount.value + newTeachers.length).toInt();
+      update(['update-teachers']);
     }
   }
 }

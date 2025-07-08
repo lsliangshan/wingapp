@@ -17,7 +17,7 @@ class NormalResponse {
   // 从 JSON 转换为 Model
   factory NormalResponse.fromJson(Map<String, dynamic> json) {
     return NormalResponse(
-      code: json['code'],
+      code: int.parse('${json['code']}'),
       message: json['message'],
       contentLength: json['contentLength'],
       headers: json['headers'] ?? {},

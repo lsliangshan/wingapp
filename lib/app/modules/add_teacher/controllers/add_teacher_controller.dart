@@ -3,6 +3,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
@@ -33,6 +34,23 @@ class AddTeacherFormData {
     this.unionId,
     this.openId,
   });
+
+  // 将 Model 转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'enName': enName,
+      'gender': gender,
+      'genderName': genderName,
+      'type': type,
+      'typeName': typeName,
+      'id': id,
+      'avatar': avatar,
+      'mobile': mobile,
+      'unionId': unionId,
+      'openId': openId,
+    };
+  }
 }
 
 class AddTeacherController extends GetxController {
@@ -61,14 +79,18 @@ class AddTeacherController extends GetxController {
     id: 'ONPkBJmOOeQii1n1v9BGAngiEiE',
   ).obs;
 
+  List<Teacher> newTeachers = [];
+
   @override
   void onInit() {
     super.onInit();
     nameController.addListener(() {
       formData.value.name = nameController.text;
+      update(['update-form-data']);
     });
     enNameController.addListener(() {
       formData.value.enName = enNameController.text;
+      update(['update-form-data']);
     });
   }
 
@@ -155,7 +177,7 @@ class AddTeacherController extends GetxController {
                       onTap: () {
                         formData.value.gender = genders[index]['value'];
                         formData.value.genderName = genders[index]['label'];
-                        update(['update-gender']);
+                        update(['update-form-data']);
                         Get.back();
                       },
                     );
@@ -231,7 +253,7 @@ class AddTeacherController extends GetxController {
                       onTap: () {
                         formData.value.type = teacherTypes[index]['value'];
                         formData.value.typeName = teacherTypes[index]['label'];
-                        update(['update-type']);
+                        update(['update-form-data']);
                         Get.back();
                       },
                     );
@@ -246,6 +268,9 @@ class AddTeacherController extends GetxController {
   }
 
   void clearFormData() {
+    nameController.clear();
+    enNameController.clear();
+
     formData.value = AddTeacherFormData(
       gender: genders[0]['value'],
       genderName: genders[0]['label'],
@@ -257,6 +282,7 @@ class AddTeacherController extends GetxController {
       id: '',
       avatar: '',
     );
+    update(['update-form-data']);
   }
 
   Future<void> saveTeacher({
@@ -276,7 +302,6 @@ class AddTeacherController extends GetxController {
       enNameFocusNode.requestFocus();
       return;
     }
-    print('>>>>>>>> saveTeacher: ${formData.value}');
 
     NormalResponse response = await teacherService.addTeacher(
       name: formData.value.name!,
@@ -287,7 +312,7 @@ class AddTeacherController extends GetxController {
       unionId: formData.value.unionId ?? '',
       openId: formData.value.openId ?? '',
       avatar: formData.value.avatar ?? '',
-      id: formData.value.id ?? formData.value.unionId ?? '',
+      id: formData.value.id ?? '',
     );
 
     if (response.code == 200) {
@@ -295,8 +320,13 @@ class AddTeacherController extends GetxController {
         message: 'toast.add_teacher.save.success'.tr,
       );
 
+      newTeachers.add(Teacher.fromJson(formData.value.toJson()));
+
       if (back) {
-        Get.back();
+        Get.back(result: newTeachers);
+      } else {
+        webViewController?.reload();
+        clearFormData();
       }
     } else {
       toastService.showError(

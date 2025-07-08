@@ -61,7 +61,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GetBuilder(
-                      id: 'update-name',
+                      id: 'update-form-data',
                       init: controller,
                       builder: (_) {
                         return Expanded(
@@ -152,7 +152,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GetBuilder(
-                      id: 'update-enName',
+                      id: 'update-form-data',
                       init: controller,
                       builder: (_) {
                         return Expanded(
@@ -247,7 +247,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GetBuilder(
-                      id: 'update-gender',
+                      id: 'update-form-data',
                       init: controller,
                       builder: (_) {
                         return Expanded(
@@ -323,7 +323,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GetBuilder(
-                      id: 'update-type',
+                      id: 'update-form-data',
                       init: controller,
                       builder: (_) {
                         return Expanded(
@@ -401,7 +401,6 @@ class AddTeacherView extends GetView<AddTeacherController> {
                       builder: (_) {
                         return Expanded(
                           child: Container(
-                            color: Colors.black12,
                             height: 200,
                             child: InAppWebView(
                               // key: UniqueKey(),
