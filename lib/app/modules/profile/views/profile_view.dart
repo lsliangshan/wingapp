@@ -335,19 +335,23 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                 ),
-                _buildSettingItem(
-                  title: 'profile.setting.teacher.manage'.tr,
-                  iconPath: 'assets/svgs/icon_teacher_manage.svg',
-                  onTap: () {
-                    controller.navigateToTeacherManage();
-                  },
-                ),
-                const Divider(
-                  height: 1,
-                  indent: 30,
-                  endIndent: 30,
-                  color: Color(0xFFF8F8F8),
-                ),
+                Obx(() => controller.isAdminTeacher.value
+                    ? _buildSettingItem(
+                        title: 'profile.setting.teacher.manage'.tr,
+                        iconPath: 'assets/svgs/icon_teacher_manage.svg',
+                        onTap: () {
+                          controller.navigateToTeacherManage();
+                        },
+                      )
+                    : const SizedBox.shrink()),
+                Obx(() => controller.isAdminTeacher.value
+                    ? const Divider(
+                        height: 1,
+                        indent: 30,
+                        endIndent: 30,
+                        color: Color(0xFFF8F8F8),
+                      )
+                    : const SizedBox.shrink()),
                 _buildSettingItem(
                   title: 'profile.setting.identity.switch'.tr,
                   iconPath: 'assets/svgs/icon_swap.svg',

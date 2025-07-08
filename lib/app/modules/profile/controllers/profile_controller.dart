@@ -5,6 +5,7 @@ import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/events/events.dart';
 import 'package:wingapp/models/login_info.model.dart';
+import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/teacher.dart';
@@ -25,7 +26,7 @@ class ProfileController extends GetxController {
 
   RxBool isDingTalkLogining = false.obs;
 
-  RxBool get isAdminTeacher => true.obs; // (loginInfo.value?.admin == '1').obs;
+  RxBool get isAdminTeacher => (loginInfo.value?.admin == '1').obs;
 
   Rx<Map<String, dynamic>?> summaryCounts = Rx<Map<String, dynamic>?>(null);
 
@@ -61,7 +62,12 @@ class ProfileController extends GetxController {
   }
 
   Future<void> initSummaryCounts() async {
-    final response = await teacherService.getSummayCounts();
+    if (!isLoggedIn.value) {
+      return;
+    }
+    final response = await teacherService.getSummayCounts(
+      id: loginInfo.value?.id,
+    );
     if (response.code == 200) {
       summaryCounts.value = response.data;
     } else {
@@ -80,8 +86,8 @@ class ProfileController extends GetxController {
 
     // 1. 获取钉钉 authCode
     const params = DingTalkAuthParam(
-      appId: 'dingkbjfwewqmbaiz9uj',
-      redirectUrl: 'http://192.168.1.11:5173/login',
+      appId: 'dingeoe1icdmqtkgnn33',
+      redirectUrl: 'http://10.2.6.210:5173/dingtalk/login',
     );
     final authCode = await DingtalkAuth.auth(params);
     if (authCode != null && authCode.isNotEmpty) {
@@ -91,15 +97,21 @@ class ProfileController extends GetxController {
       );
 
       if (userInfo.code == 200) {
-        await teacherService.loginWithDingtalk(
+        NormalResponse response = await teacherService.loginWithDingtalk(
           id: userInfo.data?['id'] ?? '',
           unionId: userInfo.data?['unionId'] ?? '',
           openId: userInfo.data?['openId'] ?? '',
           enName: userInfo.data?['enName'] ?? '',
-          stateCode: userInfo.data?['stateCode'] ?? '',
+          stateCode: userInfo.data?['stateCode'] ?? '86',
           mobile: userInfo.data?['mobile'] ?? '',
         );
-        toastService.showSuccess(message: 'toast.login.success'.tr);
+        if (response.code == 200) {
+          initLoginInfo();
+          toastService.showSuccess(message: 'toast.login.success'.tr);
+        } else {
+          toastService.showError(
+              message: response.message ?? 'toast.login.failed'.tr);
+        }
       } else {
         toastService.showError(
             message: userInfo.message ?? 'toast.login.failed'.tr);

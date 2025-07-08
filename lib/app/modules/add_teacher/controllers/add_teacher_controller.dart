@@ -330,7 +330,7 @@ class AddTeacherController extends GetxController {
       }
     } else {
       toastService.showError(
-        message: 'toast.add_teacher.save.fail'.tr,
+        message: response.message ?? 'toast.add_teacher.save.fail'.tr,
       );
     }
   }

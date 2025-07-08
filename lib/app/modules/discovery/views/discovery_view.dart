@@ -18,7 +18,7 @@ class DiscoveryView extends GetView<DiscoveryController> {
         child: TextButton(
           onPressed: () async {
             const params = DingTalkAuthParam(
-              appId: 'dingkbjfwewqmbaiz9uj',
+              appId: 'dingeoe1icdmqtkgnn33',
               redirectUrl: 'http://192.168.1.11:5173/login',
             );
             final authCode = await DingtalkAuth.auth(params);

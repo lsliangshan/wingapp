@@ -16,15 +16,17 @@ class TeacherService extends GetxService {
   TeacherDao teacherDao = Get.find<TeacherDao>();
   ToastService toastService = Get.find<ToastService>();
 
-  Future<NormalResponse> getSummayCounts() async {
+  Future<NormalResponse> getSummayCounts({
+    String? id,
+  }) async {
     http.Response response = await http.get(
-      Uri.parse('https://wf.liangqy.com/webhook/get-counts'),
+      Uri.parse(
+          'https://wf.liangqy.com/webhook/get-counts${id != null ? '?teacherId=$id' : ''}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
     final data = json.decode(response.body);
-
     return NormalResponse.fromJson(data);
   }
 
@@ -103,6 +105,7 @@ class TeacherService extends GetxService {
       }),
     );
     final data = json.decode(response.body);
+
     if (data['code'] == 200 && data['data'] != null) {
       LoginInfo loginInfo = LoginInfo.fromJson(data['data']);
       await teacherDao.login(Teacher.fromJson(data['data']));

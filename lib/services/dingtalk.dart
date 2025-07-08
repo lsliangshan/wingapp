@@ -23,6 +23,7 @@ class DingtalkService extends GetxService {
       },
     );
     final data = json.decode(response.body);
+    print('>>>>>>>> getUserInfoByAuthCode: ${data}');
     if (data['code'] == 200 && data['data'] != null) {
       return NormalResponse.fromJson(data);
     } else {

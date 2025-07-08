@@ -12,63 +12,79 @@ class TeacherView extends GetView<TeacherController> {
   const TeacherView({super.key});
 
   Widget _buildItemData(BuildContext context, int index) {
-    return ListTile(
-      onTap: () {},
-      leading: controller.teachers[index].avatar != null &&
-              controller.teachers[index].avatar!.isNotEmpty
-          ? Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              clipBehavior: Clip.hardEdge,
-              child: CachedNetworkImage(
-                imageUrl: controller.teachers[index].avatar!,
-                width: 40,
-                height: 40,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) {
-                  return SvgPicture.asset(
-                    'assets/svgs/tab_profile_selected.svg',
-                    width: 32,
-                    height: 32,
-                  );
-                },
-              ),
-            )
-          : Container(
-              width: 40,
-              height: 40,
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.surface,
-                shape: BoxShape.circle,
-              ),
-              child: SvgPicture.asset(
-                'assets/svgs/tab_profile_selected.svg',
-                width: 32,
-                height: 32,
-                colorFilter: const ColorFilter.mode(
-                  Color(0xFF888888),
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-      title: Text(controller.teachers[index].name ??
-          controller.teachers[index].enName ??
-          ''),
-      subtitle: Text(
-        controller.teachers[index].mobile,
-        style: Get.theme.textTheme.bodySmall?.copyWith(
-          color: Color(0xFF888888),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Get.theme.dividerColor.withValues(alpha: 0.02),
+            width: index == 0 ? 0 : 1,
+          ),
         ),
       ),
-      trailing: SvgPicture.asset(
-        'assets/svgs/icon_arrow_right.svg',
-        width: 20,
-        height: 20,
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: ListTile(
+        onTap: () {},
+        tileColor: Get.theme.colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        leading: controller.teachers[index].avatar != null &&
+                controller.teachers[index].avatar!.isNotEmpty
+            ? Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: CachedNetworkImage(
+                  imageUrl: controller.teachers[index].avatar!,
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) {
+                    return SvgPicture.asset(
+                      'assets/svgs/tab_profile_selected.svg',
+                      width: 32,
+                      height: 32,
+                    );
+                  },
+                ),
+              )
+            : Container(
+                width: 40,
+                height: 40,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.surface,
+                  shape: BoxShape.circle,
+                ),
+                child: SvgPicture.asset(
+                  'assets/svgs/tab_profile_selected.svg',
+                  width: 32,
+                  height: 32,
+                  colorFilter: const ColorFilter.mode(
+                    Color(0xFF888888),
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+        title: Text(controller.teachers[index].name ??
+            controller.teachers[index].enName ??
+            ''),
+        subtitle: Text(
+          controller.teachers[index].mobile,
+          style: Get.theme.textTheme.bodySmall?.copyWith(
+            color: Color(0xFF888888),
+          ),
+        ),
+        trailing: SvgPicture.asset(
+          'assets/svgs/icon_arrow_right.svg',
+          width: 20,
+          height: 20,
+        ),
       ),
     );
   }

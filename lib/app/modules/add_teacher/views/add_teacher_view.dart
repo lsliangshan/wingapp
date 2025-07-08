@@ -378,16 +378,16 @@ class AddTeacherView extends GetView<AddTeacherController> {
                           color: Get.theme.hintColor,
                         ),
                       ),
-                      // const SizedBox(
-                      //   width: 4,
-                      // ),
-                      // Text(
-                      //   '*',
-                      //   style: Get.theme.textTheme.labelLarge?.copyWith(
-                      //     color: Colors.red,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        '*',
+                        style: Get.theme.textTheme.labelLarge?.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -418,8 +418,8 @@ class AddTeacherView extends GetView<AddTeacherController> {
                                 // await ctrl.evaluateJavascript(source: controller.initDataStr);
                               },
                               onConsoleMessage: (controller, consoleMessage) {
-                                print(
-                                    '>>>>> consoleMessage: ${consoleMessage.message}');
+                                // print(
+                                //     '>>>>> consoleMessage: ${consoleMessage.message}');
                                 // it will print: {message: {"foo":1,"bar":false}, messageLevel: 1}
                               },
                             ),
