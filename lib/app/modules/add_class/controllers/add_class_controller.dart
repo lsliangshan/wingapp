@@ -72,10 +72,10 @@ class AddClassController extends GetxController {
   Future<void> chooseTeacher() async {
     final result = await Get.toNamed(Routes.CHOOSE_TEACHER);
     if (result != null) {
-      formData.value.teacherId = result['id'];
-      formData.value.teacherName = result['name'];
-      formData.value.teacherEnName = result['enName'];
-      formData.value.teacherUnionId = result['unionId'];
+      formData.value.teacherId = result.id;
+      formData.value.teacherName = result.name;
+      formData.value.teacherEnName = result.enName;
+      formData.value.teacherUnionId = result.unionId;
       update(['update-form-data']);
     }
   }

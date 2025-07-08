@@ -62,6 +62,9 @@ class Messages extends Translations {
           'add_class.form_data.btn.save': '保存',
           'add_class.form_data.btn.saveAndBack': '保存并返回',
 
+          // 选择老师页面
+          'choose_teacher.title': '选择老师',
+
           // Toast
           'toast.login.success': '登录成功',
           'toast.login.failed': '登录失败',
@@ -155,6 +158,9 @@ class Messages extends Translations {
           'add_class.form_data.teacher.hint': 'Please select the teacher',
           'add_class.form_data.btn.save': 'Save',
           'add_class.form_data.btn.saveAndBack': 'Save and Back',
+
+          // 选择老师页面
+          'choose_teacher.title': 'Choose Teacher',
 
           // Toast
           'toast.login.success': 'Login Success',

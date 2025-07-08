@@ -57,7 +57,9 @@ class ProfileController extends GetxController {
 
   Future<void> initLoginInfo() async {
     loginInfo.value = await teacherService.getLoginInfo();
-    eventBus.fire(LoginEvent(loginInfo.value!));
+    if (loginInfo.value != null) {
+      eventBus.fire(LoginEvent(loginInfo.value!));
+    }
     isLoggedIn.value = await teacherService.isLoggedIn();
 
     update(['update-login-info']);
