@@ -2,6 +2,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/app/modules/class/controllers/class_controller.dart';
 import 'package:wingapp/app/modules/profile/controllers/profile_controller.dart';
 import 'package:wingapp/events/events.dart';
 
@@ -54,6 +55,12 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       initialedView.add('ProfileView');
       Get.put<ProfileController>(
         ProfileController(),
+      );
+    }
+    if (!initialedView.contains("ClassView")) {
+      initialedView.add('ClassView');
+      Get.put<ClassController>(
+        ClassController(),
       );
     }
     // if (!initialedView.contains("EventsView")) {

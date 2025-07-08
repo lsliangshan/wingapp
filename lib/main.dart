@@ -15,6 +15,7 @@ import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
+import 'package:wingapp/services/user.dart';
 import 'package:wingapp/theme.dart';
 
 import 'app/routes/app_pages.dart';
@@ -78,6 +79,9 @@ Future<void> initServices() async {
 
   TeacherService teacherService = TeacherService();
   Get.put<TeacherService>(teacherService);
+
+  UserService userService = UserService();
+  Get.put<UserService>(userService);
 
   ClassService classService = ClassService();
   Get.put<ClassService>(classService);

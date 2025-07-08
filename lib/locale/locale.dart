@@ -53,6 +53,15 @@ class Messages extends Translations {
           'add_teacher.form_data.btn.save': '保存',
           'add_teacher.form_data.btn.saveAndBack': '保存并返回',
 
+          // 添加班级页面
+          'add_class.title': '添加班级',
+          'add_class.form_data.name': '班级名称',
+          'add_class.form_data.name.hint': '请输入班级名称',
+          'add_class.form_data.teacher': '老师',
+          'add_class.form_data.teacher.hint': '请选择老师',
+          'add_class.form_data.btn.save': '保存',
+          'add_class.form_data.btn.saveAndBack': '保存并返回',
+
           // Toast
           'toast.login.success': '登录成功',
           'toast.login.failed': '登录失败',
@@ -64,6 +73,9 @@ class Messages extends Translations {
           'toast.add_teacher.save.fail': '保存失败',
           'toast.refresh.success': '刷新成功',
           'toast.refresh.failed': '刷新失败',
+          'toast.add_class.name_required': '班级名称不能为空',
+          'toast.add_class.save.success': '保存成功',
+          'toast.add_class.save.fail': '保存失败',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -71,6 +83,7 @@ class Messages extends Translations {
           // 底部弹窗
           'bottom_sheet.choose_gender.title': '选择性别',
           'bottom_sheet.choose_type.title': '选择老师类型',
+          'bottom_sheet.choose_teacher.title': '选择老师',
 
           // 性别
           'gender.male': '男',
@@ -79,6 +92,8 @@ class Messages extends Translations {
           // 类型
           'type.full_time': '全职老师',
           'type.part_time': '兼职老师',
+
+          'teacher': '老师',
         },
         'en_US': {
           // 页面
@@ -131,6 +146,16 @@ class Messages extends Translations {
           'add_teacher.form_data.dingtalk.login': 'Dingtalk Login',
           'add_teacher.form_data.btn.save': 'Save',
           'add_teacher.form_data.btn.saveAndBack': 'Save and Back',
+
+          // 添加班级页面
+          'add_class.title': 'Add Class',
+          'add_class.form_data.name': 'Class Name',
+          'add_class.form_data.name.hint': 'Please enter the class name',
+          'add_class.form_data.teacher': 'Teacher',
+          'add_class.form_data.teacher.hint': 'Please select the teacher',
+          'add_class.form_data.btn.save': 'Save',
+          'add_class.form_data.btn.saveAndBack': 'Save and Back',
+
           // Toast
           'toast.login.success': 'Login Success',
           'toast.login.failed': 'Login Failed',
@@ -143,6 +168,9 @@ class Messages extends Translations {
           'toast.add_teacher.save.fail': 'Save Failed',
           'toast.refresh.success': 'Refresh Success',
           'toast.refresh.failed': 'Refresh Failed',
+          'toast.add_class.name_required': 'Class name cannot be empty',
+          'toast.add_class.save.success': 'Save Success',
+          'toast.add_class.save.fail': 'Save Failed',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
@@ -150,6 +178,7 @@ class Messages extends Translations {
           // 底部弹窗
           'bottom_sheet.choose_gender.title': 'Choose Gender',
           'bottom_sheet.choose_type.title': 'Choose Teacher Type',
+          'bottom_sheet.choose_teacher.title': 'Choose Teacher',
 
           // 性别
           'gender.male': 'Male',
@@ -158,6 +187,8 @@ class Messages extends Translations {
           // 类型
           'type.full_time': 'Full-time Teacher',
           'type.part_time': 'Part-time Teacher',
+
+          'teacher': 'Teacher',
         }
       };
 }

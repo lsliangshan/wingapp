@@ -49,7 +49,7 @@ class ClassView extends GetView<ClassController> {
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) {
                     return SvgPicture.asset(
-                      'assets/svgs/tab_profile_selected.svg',
+                      'assets/svgs/tab_student_selected.svg',
                       width: 32,
                       height: 32,
                     );
@@ -76,9 +76,7 @@ class ClassView extends GetView<ClassController> {
               ),
         title: Text(controller.classes[index].name),
         subtitle: Text(
-          controller.classes[index].teacherName ??
-              controller.classes[index].teacherEnName ??
-              '',
+          '${'teacher'.tr}: ${controller.classes[index].teacherEnName ?? controller.classes[index].teacherName ?? ''}',
           style: Get.theme.textTheme.bodySmall?.copyWith(
             color: Color(0xFF888888),
           ),

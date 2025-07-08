@@ -19,7 +19,7 @@ class ClassService extends GetxService {
   }) async {
     http.Response response = await http.get(
       Uri.parse(
-          'https://wf.liangqy.com/webhook-test/get-classes?pageIndex=$pageIndex&pageSize=$pageSize${teacherId != null ? '&teacherId=$teacherId' : ''}'),
+          'https://wf.liangqy.com/webhook/get-classes?pageIndex=$pageIndex&pageSize=$pageSize${teacherId != null ? '&teacherId=$teacherId' : ''}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -30,17 +30,12 @@ class ClassService extends GetxService {
   }
 
   Future<NormalResponse> addClass({
-    required String id,
     required String name,
     String? icon,
     String? teacherId,
     String? teacherName,
     String? teacherEnName,
     String? teacherUnionId,
-    String? robotCode,
-    String? openConversationId,
-    String? link,
-    String? assistant,
   }) async {
     http.Response response = await http.post(
       Uri.parse('https://wf.liangqy.com/webhook-test/add-class'),
@@ -48,17 +43,12 @@ class ClassService extends GetxService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'id': id,
         'name': name,
         'icon': icon ?? '',
         'teacherId': teacherId ?? '',
         'teacherName': teacherName ?? '',
         'teacherEnName': teacherEnName ?? '',
         'teacherUnionId': teacherUnionId ?? '',
-        'robotCode': robotCode ?? '',
-        'openConversationId': openConversationId ?? '',
-        'link': link ?? '',
-        'assistant': assistant ?? '',
       }),
     );
     final data = json.decode(response.body);

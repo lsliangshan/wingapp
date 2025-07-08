@@ -1,15 +1,23 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
+import 'package:wingapp/events/events.dart';
+import 'package:wingapp/models/login_info.model.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/toast.dart';
+import 'package:wingapp/services/user.dart';
 
 class ClassController extends GetxController {
+  final EventBus eventBus = Get.find<EventBus>();
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
+  UserService userService = Get.find<UserService>();
 
   RxList<Class> classes = RxList<Class>();
+
+  Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
 
   RxInt pageIndex = 1.obs;
   RxInt pageSize = 20.obs;
@@ -19,13 +27,32 @@ class ClassController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    eventBus.on<LoginEvent>().listen((event) {
+      loginInfo.value = event.loginInfo;
+    });
+
+    eventBus.on<LogoutEvent>().listen((event) {
+      loginInfo.value = null;
+    });
+
+    initData();
+  }
+
+  Future<void> initData() async {
+    await initLoginInfo();
+
     getClasses();
+  }
+
+  Future<void> initLoginInfo() async {
+    loginInfo.value = await userService.getLoginInfo();
   }
 
   Future<void> getClasses() async {
     NormalResponse normalResponse = await classService.getClasses(
       pageIndex: pageIndex.value,
       pageSize: pageSize.value,
+      teacherId: loginInfo.value?.id,
     );
     if (normalResponse.code == 200 &&
         normalResponse.data != null &&

@@ -1,23 +1,134 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
+import 'package:wingapp/database/database.dart';
+import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/services/class.dart';
+import 'package:wingapp/services/teacher.dart';
+import 'package:wingapp/services/toast.dart';
+
+class AddClassFormData {
+  String? name;
+  String? icon;
+  String? teacherId;
+  String? teacherName;
+  String? teacherEnName;
+  String? teacherUnionId;
+
+  AddClassFormData({
+    this.name,
+    this.icon,
+    this.teacherId,
+    this.teacherName,
+    this.teacherEnName,
+    this.teacherUnionId,
+  });
+
+  // 将 Model 转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'icon': icon,
+      'teacherId': teacherId,
+      'teacherName': teacherName,
+      'teacherEnName': teacherEnName,
+      'teacherUnionId': teacherUnionId,
+    };
+  }
+}
 
 class AddClassController extends GetxController {
-  //TODO: Implement AddClassController
+  ToastService toastService = Get.find<ToastService>();
+  ClassService classService = Get.find<ClassService>();
+  TeacherService teacherService = Get.find<TeacherService>();
 
-  final count = 0.obs;
+  final formKey = GlobalKey<FormState>();
+
+  TextEditingController nameController = TextEditingController();
+
+  FocusNode nameFocusNode = FocusNode();
+
+  Rx<AddClassFormData> formData = AddClassFormData(
+    name: '',
+    icon: '',
+    teacherId: '',
+    teacherName: '',
+    teacherEnName: '',
+    teacherUnionId: '',
+  ).obs;
+
+  List<Class> newClasses = [];
+
   @override
   void onInit() {
     super.onInit();
+    nameController.addListener(() {
+      formData.value.name = nameController.text;
+      update(['update-form-data']);
+    });
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> chooseTeacher() async {
+    final result = await Get.toNamed(Routes.CHOOSE_TEACHER);
+    if (result != null) {
+      formData.value.teacherId = result['id'];
+      formData.value.teacherName = result['name'];
+      formData.value.teacherEnName = result['enName'];
+      formData.value.teacherUnionId = result['unionId'];
+      update(['update-form-data']);
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void clearFormData() {
+    nameController.clear();
+    formData.value = AddClassFormData(
+      name: '',
+      icon: '',
+      teacherId: '',
+      teacherName: '',
+      teacherEnName: '',
+      teacherUnionId: '',
+    );
+    update(['update-form-data']);
   }
 
-  void increment() => count.value++;
+  Future<void> saveClass({
+    bool back = false,
+  }) async {
+    if (formData.value.name == null || formData.value.name!.isEmpty) {
+      toastService.showError(
+        message: 'toast.add_class.name_required'.tr,
+      );
+      nameFocusNode.requestFocus();
+      return;
+    }
+
+    NormalResponse response = await classService.addClass(
+      name: formData.value.name!,
+      icon: formData.value.icon!,
+      teacherId: formData.value.teacherId!,
+      teacherName: formData.value.teacherName!,
+      teacherEnName: formData.value.teacherEnName!,
+      teacherUnionId: formData.value.teacherUnionId!,
+    );
+
+    if (response.code == 200) {
+      toastService.showSuccess(
+        message: 'toast.add_class.save.success'.tr,
+      );
+
+      newClasses.add(Class.fromJson(formData.value.toJson()));
+
+      if (back) {
+        Get.back(result: newClasses);
+      } else {
+        clearFormData();
+      }
+    } else {
+      toastService.showError(
+        message: response.message ?? 'toast.add_class.save.fail'.tr,
+      );
+    }
+  }
 }
