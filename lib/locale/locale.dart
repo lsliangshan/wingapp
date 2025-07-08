@@ -59,6 +59,8 @@ class Messages extends Translations {
           'add_class.form_data.name.hint': '请输入班级名称',
           'add_class.form_data.teacher': '老师',
           'add_class.form_data.teacher.hint': '请选择老师',
+          'add_class.form_data.icon': '班级图标',
+          'add_class.form_data.icon.hint': '请选择班级图标',
           'add_class.form_data.btn.save': '保存',
           'add_class.form_data.btn.saveAndBack': '保存并返回',
 
@@ -158,6 +160,8 @@ class Messages extends Translations {
           'add_class.form_data.teacher.hint': 'Please select the teacher',
           'add_class.form_data.btn.save': 'Save',
           'add_class.form_data.btn.saveAndBack': 'Save and Back',
+          'add_class.form_data.icon': 'Class Icon',
+          'add_class.form_data.icon.hint': 'Please select the class icon',
 
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',

@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:wingapp/database/daos/teacher.dao.dart';
 import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/services/http.dart';
 import 'package:wingapp/services/toast.dart';
 
 class DingtalkService extends GetxService {
@@ -29,5 +31,22 @@ class DingtalkService extends GetxService {
     } else {
       return NormalResponse.fromJson(data);
     }
+  }
+
+  Future<NormalResponse> uploadFile({
+    required XFile file,
+  }) async {
+    NormalResponse response = await post(
+      'https://wf.liangqy.com/webhook/upload',
+      data: {
+        'type': 'image',
+        'media': file,
+      },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    );
+    print('>>>>>>>> uploadFile: ${response.data}');
+    return response;
   }
 }

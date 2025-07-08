@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wingapp/app/modules/add_class/controllers/add_class_controller.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 
@@ -136,16 +138,16 @@ class AddClassView extends GetView<AddClassController> {
                           color: Get.theme.hintColor,
                         ),
                       ),
-                      // const SizedBox(
-                      //   width: 4,
-                      // ),
-                      // Text(
-                      //   '*',
-                      //   style: Get.theme.textTheme.labelLarge?.copyWith(
-                      //     color: Colors.red,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        '*',
+                        style: Get.theme.textTheme.labelLarge?.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -181,6 +183,85 @@ class AddClassView extends GetView<AddClassController> {
                                   height: 20,
                                 ),
                               ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                visualDensity: VisualDensity.compact,
+              ),
+              Divider(
+                height: 1,
+                color: Get.theme.dividerColor.withValues(alpha: 0.02),
+              ),
+              ListTile(
+                tileColor: Get.theme.colorScheme.surface,
+                dense: true,
+                titleAlignment: ListTileTitleAlignment.top,
+                leading: SizedBox(
+                  width: 100,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Text(
+                        'add_class.form_data.icon'.tr,
+                        style: Get.theme.textTheme.labelLarge?.copyWith(
+                          color: Get.theme.hintColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                title: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GetBuilder(
+                      id: 'update-form-data',
+                      init: controller,
+                      builder: (_) {
+                        return Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.uploadClassIcon();
+                            },
+                            child: Container(
+                              height: 200,
+                              color: Color(0xFFF8F8F8),
+                              child: controller.classIcon.value.path.isNotEmpty
+                                  ? Image.file(
+                                      File(controller.classIcon.value.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svgs/icon_upload.svg',
+                                          width: 42,
+                                          height: 42,
+                                          colorFilter: ColorFilter.mode(
+                                            Get.theme.disabledColor,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'add_class.form_data.icon.hint'.tr,
+                                          style: Get.theme.textTheme.labelLarge
+                                              ?.copyWith(
+                                            color: Get.theme.disabledColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                             ),
                           ),
                         );

@@ -38,7 +38,7 @@ class ClassService extends GetxService {
     String? teacherUnionId,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('https://wf.liangqy.com/webhook-test/add-class'),
+      Uri.parse('https://wf.liangqy.com/webhook/add-class'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

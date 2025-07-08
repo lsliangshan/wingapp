@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
+import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
 
@@ -42,6 +43,7 @@ class AddClassController extends GetxController {
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
   TeacherService teacherService = Get.find<TeacherService>();
+  DingtalkService dingtalkService = Get.find<DingtalkService>();
 
   final formKey = GlobalKey<FormState>();
 
@@ -59,6 +61,8 @@ class AddClassController extends GetxController {
   ).obs;
 
   List<Class> newClasses = [];
+
+  Rx<XFile> classIcon = XFile('').obs;
 
   @override
   void onInit() {
@@ -106,7 +110,7 @@ class AddClassController extends GetxController {
 
     NormalResponse response = await classService.addClass(
       name: formData.value.name!,
-      icon: formData.value.icon!,
+      icon: formData.value.icon,
       teacherId: formData.value.teacherId!,
       teacherName: formData.value.teacherName!,
       teacherEnName: formData.value.teacherEnName!,
@@ -117,8 +121,7 @@ class AddClassController extends GetxController {
       toastService.showSuccess(
         message: 'toast.add_class.save.success'.tr,
       );
-
-      newClasses.add(Class.fromJson(formData.value.toJson()));
+      newClasses.add(Class.fromJson(response.data));
 
       if (back) {
         Get.back(result: newClasses);
@@ -129,6 +132,21 @@ class AddClassController extends GetxController {
       toastService.showError(
         message: response.message ?? 'toast.add_class.save.fail'.tr,
       );
+    }
+  }
+
+  Future<void> uploadClassIcon() async {
+    final result = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (result != null) {
+      classIcon.value = result;
+      NormalResponse response = await dingtalkService.uploadFile(
+        file: classIcon.value,
+      );
+
+      if (response.code == 200) {
+        formData.value.icon = response.data['mediaId'];
+        update(['update-form-data']);
+      }
     }
   }
 }
