@@ -3,8 +3,10 @@ import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/teacher.dart';
+import 'package:wingapp/services/toast.dart';
 
 class TeacherController extends GetxController {
+  ToastService toastService = Get.find<ToastService>();
   TeacherService teacherService = Get.find<TeacherService>();
 
   RxList<Teacher> teachers = RxList<Teacher>();
@@ -36,6 +38,18 @@ class TeacherController extends GetxController {
     }
 
     update(['update-teachers']);
+  }
+
+  Future<void> onRefresh() async {
+    pageIndex.value = 1;
+    await getTeachers();
+
+    return await Future.delayed(const Duration(milliseconds: 1000)).then(
+      (_) {
+        toastService.showSuccess(message: 'toast.refresh.success'.tr);
+        update(['update-teachers']);
+      },
+    );
   }
 
   Future<void> loadMoreTeachers() async {

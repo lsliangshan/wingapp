@@ -1,4 +1,8 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -148,19 +152,58 @@ class TeacherView extends GetView<TeacherController> {
           const SizedBox(width: 12),
         ],
       ),
-      body: GetBuilder(
-        id: 'update-teachers',
-        init: controller,
-        builder: (_) {
-          return CustomScrollView(
-            slivers: [
-              SliverList.builder(
-                itemCount: controller.teachers.length,
-                itemBuilder: _buildItem,
+      body: CustomMaterialIndicator(
+        onRefresh: () async {
+          await controller.onRefresh();
+        },
+        indicatorBuilder: (context, controller) {
+          return Stack(
+            children: [
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha(40),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: BackdropFilter(
+                      filter:
+                          ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 设置模糊程度
+                      child: Container(
+                        color: Colors.white.withAlpha(0), // 透明背景
+                      ),
+                    ),
+                  ),
+                ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: CircularProgressIndicator(
+                  color: Get.theme.primaryColor,
+                  strokeWidth: 2,
+                  value: controller.state.isLoading
+                      ? null
+                      : min(controller.value, 1.0),
+                ),
+              )
             ],
           );
         },
+        child: GetBuilder(
+          id: 'update-teachers',
+          init: controller,
+          builder: (_) {
+            return CustomScrollView(
+              slivers: [
+                SliverList.builder(
+                  itemCount: controller.teachers.length,
+                  itemBuilder: _buildItem,
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

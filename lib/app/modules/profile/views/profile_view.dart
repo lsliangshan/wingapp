@@ -353,6 +353,19 @@ class ProfileView extends GetView<ProfileController> {
                       )
                     : const SizedBox.shrink()),
                 _buildSettingItem(
+                  title: 'profile.setting.class.manage'.tr,
+                  iconPath: 'assets/svgs/tab_class_unselected.svg',
+                  onTap: () {
+                    controller.navigateToClassManage();
+                  },
+                ),
+                const Divider(
+                  height: 1,
+                  indent: 30,
+                  endIndent: 30,
+                  color: Color(0xFFF8F8F8),
+                ),
+                _buildSettingItem(
                   title: 'profile.setting.identity.switch'.tr,
                   iconPath: 'assets/svgs/icon_swap.svg',
                   onTap: () {

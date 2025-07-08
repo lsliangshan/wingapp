@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_class/bindings/add_class_binding.dart';
+import '../modules/add_class/views/add_class_view.dart';
 import '../modules/add_teacher/bindings/add_teacher_binding.dart';
 import '../modules/add_teacher/views/add_teacher_view.dart';
 import '../modules/class/bindings/class_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.ADD_TEACHER,
       page: () => const AddTeacherView(),
       binding: AddTeacherBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_CLASS,
+      page: () => const AddClassView(),
+      binding: AddClassBinding(),
     ),
   ];
 }

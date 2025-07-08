@@ -928,16 +928,631 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
   }
 }
 
+class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClassesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
+  @override
+  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
+      'icon', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _teacherIdMeta =
+      const VerificationMeta('teacherId');
+  @override
+  late final GeneratedColumn<String> teacherId = GeneratedColumn<String>(
+      'teacher_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _teacherNameMeta =
+      const VerificationMeta('teacherName');
+  @override
+  late final GeneratedColumn<String> teacherName = GeneratedColumn<String>(
+      'teacher_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _teacherEnNameMeta =
+      const VerificationMeta('teacherEnName');
+  @override
+  late final GeneratedColumn<String> teacherEnName = GeneratedColumn<String>(
+      'teacher_en_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _teacherUnionIdMeta =
+      const VerificationMeta('teacherUnionId');
+  @override
+  late final GeneratedColumn<String> teacherUnionId = GeneratedColumn<String>(
+      'teacher_union_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _robotCodeMeta =
+      const VerificationMeta('robotCode');
+  @override
+  late final GeneratedColumn<String> robotCode = GeneratedColumn<String>(
+      'robot_code', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _openConversationIdMeta =
+      const VerificationMeta('openConversationId');
+  @override
+  late final GeneratedColumn<String> openConversationId =
+      GeneratedColumn<String>('open_conversation_id', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _chatIdMeta = const VerificationMeta('chatId');
+  @override
+  late final GeneratedColumn<String> chatId = GeneratedColumn<String>(
+      'chat_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _linkMeta = const VerificationMeta('link');
+  @override
+  late final GeneratedColumn<String> link = GeneratedColumn<String>(
+      'link', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _assistantMeta =
+      const VerificationMeta('assistant');
+  @override
+  late final GeneratedColumn<String> assistant = GeneratedColumn<String>(
+      'assistant', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        icon,
+        teacherId,
+        teacherName,
+        teacherEnName,
+        teacherUnionId,
+        robotCode,
+        openConversationId,
+        chatId,
+        link,
+        assistant
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'classes';
+  @override
+  VerificationContext validateIntegrity(Insertable<Class> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('icon')) {
+      context.handle(
+          _iconMeta, icon.isAcceptableOrUnknown(data['icon']!, _iconMeta));
+    }
+    if (data.containsKey('teacher_id')) {
+      context.handle(_teacherIdMeta,
+          teacherId.isAcceptableOrUnknown(data['teacher_id']!, _teacherIdMeta));
+    }
+    if (data.containsKey('teacher_name')) {
+      context.handle(
+          _teacherNameMeta,
+          teacherName.isAcceptableOrUnknown(
+              data['teacher_name']!, _teacherNameMeta));
+    }
+    if (data.containsKey('teacher_en_name')) {
+      context.handle(
+          _teacherEnNameMeta,
+          teacherEnName.isAcceptableOrUnknown(
+              data['teacher_en_name']!, _teacherEnNameMeta));
+    }
+    if (data.containsKey('teacher_union_id')) {
+      context.handle(
+          _teacherUnionIdMeta,
+          teacherUnionId.isAcceptableOrUnknown(
+              data['teacher_union_id']!, _teacherUnionIdMeta));
+    }
+    if (data.containsKey('robot_code')) {
+      context.handle(_robotCodeMeta,
+          robotCode.isAcceptableOrUnknown(data['robot_code']!, _robotCodeMeta));
+    }
+    if (data.containsKey('open_conversation_id')) {
+      context.handle(
+          _openConversationIdMeta,
+          openConversationId.isAcceptableOrUnknown(
+              data['open_conversation_id']!, _openConversationIdMeta));
+    }
+    if (data.containsKey('chat_id')) {
+      context.handle(_chatIdMeta,
+          chatId.isAcceptableOrUnknown(data['chat_id']!, _chatIdMeta));
+    }
+    if (data.containsKey('link')) {
+      context.handle(
+          _linkMeta, link.isAcceptableOrUnknown(data['link']!, _linkMeta));
+    }
+    if (data.containsKey('assistant')) {
+      context.handle(_assistantMeta,
+          assistant.isAcceptableOrUnknown(data['assistant']!, _assistantMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Class map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Class(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      icon: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}icon']),
+      teacherId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_id']),
+      teacherName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_name']),
+      teacherEnName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_en_name']),
+      teacherUnionId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}teacher_union_id']),
+      robotCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}robot_code']),
+      openConversationId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}open_conversation_id']),
+      chatId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}chat_id']),
+      link: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}link']),
+      assistant: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}assistant']),
+    );
+  }
+
+  @override
+  $ClassesTable createAlias(String alias) {
+    return $ClassesTable(attachedDatabase, alias);
+  }
+}
+
+class Class extends DataClass implements Insertable<Class> {
+  final String id;
+  final String name;
+  final String? icon;
+  final String? teacherId;
+  final String? teacherName;
+  final String? teacherEnName;
+  final String? teacherUnionId;
+  final String? robotCode;
+  final String? openConversationId;
+  final String? chatId;
+  final String? link;
+  final String? assistant;
+  const Class(
+      {required this.id,
+      required this.name,
+      this.icon,
+      this.teacherId,
+      this.teacherName,
+      this.teacherEnName,
+      this.teacherUnionId,
+      this.robotCode,
+      this.openConversationId,
+      this.chatId,
+      this.link,
+      this.assistant});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || icon != null) {
+      map['icon'] = Variable<String>(icon);
+    }
+    if (!nullToAbsent || teacherId != null) {
+      map['teacher_id'] = Variable<String>(teacherId);
+    }
+    if (!nullToAbsent || teacherName != null) {
+      map['teacher_name'] = Variable<String>(teacherName);
+    }
+    if (!nullToAbsent || teacherEnName != null) {
+      map['teacher_en_name'] = Variable<String>(teacherEnName);
+    }
+    if (!nullToAbsent || teacherUnionId != null) {
+      map['teacher_union_id'] = Variable<String>(teacherUnionId);
+    }
+    if (!nullToAbsent || robotCode != null) {
+      map['robot_code'] = Variable<String>(robotCode);
+    }
+    if (!nullToAbsent || openConversationId != null) {
+      map['open_conversation_id'] = Variable<String>(openConversationId);
+    }
+    if (!nullToAbsent || chatId != null) {
+      map['chat_id'] = Variable<String>(chatId);
+    }
+    if (!nullToAbsent || link != null) {
+      map['link'] = Variable<String>(link);
+    }
+    if (!nullToAbsent || assistant != null) {
+      map['assistant'] = Variable<String>(assistant);
+    }
+    return map;
+  }
+
+  ClassesCompanion toCompanion(bool nullToAbsent) {
+    return ClassesCompanion(
+      id: Value(id),
+      name: Value(name),
+      icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
+      teacherId: teacherId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(teacherId),
+      teacherName: teacherName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(teacherName),
+      teacherEnName: teacherEnName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(teacherEnName),
+      teacherUnionId: teacherUnionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(teacherUnionId),
+      robotCode: robotCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(robotCode),
+      openConversationId: openConversationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(openConversationId),
+      chatId:
+          chatId == null && nullToAbsent ? const Value.absent() : Value(chatId),
+      link: link == null && nullToAbsent ? const Value.absent() : Value(link),
+      assistant: assistant == null && nullToAbsent
+          ? const Value.absent()
+          : Value(assistant),
+    );
+  }
+
+  factory Class.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Class(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      icon: serializer.fromJson<String?>(json['icon']),
+      teacherId: serializer.fromJson<String?>(json['teacherId']),
+      teacherName: serializer.fromJson<String?>(json['teacherName']),
+      teacherEnName: serializer.fromJson<String?>(json['teacherEnName']),
+      teacherUnionId: serializer.fromJson<String?>(json['teacherUnionId']),
+      robotCode: serializer.fromJson<String?>(json['robotCode']),
+      openConversationId:
+          serializer.fromJson<String?>(json['openConversationId']),
+      chatId: serializer.fromJson<String?>(json['chatId']),
+      link: serializer.fromJson<String?>(json['link']),
+      assistant: serializer.fromJson<String?>(json['assistant']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'icon': serializer.toJson<String?>(icon),
+      'teacherId': serializer.toJson<String?>(teacherId),
+      'teacherName': serializer.toJson<String?>(teacherName),
+      'teacherEnName': serializer.toJson<String?>(teacherEnName),
+      'teacherUnionId': serializer.toJson<String?>(teacherUnionId),
+      'robotCode': serializer.toJson<String?>(robotCode),
+      'openConversationId': serializer.toJson<String?>(openConversationId),
+      'chatId': serializer.toJson<String?>(chatId),
+      'link': serializer.toJson<String?>(link),
+      'assistant': serializer.toJson<String?>(assistant),
+    };
+  }
+
+  Class copyWith(
+          {String? id,
+          String? name,
+          Value<String?> icon = const Value.absent(),
+          Value<String?> teacherId = const Value.absent(),
+          Value<String?> teacherName = const Value.absent(),
+          Value<String?> teacherEnName = const Value.absent(),
+          Value<String?> teacherUnionId = const Value.absent(),
+          Value<String?> robotCode = const Value.absent(),
+          Value<String?> openConversationId = const Value.absent(),
+          Value<String?> chatId = const Value.absent(),
+          Value<String?> link = const Value.absent(),
+          Value<String?> assistant = const Value.absent()}) =>
+      Class(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        icon: icon.present ? icon.value : this.icon,
+        teacherId: teacherId.present ? teacherId.value : this.teacherId,
+        teacherName: teacherName.present ? teacherName.value : this.teacherName,
+        teacherEnName:
+            teacherEnName.present ? teacherEnName.value : this.teacherEnName,
+        teacherUnionId:
+            teacherUnionId.present ? teacherUnionId.value : this.teacherUnionId,
+        robotCode: robotCode.present ? robotCode.value : this.robotCode,
+        openConversationId: openConversationId.present
+            ? openConversationId.value
+            : this.openConversationId,
+        chatId: chatId.present ? chatId.value : this.chatId,
+        link: link.present ? link.value : this.link,
+        assistant: assistant.present ? assistant.value : this.assistant,
+      );
+  Class copyWithCompanion(ClassesCompanion data) {
+    return Class(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      icon: data.icon.present ? data.icon.value : this.icon,
+      teacherId: data.teacherId.present ? data.teacherId.value : this.teacherId,
+      teacherName:
+          data.teacherName.present ? data.teacherName.value : this.teacherName,
+      teacherEnName: data.teacherEnName.present
+          ? data.teacherEnName.value
+          : this.teacherEnName,
+      teacherUnionId: data.teacherUnionId.present
+          ? data.teacherUnionId.value
+          : this.teacherUnionId,
+      robotCode: data.robotCode.present ? data.robotCode.value : this.robotCode,
+      openConversationId: data.openConversationId.present
+          ? data.openConversationId.value
+          : this.openConversationId,
+      chatId: data.chatId.present ? data.chatId.value : this.chatId,
+      link: data.link.present ? data.link.value : this.link,
+      assistant: data.assistant.present ? data.assistant.value : this.assistant,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Class(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('icon: $icon, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('teacherName: $teacherName, ')
+          ..write('teacherEnName: $teacherEnName, ')
+          ..write('teacherUnionId: $teacherUnionId, ')
+          ..write('robotCode: $robotCode, ')
+          ..write('openConversationId: $openConversationId, ')
+          ..write('chatId: $chatId, ')
+          ..write('link: $link, ')
+          ..write('assistant: $assistant')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      name,
+      icon,
+      teacherId,
+      teacherName,
+      teacherEnName,
+      teacherUnionId,
+      robotCode,
+      openConversationId,
+      chatId,
+      link,
+      assistant);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Class &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.icon == this.icon &&
+          other.teacherId == this.teacherId &&
+          other.teacherName == this.teacherName &&
+          other.teacherEnName == this.teacherEnName &&
+          other.teacherUnionId == this.teacherUnionId &&
+          other.robotCode == this.robotCode &&
+          other.openConversationId == this.openConversationId &&
+          other.chatId == this.chatId &&
+          other.link == this.link &&
+          other.assistant == this.assistant);
+}
+
+class ClassesCompanion extends UpdateCompanion<Class> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> icon;
+  final Value<String?> teacherId;
+  final Value<String?> teacherName;
+  final Value<String?> teacherEnName;
+  final Value<String?> teacherUnionId;
+  final Value<String?> robotCode;
+  final Value<String?> openConversationId;
+  final Value<String?> chatId;
+  final Value<String?> link;
+  final Value<String?> assistant;
+  final Value<int> rowid;
+  const ClassesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.icon = const Value.absent(),
+    this.teacherId = const Value.absent(),
+    this.teacherName = const Value.absent(),
+    this.teacherEnName = const Value.absent(),
+    this.teacherUnionId = const Value.absent(),
+    this.robotCode = const Value.absent(),
+    this.openConversationId = const Value.absent(),
+    this.chatId = const Value.absent(),
+    this.link = const Value.absent(),
+    this.assistant = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClassesCompanion.insert({
+    required String id,
+    required String name,
+    this.icon = const Value.absent(),
+    this.teacherId = const Value.absent(),
+    this.teacherName = const Value.absent(),
+    this.teacherEnName = const Value.absent(),
+    this.teacherUnionId = const Value.absent(),
+    this.robotCode = const Value.absent(),
+    this.openConversationId = const Value.absent(),
+    this.chatId = const Value.absent(),
+    this.link = const Value.absent(),
+    this.assistant = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name);
+  static Insertable<Class> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? icon,
+    Expression<String>? teacherId,
+    Expression<String>? teacherName,
+    Expression<String>? teacherEnName,
+    Expression<String>? teacherUnionId,
+    Expression<String>? robotCode,
+    Expression<String>? openConversationId,
+    Expression<String>? chatId,
+    Expression<String>? link,
+    Expression<String>? assistant,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (icon != null) 'icon': icon,
+      if (teacherId != null) 'teacher_id': teacherId,
+      if (teacherName != null) 'teacher_name': teacherName,
+      if (teacherEnName != null) 'teacher_en_name': teacherEnName,
+      if (teacherUnionId != null) 'teacher_union_id': teacherUnionId,
+      if (robotCode != null) 'robot_code': robotCode,
+      if (openConversationId != null)
+        'open_conversation_id': openConversationId,
+      if (chatId != null) 'chat_id': chatId,
+      if (link != null) 'link': link,
+      if (assistant != null) 'assistant': assistant,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClassesCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String?>? icon,
+      Value<String?>? teacherId,
+      Value<String?>? teacherName,
+      Value<String?>? teacherEnName,
+      Value<String?>? teacherUnionId,
+      Value<String?>? robotCode,
+      Value<String?>? openConversationId,
+      Value<String?>? chatId,
+      Value<String?>? link,
+      Value<String?>? assistant,
+      Value<int>? rowid}) {
+    return ClassesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      icon: icon ?? this.icon,
+      teacherId: teacherId ?? this.teacherId,
+      teacherName: teacherName ?? this.teacherName,
+      teacherEnName: teacherEnName ?? this.teacherEnName,
+      teacherUnionId: teacherUnionId ?? this.teacherUnionId,
+      robotCode: robotCode ?? this.robotCode,
+      openConversationId: openConversationId ?? this.openConversationId,
+      chatId: chatId ?? this.chatId,
+      link: link ?? this.link,
+      assistant: assistant ?? this.assistant,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (icon.present) {
+      map['icon'] = Variable<String>(icon.value);
+    }
+    if (teacherId.present) {
+      map['teacher_id'] = Variable<String>(teacherId.value);
+    }
+    if (teacherName.present) {
+      map['teacher_name'] = Variable<String>(teacherName.value);
+    }
+    if (teacherEnName.present) {
+      map['teacher_en_name'] = Variable<String>(teacherEnName.value);
+    }
+    if (teacherUnionId.present) {
+      map['teacher_union_id'] = Variable<String>(teacherUnionId.value);
+    }
+    if (robotCode.present) {
+      map['robot_code'] = Variable<String>(robotCode.value);
+    }
+    if (openConversationId.present) {
+      map['open_conversation_id'] = Variable<String>(openConversationId.value);
+    }
+    if (chatId.present) {
+      map['chat_id'] = Variable<String>(chatId.value);
+    }
+    if (link.present) {
+      map['link'] = Variable<String>(link.value);
+    }
+    if (assistant.present) {
+      map['assistant'] = Variable<String>(assistant.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClassesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('icon: $icon, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('teacherName: $teacherName, ')
+          ..write('teacherEnName: $teacherEnName, ')
+          ..write('teacherUnionId: $teacherUnionId, ')
+          ..write('robotCode: $robotCode, ')
+          ..write('openConversationId: $openConversationId, ')
+          ..write('chatId: $chatId, ')
+          ..write('link: $link, ')
+          ..write('assistant: $assistant, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $TeachersTable teachers = $TeachersTable(this);
+  late final $ClassesTable classes = $ClassesTable(this);
   late final TeacherDao teacherDao = TeacherDao(this as AppDatabase);
+  late final ClassDao classDao = ClassDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [teachers];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [teachers, classes];
 }
 
 typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
@@ -1331,10 +1946,287 @@ typedef $$TeachersTableProcessedTableManager = ProcessedTableManager<
     (Teacher, BaseReferences<_$AppDatabase, $TeachersTable, Teacher>),
     Teacher,
     PrefetchHooks Function()>;
+typedef $$ClassesTableCreateCompanionBuilder = ClassesCompanion Function({
+  required String id,
+  required String name,
+  Value<String?> icon,
+  Value<String?> teacherId,
+  Value<String?> teacherName,
+  Value<String?> teacherEnName,
+  Value<String?> teacherUnionId,
+  Value<String?> robotCode,
+  Value<String?> openConversationId,
+  Value<String?> chatId,
+  Value<String?> link,
+  Value<String?> assistant,
+  Value<int> rowid,
+});
+typedef $$ClassesTableUpdateCompanionBuilder = ClassesCompanion Function({
+  Value<String> id,
+  Value<String> name,
+  Value<String?> icon,
+  Value<String?> teacherId,
+  Value<String?> teacherName,
+  Value<String?> teacherEnName,
+  Value<String?> teacherUnionId,
+  Value<String?> robotCode,
+  Value<String?> openConversationId,
+  Value<String?> chatId,
+  Value<String?> link,
+  Value<String?> assistant,
+  Value<int> rowid,
+});
+
+class $$ClassesTableFilterComposer
+    extends Composer<_$AppDatabase, $ClassesTable> {
+  $$ClassesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get icon => $composableBuilder(
+      column: $table.icon, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get robotCode => $composableBuilder(
+      column: $table.robotCode, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get openConversationId => $composableBuilder(
+      column: $table.openConversationId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get chatId => $composableBuilder(
+      column: $table.chatId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get link => $composableBuilder(
+      column: $table.link, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get assistant => $composableBuilder(
+      column: $table.assistant, builder: (column) => ColumnFilters(column));
+}
+
+class $$ClassesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClassesTable> {
+  $$ClassesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get icon => $composableBuilder(
+      column: $table.icon, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get robotCode => $composableBuilder(
+      column: $table.robotCode, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get openConversationId => $composableBuilder(
+      column: $table.openConversationId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get chatId => $composableBuilder(
+      column: $table.chatId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get link => $composableBuilder(
+      column: $table.link, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get assistant => $composableBuilder(
+      column: $table.assistant, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ClassesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClassesTable> {
+  $$ClassesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get icon =>
+      $composableBuilder(column: $table.icon, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherId =>
+      $composableBuilder(column: $table.teacherId, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId, builder: (column) => column);
+
+  GeneratedColumn<String> get robotCode =>
+      $composableBuilder(column: $table.robotCode, builder: (column) => column);
+
+  GeneratedColumn<String> get openConversationId => $composableBuilder(
+      column: $table.openConversationId, builder: (column) => column);
+
+  GeneratedColumn<String> get chatId =>
+      $composableBuilder(column: $table.chatId, builder: (column) => column);
+
+  GeneratedColumn<String> get link =>
+      $composableBuilder(column: $table.link, builder: (column) => column);
+
+  GeneratedColumn<String> get assistant =>
+      $composableBuilder(column: $table.assistant, builder: (column) => column);
+}
+
+class $$ClassesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ClassesTable,
+    Class,
+    $$ClassesTableFilterComposer,
+    $$ClassesTableOrderingComposer,
+    $$ClassesTableAnnotationComposer,
+    $$ClassesTableCreateCompanionBuilder,
+    $$ClassesTableUpdateCompanionBuilder,
+    (Class, BaseReferences<_$AppDatabase, $ClassesTable, Class>),
+    Class,
+    PrefetchHooks Function()> {
+  $$ClassesTableTableManager(_$AppDatabase db, $ClassesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClassesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClassesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClassesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String?> icon = const Value.absent(),
+            Value<String?> teacherId = const Value.absent(),
+            Value<String?> teacherName = const Value.absent(),
+            Value<String?> teacherEnName = const Value.absent(),
+            Value<String?> teacherUnionId = const Value.absent(),
+            Value<String?> robotCode = const Value.absent(),
+            Value<String?> openConversationId = const Value.absent(),
+            Value<String?> chatId = const Value.absent(),
+            Value<String?> link = const Value.absent(),
+            Value<String?> assistant = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ClassesCompanion(
+            id: id,
+            name: name,
+            icon: icon,
+            teacherId: teacherId,
+            teacherName: teacherName,
+            teacherEnName: teacherEnName,
+            teacherUnionId: teacherUnionId,
+            robotCode: robotCode,
+            openConversationId: openConversationId,
+            chatId: chatId,
+            link: link,
+            assistant: assistant,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String name,
+            Value<String?> icon = const Value.absent(),
+            Value<String?> teacherId = const Value.absent(),
+            Value<String?> teacherName = const Value.absent(),
+            Value<String?> teacherEnName = const Value.absent(),
+            Value<String?> teacherUnionId = const Value.absent(),
+            Value<String?> robotCode = const Value.absent(),
+            Value<String?> openConversationId = const Value.absent(),
+            Value<String?> chatId = const Value.absent(),
+            Value<String?> link = const Value.absent(),
+            Value<String?> assistant = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ClassesCompanion.insert(
+            id: id,
+            name: name,
+            icon: icon,
+            teacherId: teacherId,
+            teacherName: teacherName,
+            teacherEnName: teacherEnName,
+            teacherUnionId: teacherUnionId,
+            robotCode: robotCode,
+            openConversationId: openConversationId,
+            chatId: chatId,
+            link: link,
+            assistant: assistant,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ClassesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ClassesTable,
+    Class,
+    $$ClassesTableFilterComposer,
+    $$ClassesTableOrderingComposer,
+    $$ClassesTableAnnotationComposer,
+    $$ClassesTableCreateCompanionBuilder,
+    $$ClassesTableUpdateCompanionBuilder,
+    (Class, BaseReferences<_$AppDatabase, $ClassesTable, Class>),
+    Class,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$TeachersTableTableManager get teachers =>
       $$TeachersTableTableManager(_db, _db.teachers);
+  $$ClassesTableTableManager get classes =>
+      $$ClassesTableTableManager(_db, _db.classes);
 }

@@ -66,7 +66,7 @@ class ProfileController extends GetxController {
       return;
     }
     final response = await teacherService.getSummayCounts(
-      id: loginInfo.value?.id,
+      teacherId: loginInfo.value?.id,
     );
     if (response.code == 200) {
       summaryCounts.value = response.data;
@@ -138,6 +138,11 @@ class ProfileController extends GetxController {
 
   void navigateToTeacherManage() async {
     await Get.toNamed(Routes.TEACHER);
+    initSummaryCounts();
+  }
+
+  void navigateToClassManage() async {
+    await Get.toNamed(Routes.CLASS);
     initSummaryCounts();
   }
 }

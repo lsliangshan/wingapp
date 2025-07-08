@@ -17,11 +17,11 @@ class TeacherService extends GetxService {
   ToastService toastService = Get.find<ToastService>();
 
   Future<NormalResponse> getSummayCounts({
-    String? id,
+    String? teacherId,
   }) async {
     http.Response response = await http.get(
       Uri.parse(
-          'https://wf.liangqy.com/webhook/get-counts${id != null ? '?teacherId=$id' : ''}'),
+          'https://wf.liangqy.com/webhook/get-counts${teacherId != null ? '?teacherId=$teacherId' : ''}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

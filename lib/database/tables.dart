@@ -56,6 +56,37 @@ class Teachers extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('Class')
+class Classes extends Table {
+  // 班级 ID
+  TextColumn get id => text()();
+  // 班级名称
+  TextColumn get name => text()();
+  // 班级图标
+  TextColumn get icon => text().nullable()();
+  // 班级老师 ID
+  TextColumn get teacherId => text().nullable()();
+  // 班级老师名称
+  TextColumn get teacherName => text().nullable()();
+  // 班级老师英文名称
+  TextColumn get teacherEnName => text().nullable()();
+  // 班级老师钉钉的 unionId
+  TextColumn get teacherUnionId => text().nullable()();
+  // 班级机器人编码
+  TextColumn get robotCode => text().nullable()();
+  // 班级机器人 openConversationId
+  TextColumn get openConversationId => text().nullable()();
+  // 班级机器人 chatId
+  TextColumn get chatId => text().nullable()();
+  // 班级机器人 link
+  TextColumn get link => text().nullable()();
+  // 班级机器人 assistant
+  TextColumn get assistant => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 mixin AutoIncrementingPrimaryKey on Table {
   IntColumn get id => integer().autoIncrement().nullable()();
 }

@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/database/daos/class.dao.dart';
 import 'package:wingapp/database/daos/teacher.dao.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/locale/locale.dart';
+import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/teacher.dart';
@@ -71,8 +73,14 @@ Future<void> initServices() async {
   TeacherDao teacherDao = TeacherDao(db);
   Get.put<TeacherDao>(teacherDao);
 
+  ClassDao classDao = ClassDao(db);
+  Get.put<ClassDao>(classDao);
+
   TeacherService teacherService = TeacherService();
   Get.put<TeacherService>(teacherService);
+
+  ClassService classService = ClassService();
+  Get.put<ClassService>(classService);
 
   DingtalkService dingtalkService = DingtalkService();
   Get.put<DingtalkService>(dingtalkService);

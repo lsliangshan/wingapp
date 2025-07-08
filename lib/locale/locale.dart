@@ -34,6 +34,11 @@ class Messages extends Translations {
           'teacher.btn.add': '添加老师',
           'teacher.tip.empty': '暂无数据',
 
+          // 班级管理页面
+          'class.title': '班级管理',
+          'class.btn.add': '添加班级',
+          'class.tip.empty': '暂无数据',
+
           // 添加老师页面
           'add_teacher.title': '添加老师',
           'add_teacher.form_data.name': '姓名',
@@ -57,6 +62,8 @@ class Messages extends Translations {
           'toast.add_teacher.en_name_required': '老师英文名不能为空',
           'toast.add_teacher.save.success': '保存成功',
           'toast.add_teacher.save.fail': '保存失败',
+          'toast.refresh.success': '刷新成功',
+          'toast.refresh.failed': '刷新失败',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -104,6 +111,11 @@ class Messages extends Translations {
           'teacher.btn.add': 'Add Teacher',
           'teacher.tip.empty': 'No Data',
 
+          // 班级管理页面
+          'class.title': 'Class Management',
+          'class.btn.add': 'Add Class',
+          'class.tip.empty': 'No Data',
+
           // 添加老师页面
           'add_teacher.title': 'Add Teacher',
           'add_teacher.form_data.name': 'Teacher Name',
@@ -129,6 +141,8 @@ class Messages extends Translations {
               'Teacher English name cannot be empty',
           'toast.add_teacher.save.success': 'Save Success',
           'toast.add_teacher.save.fail': 'Save Failed',
+          'toast.refresh.success': 'Refresh Success',
+          'toast.refresh.failed': 'Refresh Failed',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
