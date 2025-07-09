@@ -64,6 +64,10 @@ class Messages extends Translations {
           'add_class.form_data.btn.save': '保存',
           'add_class.form_data.btn.saveAndBack': '保存并返回',
 
+          // 班级详情页面
+          'class_detail.title': '班级详情',
+          'class_detail.init.failed': '获取班级详情失败',
+
           // 选择老师页面
           'choose_teacher.title': '选择老师',
 
@@ -103,6 +107,9 @@ class Messages extends Translations {
           'type.part_time': '兼职老师',
 
           'teacher': '老师',
+          'student': '学生',
+          'schedule': '课表',
+          'notification': '通知',
         },
         'en_US': {
           // 页面
@@ -167,6 +174,10 @@ class Messages extends Translations {
           'add_class.form_data.icon': 'Class Icon',
           'add_class.form_data.icon.hint': 'Please select the class icon',
 
+          // 班级详情页面
+          'class_detail.title': 'Class Detail',
+          'class_detail.init.failed': 'Get class detail failed',
+
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',
 
@@ -207,6 +218,9 @@ class Messages extends Translations {
           'type.part_time': 'Part-time Teacher',
 
           'teacher': 'Teacher',
+          'student': 'Student',
+          'schedule': 'Schedule',
+          'notification': 'Notification',
         }
       };
 }

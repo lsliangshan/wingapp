@@ -1000,6 +1000,18 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
   late final GeneratedColumn<String> assistant = GeneratedColumn<String>(
       'assistant', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createAtMeta =
+      const VerificationMeta('createAt');
+  @override
+  late final GeneratedColumn<String> createAt = GeneratedColumn<String>(
+      'create_at', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _updateAtMeta =
+      const VerificationMeta('updateAt');
+  @override
+  late final GeneratedColumn<String> updateAt = GeneratedColumn<String>(
+      'update_at', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1013,7 +1025,9 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
         openConversationId,
         chatId,
         link,
-        assistant
+        assistant,
+        createAt,
+        updateAt
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1084,6 +1098,14 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
       context.handle(_assistantMeta,
           assistant.isAcceptableOrUnknown(data['assistant']!, _assistantMeta));
     }
+    if (data.containsKey('create_at')) {
+      context.handle(_createAtMeta,
+          createAt.isAcceptableOrUnknown(data['create_at']!, _createAtMeta));
+    }
+    if (data.containsKey('update_at')) {
+      context.handle(_updateAtMeta,
+          updateAt.isAcceptableOrUnknown(data['update_at']!, _updateAtMeta));
+    }
     return context;
   }
 
@@ -1117,6 +1139,10 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
           .read(DriftSqlType.string, data['${effectivePrefix}link']),
       assistant: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}assistant']),
+      createAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}create_at']),
+      updateAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}update_at']),
     );
   }
 
@@ -1139,6 +1165,8 @@ class Class extends DataClass implements Insertable<Class> {
   final String? chatId;
   final String? link;
   final String? assistant;
+  final String? createAt;
+  final String? updateAt;
   const Class(
       {required this.id,
       required this.name,
@@ -1151,7 +1179,9 @@ class Class extends DataClass implements Insertable<Class> {
       this.openConversationId,
       this.chatId,
       this.link,
-      this.assistant});
+      this.assistant,
+      this.createAt,
+      this.updateAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1187,6 +1217,12 @@ class Class extends DataClass implements Insertable<Class> {
     if (!nullToAbsent || assistant != null) {
       map['assistant'] = Variable<String>(assistant);
     }
+    if (!nullToAbsent || createAt != null) {
+      map['create_at'] = Variable<String>(createAt);
+    }
+    if (!nullToAbsent || updateAt != null) {
+      map['update_at'] = Variable<String>(updateAt);
+    }
     return map;
   }
 
@@ -1219,6 +1255,12 @@ class Class extends DataClass implements Insertable<Class> {
       assistant: assistant == null && nullToAbsent
           ? const Value.absent()
           : Value(assistant),
+      createAt: createAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createAt),
+      updateAt: updateAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updateAt),
     );
   }
 
@@ -1239,6 +1281,8 @@ class Class extends DataClass implements Insertable<Class> {
       chatId: serializer.fromJson<String?>(json['chatId']),
       link: serializer.fromJson<String?>(json['link']),
       assistant: serializer.fromJson<String?>(json['assistant']),
+      createAt: serializer.fromJson<String?>(json['createAt']),
+      updateAt: serializer.fromJson<String?>(json['updateAt']),
     );
   }
   @override
@@ -1257,6 +1301,8 @@ class Class extends DataClass implements Insertable<Class> {
       'chatId': serializer.toJson<String?>(chatId),
       'link': serializer.toJson<String?>(link),
       'assistant': serializer.toJson<String?>(assistant),
+      'createAt': serializer.toJson<String?>(createAt),
+      'updateAt': serializer.toJson<String?>(updateAt),
     };
   }
 
@@ -1272,7 +1318,9 @@ class Class extends DataClass implements Insertable<Class> {
           Value<String?> openConversationId = const Value.absent(),
           Value<String?> chatId = const Value.absent(),
           Value<String?> link = const Value.absent(),
-          Value<String?> assistant = const Value.absent()}) =>
+          Value<String?> assistant = const Value.absent(),
+          Value<String?> createAt = const Value.absent(),
+          Value<String?> updateAt = const Value.absent()}) =>
       Class(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -1290,6 +1338,8 @@ class Class extends DataClass implements Insertable<Class> {
         chatId: chatId.present ? chatId.value : this.chatId,
         link: link.present ? link.value : this.link,
         assistant: assistant.present ? assistant.value : this.assistant,
+        createAt: createAt.present ? createAt.value : this.createAt,
+        updateAt: updateAt.present ? updateAt.value : this.updateAt,
       );
   Class copyWithCompanion(ClassesCompanion data) {
     return Class(
@@ -1312,6 +1362,8 @@ class Class extends DataClass implements Insertable<Class> {
       chatId: data.chatId.present ? data.chatId.value : this.chatId,
       link: data.link.present ? data.link.value : this.link,
       assistant: data.assistant.present ? data.assistant.value : this.assistant,
+      createAt: data.createAt.present ? data.createAt.value : this.createAt,
+      updateAt: data.updateAt.present ? data.updateAt.value : this.updateAt,
     );
   }
 
@@ -1329,7 +1381,9 @@ class Class extends DataClass implements Insertable<Class> {
           ..write('openConversationId: $openConversationId, ')
           ..write('chatId: $chatId, ')
           ..write('link: $link, ')
-          ..write('assistant: $assistant')
+          ..write('assistant: $assistant, ')
+          ..write('createAt: $createAt, ')
+          ..write('updateAt: $updateAt')
           ..write(')'))
         .toString();
   }
@@ -1347,7 +1401,9 @@ class Class extends DataClass implements Insertable<Class> {
       openConversationId,
       chatId,
       link,
-      assistant);
+      assistant,
+      createAt,
+      updateAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1363,7 +1419,9 @@ class Class extends DataClass implements Insertable<Class> {
           other.openConversationId == this.openConversationId &&
           other.chatId == this.chatId &&
           other.link == this.link &&
-          other.assistant == this.assistant);
+          other.assistant == this.assistant &&
+          other.createAt == this.createAt &&
+          other.updateAt == this.updateAt);
 }
 
 class ClassesCompanion extends UpdateCompanion<Class> {
@@ -1379,6 +1437,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
   final Value<String?> chatId;
   final Value<String?> link;
   final Value<String?> assistant;
+  final Value<String?> createAt;
+  final Value<String?> updateAt;
   final Value<int> rowid;
   const ClassesCompanion({
     this.id = const Value.absent(),
@@ -1393,6 +1453,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
     this.chatId = const Value.absent(),
     this.link = const Value.absent(),
     this.assistant = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.updateAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ClassesCompanion.insert({
@@ -1408,6 +1470,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
     this.chatId = const Value.absent(),
     this.link = const Value.absent(),
     this.assistant = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.updateAt = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name);
@@ -1424,6 +1488,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
     Expression<String>? chatId,
     Expression<String>? link,
     Expression<String>? assistant,
+    Expression<String>? createAt,
+    Expression<String>? updateAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1440,6 +1506,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
       if (chatId != null) 'chat_id': chatId,
       if (link != null) 'link': link,
       if (assistant != null) 'assistant': assistant,
+      if (createAt != null) 'create_at': createAt,
+      if (updateAt != null) 'update_at': updateAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1457,6 +1525,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
       Value<String?>? chatId,
       Value<String?>? link,
       Value<String?>? assistant,
+      Value<String?>? createAt,
+      Value<String?>? updateAt,
       Value<int>? rowid}) {
     return ClassesCompanion(
       id: id ?? this.id,
@@ -1471,6 +1541,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
       chatId: chatId ?? this.chatId,
       link: link ?? this.link,
       assistant: assistant ?? this.assistant,
+      createAt: createAt ?? this.createAt,
+      updateAt: updateAt ?? this.updateAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1514,6 +1586,12 @@ class ClassesCompanion extends UpdateCompanion<Class> {
     if (assistant.present) {
       map['assistant'] = Variable<String>(assistant.value);
     }
+    if (createAt.present) {
+      map['create_at'] = Variable<String>(createAt.value);
+    }
+    if (updateAt.present) {
+      map['update_at'] = Variable<String>(updateAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1535,6 +1613,8 @@ class ClassesCompanion extends UpdateCompanion<Class> {
           ..write('chatId: $chatId, ')
           ..write('link: $link, ')
           ..write('assistant: $assistant, ')
+          ..write('createAt: $createAt, ')
+          ..write('updateAt: $updateAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1959,6 +2039,8 @@ typedef $$ClassesTableCreateCompanionBuilder = ClassesCompanion Function({
   Value<String?> chatId,
   Value<String?> link,
   Value<String?> assistant,
+  Value<String?> createAt,
+  Value<String?> updateAt,
   Value<int> rowid,
 });
 typedef $$ClassesTableUpdateCompanionBuilder = ClassesCompanion Function({
@@ -1974,6 +2056,8 @@ typedef $$ClassesTableUpdateCompanionBuilder = ClassesCompanion Function({
   Value<String?> chatId,
   Value<String?> link,
   Value<String?> assistant,
+  Value<String?> createAt,
+  Value<String?> updateAt,
   Value<int> rowid,
 });
 
@@ -2023,6 +2107,12 @@ class $$ClassesTableFilterComposer
 
   ColumnFilters<String> get assistant => $composableBuilder(
       column: $table.assistant, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get updateAt => $composableBuilder(
+      column: $table.updateAt, builder: (column) => ColumnFilters(column));
 }
 
 class $$ClassesTableOrderingComposer
@@ -2072,6 +2162,12 @@ class $$ClassesTableOrderingComposer
 
   ColumnOrderings<String> get assistant => $composableBuilder(
       column: $table.assistant, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get updateAt => $composableBuilder(
+      column: $table.updateAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$ClassesTableAnnotationComposer
@@ -2118,6 +2214,12 @@ class $$ClassesTableAnnotationComposer
 
   GeneratedColumn<String> get assistant =>
       $composableBuilder(column: $table.assistant, builder: (column) => column);
+
+  GeneratedColumn<String> get createAt =>
+      $composableBuilder(column: $table.createAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updateAt =>
+      $composableBuilder(column: $table.updateAt, builder: (column) => column);
 }
 
 class $$ClassesTableTableManager extends RootTableManager<
@@ -2155,6 +2257,8 @@ class $$ClassesTableTableManager extends RootTableManager<
             Value<String?> chatId = const Value.absent(),
             Value<String?> link = const Value.absent(),
             Value<String?> assistant = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> updateAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ClassesCompanion(
@@ -2170,6 +2274,8 @@ class $$ClassesTableTableManager extends RootTableManager<
             chatId: chatId,
             link: link,
             assistant: assistant,
+            createAt: createAt,
+            updateAt: updateAt,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -2185,6 +2291,8 @@ class $$ClassesTableTableManager extends RootTableManager<
             Value<String?> chatId = const Value.absent(),
             Value<String?> link = const Value.absent(),
             Value<String?> assistant = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> updateAt = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ClassesCompanion.insert(
@@ -2200,6 +2308,8 @@ class $$ClassesTableTableManager extends RootTableManager<
             chatId: chatId,
             link: link,
             assistant: assistant,
+            createAt: createAt,
+            updateAt: updateAt,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

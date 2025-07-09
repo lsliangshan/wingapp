@@ -54,6 +54,13 @@ class ClassController extends GetxController {
     eventBus.fire(NeedLoginEvent());
   }
 
+  void gotoClassDetail({required String classId}) {
+    Get.toNamed(
+      Routes.CLASS_DETAIL,
+      arguments: {'classId': classId},
+    );
+  }
+
   Future<void> initData() async {
     await initLoginInfo();
 

@@ -82,6 +82,10 @@ class Classes extends Table {
   TextColumn get link => text().nullable()();
   // 班级机器人 assistant
   TextColumn get assistant => text().nullable()();
+  // 班级创建时间
+  TextColumn get createAt => text().nullable()();
+  // 班级更新时间
+  TextColumn get updateAt => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};

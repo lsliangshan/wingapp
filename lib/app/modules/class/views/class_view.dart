@@ -29,7 +29,9 @@ class ClassView extends GetView<ClassController> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          controller.gotoClassDetail(classId: controller.classes[index].id);
+        },
         tileColor: Get.theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

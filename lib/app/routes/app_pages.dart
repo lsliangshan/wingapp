@@ -8,6 +8,8 @@ import '../modules/choose_teacher/bindings/choose_teacher_binding.dart';
 import '../modules/choose_teacher/views/choose_teacher_view.dart';
 import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
+import '../modules/class_detail/bindings/class_detail_binding.dart';
+import '../modules/class_detail/views/class_detail_view.dart';
 import '../modules/discovery/bindings/discovery_binding.dart';
 import '../modules/discovery/views/discovery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -78,6 +80,13 @@ class AppPages {
       name: _Paths.CHOOSE_TEACHER,
       page: () => const ChooseTeacherView(),
       binding: ChooseTeacherBinding(),
+    ),
+    GetPage(
+      name: _Paths.CLASS_DETAIL,
+      page: () => ClassDetailView(
+        classId: Get.arguments['classId'] ?? '',
+      ),
+      binding: ClassDetailBinding(),
     ),
   ];
 }
