@@ -71,6 +71,9 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': '选择老师',
 
+          // 发送机器人消息页面
+          'send_robot_message.title': '发送机器人消息',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -180,6 +183,9 @@ class Messages extends Translations {
 
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',
+
+          // 发送机器人消息页面
+          'send_robot_message.title': 'Send Robot Message',
 
           // 未登录页面
           'need_login.tip': 'Need Login',
