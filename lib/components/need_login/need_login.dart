@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 
 // https://www.figma.com/design/80lkFHWAzQW1iXR1PduJBn/Empty-State-Illustrations--Community-?node-id=1-1460&t=BAqhxeFg9l3AwayU-0
 
-class EmptyResult extends StatelessWidget {
+class NeedLogin extends StatelessWidget {
   final Function()? onPressed;
   final Widget? mainButton;
   final bool showMainButton;
-  const EmptyResult({
+  const NeedLogin({
     super.key,
     this.onPressed,
     this.mainButton,
@@ -23,13 +23,13 @@ class EmptyResult extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           SvgPicture.asset(
-            'assets/svgs/empty_result.svg',
+            'assets/svgs/need_login.svg',
             width: 200,
             height: 200,
           ),
           const SizedBox(height: 16),
           Text(
-            'teacher.tip.empty'.tr,
+            'need_login.tip'.tr,
             style: Get.theme.textTheme.titleMedium?.copyWith(
               color: Color(0xFFC8C8C8),
               fontSize: 14,
@@ -42,7 +42,7 @@ class EmptyResult extends StatelessWidget {
                   onPressed: () {
                     onPressed?.call();
                   },
-                  child: Text('teacher.btn.add'.tr),
+                  child: Text('need_login.btn.login'.tr),
                 ),
         ],
       ),

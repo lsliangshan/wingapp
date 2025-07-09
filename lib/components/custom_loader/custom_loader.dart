@@ -10,7 +10,7 @@ class CustomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoActivityIndicator(
       color: color ?? Get.theme.hintColor,
-      radius: size ?? 16,
+      radius: size ?? 14,
     );
   }
 }

@@ -24,6 +24,18 @@ class ClassService extends GetxService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+
+    if (response.body.isEmpty) {
+      return NormalResponse(
+        code: 1001,
+        data: {
+          'list': [],
+          'totalCount': 0,
+          'totalPage': 0,
+        },
+      );
+    }
+
     final data = json.decode(response.body);
 
     return NormalResponse.fromJson(data);

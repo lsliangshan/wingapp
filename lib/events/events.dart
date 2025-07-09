@@ -18,3 +18,14 @@ class LoginEvent {
 class LogoutEvent {
   LogoutEvent();
 }
+
+class NeedLoginEvent {
+  NeedLoginEvent();
+}
+
+class NeedLoginCallbackEvent {
+  final bool isSuccess;
+  NeedLoginCallbackEvent({
+    required this.isSuccess,
+  });
+}

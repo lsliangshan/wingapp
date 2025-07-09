@@ -47,6 +47,17 @@ class ProfileController extends GetxController {
       isLoggedIn.value = false;
       update(['update-login-info']);
     });
+
+    eventBus.on<NeedLoginEvent>().listen((event) {
+      dingTalkLogin(
+        onSuccess: () {
+          eventBus.fire(NeedLoginCallbackEvent(isSuccess: true));
+        },
+        onFailed: () {
+          eventBus.fire(NeedLoginCallbackEvent(isSuccess: false));
+        },
+      );
+    });
   }
 
   Future<void> initData() async {
@@ -85,7 +96,10 @@ class ProfileController extends GetxController {
     update(['update-summary-counts']);
   }
 
-  void dingTalkLogin() async {
+  void dingTalkLogin({
+    Function()? onSuccess,
+    Function()? onFailed,
+  }) async {
     isDingTalkLogining.value = true;
 
     // 1. 获取钉钉 authCode
@@ -112,17 +126,27 @@ class ProfileController extends GetxController {
         if (response.code == 200) {
           initLoginInfo();
           toastService.showSuccess(message: 'toast.login.success'.tr);
+          if (onSuccess != null) {
+            onSuccess();
+          }
         } else {
           toastService.showError(
               message: response.message ?? 'toast.login.failed'.tr);
+          if (onFailed != null) {
+            onFailed();
+          }
         }
       } else {
         toastService.showError(
             message: userInfo.message ?? 'toast.login.failed'.tr);
+        if (onFailed != null) {
+          onFailed();
+        }
       }
     }
     // await teacherService.dingTalkLogin();
     isDingTalkLogining.value = false;
+
     update(['update-login-info']);
   }
 

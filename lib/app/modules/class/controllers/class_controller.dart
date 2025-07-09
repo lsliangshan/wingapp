@@ -24,6 +24,8 @@ class ClassController extends GetxController {
   RxInt totalCount = 0.obs;
   RxInt totalPage = 1.obs;
 
+  late Future<void> initClassesFuture;
+
   @override
   void onInit() {
     super.onInit();
@@ -35,13 +37,29 @@ class ClassController extends GetxController {
       loginInfo.value = null;
     });
 
-    initData();
+    eventBus.on<NeedLoginCallbackEvent>().listen((event) {
+      if (event.isSuccess) {
+        // 登录成功
+        initClassesFuture = initData();
+      } else {
+        // 登录失败
+        toastService.showError(message: 'toast.login.failed'.tr);
+      }
+    });
+
+    initClassesFuture = initData();
+  }
+
+  void needLogin() {
+    eventBus.fire(NeedLoginEvent());
   }
 
   Future<void> initData() async {
     await initLoginInfo();
 
-    getClasses();
+    await getClasses();
+
+    return await Future.delayed(const Duration(milliseconds: 500));
   }
 
   Future<void> initLoginInfo() async {
@@ -54,12 +72,27 @@ class ClassController extends GetxController {
       pageSize: pageSize.value,
       teacherId: loginInfo.value?.id,
     );
-    if (normalResponse.code == 200 &&
-        normalResponse.data != null &&
-        normalResponse.data!['list'] != null) {
-      classes.value = normalResponse.data!['list']
-          .map<Class>((e) => Class.fromJson(e))
-          .toList();
+    if (normalResponse.code == 200 && normalResponse.data != null) {
+      if (pageIndex.value == 1) {
+        if (normalResponse.data!['list'] != null &&
+            normalResponse.data!['list'].isNotEmpty) {
+          classes.value = normalResponse.data!['list']
+              .map<Class>((e) => Class.fromJson(e))
+              .toList();
+        } else {
+          // 无数据
+        }
+      } else {
+        if (normalResponse.data!['list'] != null &&
+            normalResponse.data!['list'].isNotEmpty) {
+          classes.addAll(normalResponse.data!['list']
+              .map<Class>((e) => Class.fromJson(e))
+              .toList());
+        } else {
+          // 无数据
+        }
+      }
+
       totalCount.value = normalResponse.data!['totalCount'];
       totalPage.value = normalResponse.data!['totalPage'];
     }

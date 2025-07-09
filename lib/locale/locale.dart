@@ -67,6 +67,10 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': '选择老师',
 
+          // 未登录页面
+          'need_login.tip': '需要登录',
+          'need_login.btn.login': '钉钉授权登录',
+
           // Toast
           'toast.login.success': '登录成功',
           'toast.login.failed': '登录失败',
@@ -165,6 +169,10 @@ class Messages extends Translations {
 
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',
+
+          // 未登录页面
+          'need_login.tip': 'Need Login',
+          'need_login.btn.login': 'Dingtalk Authorization Login',
 
           // Toast
           'toast.login.success': 'Login Success',

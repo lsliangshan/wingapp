@@ -9,7 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/modules/class/controllers/class_controller.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
+import 'package:wingapp/components/need_login/need_login.dart';
 
 class ClassView extends GetView<ClassController> {
   const ClassView({super.key});
@@ -191,13 +193,46 @@ class ClassView extends GetView<ClassController> {
           id: 'update-classes',
           init: controller,
           builder: (_) {
-            return CustomScrollView(
-              slivers: [
-                SliverList.builder(
-                  itemCount: controller.classes.length,
-                  itemBuilder: _buildItem,
+            if (controller.loginInfo.value == null) {
+              return Center(
+                child: NeedLogin(
+                  onPressed: () {
+                    controller.needLogin();
+                  },
                 ),
-              ],
+              );
+            }
+            return FutureBuilder(
+              future: controller.initClassesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Center(
+                    child: CustomLoader(),
+                  );
+                }
+                if (controller.classes.isEmpty) {
+                  return SizedBox(
+                    width: Get.width,
+                    height: Get.height - 300,
+                    child: EmptyResult(
+                      mainButton: FilledButton(
+                        onPressed: () {
+                          controller.gotoAddClass();
+                        },
+                        child: Text('class.btn.add'.tr),
+                      ),
+                    ),
+                  );
+                }
+                return CustomScrollView(
+                  slivers: [
+                    SliverList.builder(
+                      itemCount: controller.classes.length,
+                      itemBuilder: _buildItem,
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),
