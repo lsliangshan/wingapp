@@ -18,6 +18,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/schedule/bindings/schedule_binding.dart';
 import '../modules/schedule/views/schedule_view.dart';
+import '../modules/send_robot_message/bindings/send_robot_message_binding.dart';
+import '../modules/send_robot_message/views/send_robot_message_view.dart';
 import '../modules/student/bindings/student_binding.dart';
 import '../modules/student/views/student_view.dart';
 import '../modules/teacher/bindings/teacher_binding.dart';
@@ -87,6 +89,14 @@ class AppPages {
         classId: Get.arguments['classId'] ?? '',
       ),
       binding: ClassDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEND_ROBOT_MESSAGE,
+      page: () => SendRobotMessageView(
+        robotCode: Get.arguments['robotCode'] ?? '',
+        openConversationId: Get.arguments['openConversationId'] ?? '',
+      ),
+      binding: SendRobotMessageBinding(),
     ),
   ];
 }

@@ -158,6 +158,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                       ),
                       elevation: 0,
                       child: ListTile(
+                        onTap: () {
+                          controller.goToSendRobotMessage();
+                        },
                         tileColor: Get.theme.colorScheme.surface,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),

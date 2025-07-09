@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
@@ -56,5 +57,12 @@ class ClassDetailController extends GetxController {
     } else {
       toastService.showError(message: 'class_detail.init.failed'.tr);
     }
+  }
+
+  void goToSendRobotMessage() {
+    Get.toNamed(Routes.SEND_ROBOT_MESSAGE, arguments: {
+      'robotCode': classDetail.value.robotCode,
+      'openConversationId': classDetail.value.openConversationId,
+    });
   }
 }
