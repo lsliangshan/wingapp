@@ -27,6 +27,8 @@ class SendRobotMessageController extends GetxController {
 
   RxList<LoginInfo> atUsers = <LoginInfo>[].obs;
 
+  RxList<LoginInfo> users = <LoginInfo>[].obs;
+
   RxString robotCode = ''.obs;
   RxString openConversationId = ''.obs;
   RxString classId = ''.obs;
@@ -93,10 +95,10 @@ class SendRobotMessageController extends GetxController {
 
         String newText = curr.substring(0, lastAtIndex);
 
-        final u = curr.substring(lastAtIndex + 1).trim();
-        if (u.isNotEmpty) {
-          removeAtUser(u);
-        }
+        // final u = curr.substring(lastAtIndex + 1).trim();
+        // if (u.isNotEmpty) {
+        //   removeAtUser(u);
+        // }
 
         messageController.value = TextEditingValue(
           text: newText,
@@ -143,28 +145,59 @@ class SendRobotMessageController extends GetxController {
 
   Future<void> initLoginInfo() async {
     loginInfo.value = await userService.getLoginInfo();
+
+    users.add(loginInfo.value!);
+    users.add(LoginInfo(
+      id: '1',
+      name: '张三',
+      avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+      unionId: '1',
+    ));
   }
 
   formatMessage(String message) {
-    if (!message.contains('@') || atUsers.isEmpty) {
-      return message;
+    if (!message.contains('@')) {
+      return {
+        'message': message,
+        'atUsers': [],
+      };
     }
 
     String newMessage = message;
 
-    List<String> atUserNames = atUsers.map((e) => '@${e.name}').toList();
+    final re = RegExp(r'[ @]?@([^ @]{1,})', multiLine: true);
+    List<LoginInfo> atUserNames = re
+        .allMatches(newMessage)
+        .map((e) => e.group(1)!)
+        .toList()
+        .toSet()
+        .toList()
+        .map((e) => users.firstWhere((element) => element.name == e,
+            orElse: () => LoginInfo(
+                  id: '',
+                  name: e,
+                  avatar: '',
+                  unionId: '',
+                )))
+        .where((element) => element.id != null && element.id!.isNotEmpty)
+        .toList();
 
     for (var element in atUserNames) {
-      newMessage = newMessage.replaceAll(element, '');
+      newMessage = newMessage.replaceAll('@${element.name}', '');
     }
 
-    return newMessage.trim();
+    return {
+      'message': newMessage.trim(),
+      'atUsers': atUserNames.isEmpty ? [] : atUserNames,
+    };
   }
 
   Future<void> sendMessage() async {
     if (messageController.text.isEmpty) {
       return;
     }
+
+    final message = formatMessage(messageController.text);
 
     messageFocusNode.unfocus();
 
@@ -179,9 +212,11 @@ class SendRobotMessageController extends GetxController {
 
     await dingtalkService.sendRobotMessage(
       classId: classId.value,
-      message: formatMessage(messageController.text),
-      atUsers: atUsers.map((e) => e.id ?? '').toList(),
-      isAtAll: atUsers.isEmpty,
+      message: message['message'],
+      atUsers: message['atUsers'].isNotEmpty
+          ? message['atUsers'].map<String>((LoginInfo e) => e.id ?? '').toList()
+          : [],
+      isAtAll: message['atUsers'].isEmpty,
     );
 
     update(['update-messages']);
