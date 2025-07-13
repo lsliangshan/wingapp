@@ -49,4 +49,36 @@ class DingtalkService extends GetxService {
     print('>>>>>>>> uploadFile: ${response.data}');
     return response;
   }
+
+  Future<void> sendRobotMessage({
+    required String classId,
+    required String message,
+    List<String>? receiverUnionIds,
+    List<String>? atUsers,
+    bool? isAtAll,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse('https://wf.liangqy.com/webhook/send-robot-message'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'classId': classId,
+        'message': message,
+        'receiverUnionIds': receiverUnionIds ?? [],
+        'atUsers': atUsers ?? [],
+        'isAtAll': isAtAll ?? false,
+      }),
+    );
+
+    print('>>>>>>>> sendRobotMessage: ${response.body}');
+
+    // final data = json.decode(response.body);
+
+    // if (data['code'] == 200 && data['data'] != null) {
+    //   return NormalResponse.fromJson(data);
+    // } else {
+    //   return NormalResponse.fromJson(data);
+    // }
+  }
 }

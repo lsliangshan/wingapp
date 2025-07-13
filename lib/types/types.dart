@@ -21,6 +21,13 @@ enum MemberActionType {
   detailedDataStatistics,
 }
 
+enum MessageType {
+  text,
+  image,
+  voice,
+  video,
+}
+
 class TeacherType {
   static const fullTime = 'full-time';
   static const partTime = 'part-time';

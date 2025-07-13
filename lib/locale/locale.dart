@@ -71,8 +71,17 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': '选择老师',
 
+          // 选择@用户页面
+          'choose_at_users.title': '选择提醒用户',
+          'choose_at_users.search': '搜索',
+          'choose_at_users.confirm': '确认',
+          'choose_at_users.multi_select': '多选',
+          'choose_at_users.multi_select.off': '取消',
+          'choose_at_users.at_all': '所有人',
+
           // 发送机器人消息页面
           'send_robot_message.title': '发送机器人消息',
+          'send_robot_message.hint_text': '请输入消息内容',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -184,8 +193,17 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',
 
+          // 选择@用户页面
+          'choose_at_users.title': 'Choose Remind Users',
+          'choose_at_users.search': 'Search',
+          'choose_at_users.confirm': 'Confirm',
+          'choose_at_users.multi_select': 'Multi Select',
+          'choose_at_users.multi_select.off': 'Cancel',
+          'choose_at_users.at_all': 'All',
+
           // 发送机器人消息页面
           'send_robot_message.title': 'Send Robot Message',
+          'send_robot_message.hint_text': 'Please enter the message content',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

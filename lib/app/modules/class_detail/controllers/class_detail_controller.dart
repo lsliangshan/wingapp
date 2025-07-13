@@ -63,6 +63,7 @@ class ClassDetailController extends GetxController {
     Get.toNamed(Routes.SEND_ROBOT_MESSAGE, arguments: {
       'robotCode': classDetail.value.robotCode,
       'openConversationId': classDetail.value.openConversationId,
+      'classId': classId.value,
     });
   }
 }

@@ -18,8 +18,9 @@ ThemeData darkTheme() {
       primary: primaryColor, // 主颜色
       secondary: const Color.fromRGBO(255, 176, 61, 1), // 强调色
       error: const Color(0xFFFF3333),
+      onPrimary: Colors.white,
     ),
-    scaffoldBackgroundColor: const Color(0xFFF8F8F8),
+    scaffoldBackgroundColor: const Color(0xFFF0F0F0),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,

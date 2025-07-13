@@ -4,6 +4,8 @@ import '../modules/add_class/bindings/add_class_binding.dart';
 import '../modules/add_class/views/add_class_view.dart';
 import '../modules/add_teacher/bindings/add_teacher_binding.dart';
 import '../modules/add_teacher/views/add_teacher_view.dart';
+import '../modules/choose_at_users/bindings/choose_at_users_binding.dart';
+import '../modules/choose_at_users/views/choose_at_users_view.dart';
 import '../modules/choose_teacher/bindings/choose_teacher_binding.dart';
 import '../modules/choose_teacher/views/choose_teacher_view.dart';
 import '../modules/class/bindings/class_binding.dart';
@@ -95,8 +97,15 @@ class AppPages {
       page: () => SendRobotMessageView(
         robotCode: Get.arguments['robotCode'] ?? '',
         openConversationId: Get.arguments['openConversationId'] ?? '',
+        classId: Get.arguments['classId'] ?? '',
       ),
       binding: SendRobotMessageBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHOOSE_AT_USERS,
+      page: () => const ChooseAtUsersView(),
+      binding: ChooseAtUsersBinding(),
+      transition: Transition.downToUp,
     ),
   ];
 }
