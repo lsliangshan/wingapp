@@ -112,7 +112,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                   text: message.message,
                   isSender: message.senderId == controller.loginInfo.value?.id,
                   color: (message.senderId == controller.loginInfo.value?.id)
-                      ? Get.theme.colorScheme.primary
+                      ? Color(0xFF07c160)
                       : Get.theme.colorScheme.surface,
                   tail: false,
                   textStyle: TextStyle(
