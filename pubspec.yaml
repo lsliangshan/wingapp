@@ -69,6 +69,8 @@ dependencies:
 
   chat_bubbles: ^1.7.0
 
+  flutter_client_sse: ^2.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

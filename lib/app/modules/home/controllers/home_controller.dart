@@ -5,8 +5,11 @@ import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/modules/class/controllers/class_controller.dart';
 import 'package:wingapp/app/modules/profile/controllers/profile_controller.dart';
 import 'package:wingapp/events/events.dart';
+import 'package:wingapp/services/message.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
+  MessageService messageService = Get.find<MessageService>();
+
   EventBus eventBus = Get.find<EventBus>();
 
   late PageController pageController;
@@ -36,6 +39,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
         eventBus.fire(TabChangeEvent(name: tabs[3]['name']));
       }
     });
+
+    messageService.initMessageService();
   }
 
   void changePage(value) {

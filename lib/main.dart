@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/database/daos/class.dao.dart';
+import 'package:wingapp/database/daos/message.dao.dart';
 import 'package:wingapp/database/daos/teacher.dao.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/locale/locale.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
+import 'package:wingapp/services/message.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
 import 'package:wingapp/services/user.dart';
@@ -77,6 +79,9 @@ Future<void> initServices() async {
   ClassDao classDao = ClassDao(db);
   Get.put<ClassDao>(classDao);
 
+  MessageDao messageDao = MessageDao(db);
+  Get.put<MessageDao>(messageDao);
+
   TeacherService teacherService = TeacherService();
   Get.put<TeacherService>(teacherService);
 
@@ -85,6 +90,9 @@ Future<void> initServices() async {
 
   ClassService classService = ClassService();
   Get.put<ClassService>(classService);
+
+  MessageService messageService = MessageService();
+  Get.put<MessageService>(messageService);
 
   DingtalkService dingtalkService = DingtalkService();
   Get.put<DingtalkService>(dingtalkService);

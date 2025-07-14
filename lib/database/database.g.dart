@@ -1621,18 +1621,545 @@ class ClassesCompanion extends UpdateCompanion<Class> {
   }
 }
 
+class $MessagesTable extends Messages with TableInfo<$MessagesTable, Message> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MessagesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _classIdMeta =
+      const VerificationMeta('classId');
+  @override
+  late final GeneratedColumn<String> classId = GeneratedColumn<String>(
+      'class_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
+  @override
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _senderIdMeta =
+      const VerificationMeta('senderId');
+  @override
+  late final GeneratedColumn<String> senderId = GeneratedColumn<String>(
+      'sender_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _senderNameMeta =
+      const VerificationMeta('senderName');
+  @override
+  late final GeneratedColumn<String> senderName = GeneratedColumn<String>(
+      'sender_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _senderAvatarMeta =
+      const VerificationMeta('senderAvatar');
+  @override
+  late final GeneratedColumn<String> senderAvatar = GeneratedColumn<String>(
+      'sender_avatar', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _createAtMeta =
+      const VerificationMeta('createAt');
+  @override
+  late final GeneratedColumn<String> createAt = GeneratedColumn<String>(
+      'create_at', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue:
+          Constant(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now())));
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('text'));
+  static const VerificationMeta _isRobotMeta =
+      const VerificationMeta('isRobot');
+  @override
+  late final GeneratedColumn<bool> isRobot = GeneratedColumn<bool>(
+      'is_robot', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_robot" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _fromMeta = const VerificationMeta('from');
+  @override
+  late final GeneratedColumn<String> from = GeneratedColumn<String>(
+      'from', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('dingtalk'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        classId,
+        content,
+        senderId,
+        senderName,
+        senderAvatar,
+        createAt,
+        type,
+        isRobot,
+        from
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'messages';
+  @override
+  VerificationContext validateIntegrity(Insertable<Message> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('class_id')) {
+      context.handle(_classIdMeta,
+          classId.isAcceptableOrUnknown(data['class_id']!, _classIdMeta));
+    } else if (isInserting) {
+      context.missing(_classIdMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    if (data.containsKey('sender_id')) {
+      context.handle(_senderIdMeta,
+          senderId.isAcceptableOrUnknown(data['sender_id']!, _senderIdMeta));
+    } else if (isInserting) {
+      context.missing(_senderIdMeta);
+    }
+    if (data.containsKey('sender_name')) {
+      context.handle(
+          _senderNameMeta,
+          senderName.isAcceptableOrUnknown(
+              data['sender_name']!, _senderNameMeta));
+    } else if (isInserting) {
+      context.missing(_senderNameMeta);
+    }
+    if (data.containsKey('sender_avatar')) {
+      context.handle(
+          _senderAvatarMeta,
+          senderAvatar.isAcceptableOrUnknown(
+              data['sender_avatar']!, _senderAvatarMeta));
+    }
+    if (data.containsKey('create_at')) {
+      context.handle(_createAtMeta,
+          createAt.isAcceptableOrUnknown(data['create_at']!, _createAtMeta));
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    }
+    if (data.containsKey('is_robot')) {
+      context.handle(_isRobotMeta,
+          isRobot.isAcceptableOrUnknown(data['is_robot']!, _isRobotMeta));
+    }
+    if (data.containsKey('from')) {
+      context.handle(
+          _fromMeta, from.isAcceptableOrUnknown(data['from']!, _fromMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Message map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Message(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      classId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}class_id'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content'])!,
+      senderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sender_id'])!,
+      senderName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sender_name'])!,
+      senderAvatar: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sender_avatar']),
+      createAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}create_at']),
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type']),
+      isRobot: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_robot']),
+      from: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}from']),
+    );
+  }
+
+  @override
+  $MessagesTable createAlias(String alias) {
+    return $MessagesTable(attachedDatabase, alias);
+  }
+}
+
+class Message extends DataClass implements Insertable<Message> {
+  final String id;
+  final String classId;
+  final String content;
+  final String senderId;
+  final String senderName;
+  final String? senderAvatar;
+  final String? createAt;
+  final String? type;
+  final bool? isRobot;
+  final String? from;
+  const Message(
+      {required this.id,
+      required this.classId,
+      required this.content,
+      required this.senderId,
+      required this.senderName,
+      this.senderAvatar,
+      this.createAt,
+      this.type,
+      this.isRobot,
+      this.from});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['class_id'] = Variable<String>(classId);
+    map['content'] = Variable<String>(content);
+    map['sender_id'] = Variable<String>(senderId);
+    map['sender_name'] = Variable<String>(senderName);
+    if (!nullToAbsent || senderAvatar != null) {
+      map['sender_avatar'] = Variable<String>(senderAvatar);
+    }
+    if (!nullToAbsent || createAt != null) {
+      map['create_at'] = Variable<String>(createAt);
+    }
+    if (!nullToAbsent || type != null) {
+      map['type'] = Variable<String>(type);
+    }
+    if (!nullToAbsent || isRobot != null) {
+      map['is_robot'] = Variable<bool>(isRobot);
+    }
+    if (!nullToAbsent || from != null) {
+      map['from'] = Variable<String>(from);
+    }
+    return map;
+  }
+
+  MessagesCompanion toCompanion(bool nullToAbsent) {
+    return MessagesCompanion(
+      id: Value(id),
+      classId: Value(classId),
+      content: Value(content),
+      senderId: Value(senderId),
+      senderName: Value(senderName),
+      senderAvatar: senderAvatar == null && nullToAbsent
+          ? const Value.absent()
+          : Value(senderAvatar),
+      createAt: createAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createAt),
+      type: type == null && nullToAbsent ? const Value.absent() : Value(type),
+      isRobot: isRobot == null && nullToAbsent
+          ? const Value.absent()
+          : Value(isRobot),
+      from: from == null && nullToAbsent ? const Value.absent() : Value(from),
+    );
+  }
+
+  factory Message.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Message(
+      id: serializer.fromJson<String>(json['id']),
+      classId: serializer.fromJson<String>(json['classId']),
+      content: serializer.fromJson<String>(json['content']),
+      senderId: serializer.fromJson<String>(json['senderId']),
+      senderName: serializer.fromJson<String>(json['senderName']),
+      senderAvatar: serializer.fromJson<String?>(json['senderAvatar']),
+      createAt: serializer.fromJson<String?>(json['createAt']),
+      type: serializer.fromJson<String?>(json['type']),
+      isRobot: serializer.fromJson<bool?>(json['isRobot']),
+      from: serializer.fromJson<String?>(json['from']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'classId': serializer.toJson<String>(classId),
+      'content': serializer.toJson<String>(content),
+      'senderId': serializer.toJson<String>(senderId),
+      'senderName': serializer.toJson<String>(senderName),
+      'senderAvatar': serializer.toJson<String?>(senderAvatar),
+      'createAt': serializer.toJson<String?>(createAt),
+      'type': serializer.toJson<String?>(type),
+      'isRobot': serializer.toJson<bool?>(isRobot),
+      'from': serializer.toJson<String?>(from),
+    };
+  }
+
+  Message copyWith(
+          {String? id,
+          String? classId,
+          String? content,
+          String? senderId,
+          String? senderName,
+          Value<String?> senderAvatar = const Value.absent(),
+          Value<String?> createAt = const Value.absent(),
+          Value<String?> type = const Value.absent(),
+          Value<bool?> isRobot = const Value.absent(),
+          Value<String?> from = const Value.absent()}) =>
+      Message(
+        id: id ?? this.id,
+        classId: classId ?? this.classId,
+        content: content ?? this.content,
+        senderId: senderId ?? this.senderId,
+        senderName: senderName ?? this.senderName,
+        senderAvatar:
+            senderAvatar.present ? senderAvatar.value : this.senderAvatar,
+        createAt: createAt.present ? createAt.value : this.createAt,
+        type: type.present ? type.value : this.type,
+        isRobot: isRobot.present ? isRobot.value : this.isRobot,
+        from: from.present ? from.value : this.from,
+      );
+  Message copyWithCompanion(MessagesCompanion data) {
+    return Message(
+      id: data.id.present ? data.id.value : this.id,
+      classId: data.classId.present ? data.classId.value : this.classId,
+      content: data.content.present ? data.content.value : this.content,
+      senderId: data.senderId.present ? data.senderId.value : this.senderId,
+      senderName:
+          data.senderName.present ? data.senderName.value : this.senderName,
+      senderAvatar: data.senderAvatar.present
+          ? data.senderAvatar.value
+          : this.senderAvatar,
+      createAt: data.createAt.present ? data.createAt.value : this.createAt,
+      type: data.type.present ? data.type.value : this.type,
+      isRobot: data.isRobot.present ? data.isRobot.value : this.isRobot,
+      from: data.from.present ? data.from.value : this.from,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Message(')
+          ..write('id: $id, ')
+          ..write('classId: $classId, ')
+          ..write('content: $content, ')
+          ..write('senderId: $senderId, ')
+          ..write('senderName: $senderName, ')
+          ..write('senderAvatar: $senderAvatar, ')
+          ..write('createAt: $createAt, ')
+          ..write('type: $type, ')
+          ..write('isRobot: $isRobot, ')
+          ..write('from: $from')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, classId, content, senderId, senderName,
+      senderAvatar, createAt, type, isRobot, from);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Message &&
+          other.id == this.id &&
+          other.classId == this.classId &&
+          other.content == this.content &&
+          other.senderId == this.senderId &&
+          other.senderName == this.senderName &&
+          other.senderAvatar == this.senderAvatar &&
+          other.createAt == this.createAt &&
+          other.type == this.type &&
+          other.isRobot == this.isRobot &&
+          other.from == this.from);
+}
+
+class MessagesCompanion extends UpdateCompanion<Message> {
+  final Value<String> id;
+  final Value<String> classId;
+  final Value<String> content;
+  final Value<String> senderId;
+  final Value<String> senderName;
+  final Value<String?> senderAvatar;
+  final Value<String?> createAt;
+  final Value<String?> type;
+  final Value<bool?> isRobot;
+  final Value<String?> from;
+  final Value<int> rowid;
+  const MessagesCompanion({
+    this.id = const Value.absent(),
+    this.classId = const Value.absent(),
+    this.content = const Value.absent(),
+    this.senderId = const Value.absent(),
+    this.senderName = const Value.absent(),
+    this.senderAvatar = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.type = const Value.absent(),
+    this.isRobot = const Value.absent(),
+    this.from = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MessagesCompanion.insert({
+    required String id,
+    required String classId,
+    required String content,
+    required String senderId,
+    required String senderName,
+    this.senderAvatar = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.type = const Value.absent(),
+    this.isRobot = const Value.absent(),
+    this.from = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        classId = Value(classId),
+        content = Value(content),
+        senderId = Value(senderId),
+        senderName = Value(senderName);
+  static Insertable<Message> custom({
+    Expression<String>? id,
+    Expression<String>? classId,
+    Expression<String>? content,
+    Expression<String>? senderId,
+    Expression<String>? senderName,
+    Expression<String>? senderAvatar,
+    Expression<String>? createAt,
+    Expression<String>? type,
+    Expression<bool>? isRobot,
+    Expression<String>? from,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (classId != null) 'class_id': classId,
+      if (content != null) 'content': content,
+      if (senderId != null) 'sender_id': senderId,
+      if (senderName != null) 'sender_name': senderName,
+      if (senderAvatar != null) 'sender_avatar': senderAvatar,
+      if (createAt != null) 'create_at': createAt,
+      if (type != null) 'type': type,
+      if (isRobot != null) 'is_robot': isRobot,
+      if (from != null) 'from': from,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MessagesCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? classId,
+      Value<String>? content,
+      Value<String>? senderId,
+      Value<String>? senderName,
+      Value<String?>? senderAvatar,
+      Value<String?>? createAt,
+      Value<String?>? type,
+      Value<bool?>? isRobot,
+      Value<String?>? from,
+      Value<int>? rowid}) {
+    return MessagesCompanion(
+      id: id ?? this.id,
+      classId: classId ?? this.classId,
+      content: content ?? this.content,
+      senderId: senderId ?? this.senderId,
+      senderName: senderName ?? this.senderName,
+      senderAvatar: senderAvatar ?? this.senderAvatar,
+      createAt: createAt ?? this.createAt,
+      type: type ?? this.type,
+      isRobot: isRobot ?? this.isRobot,
+      from: from ?? this.from,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (classId.present) {
+      map['class_id'] = Variable<String>(classId.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (senderId.present) {
+      map['sender_id'] = Variable<String>(senderId.value);
+    }
+    if (senderName.present) {
+      map['sender_name'] = Variable<String>(senderName.value);
+    }
+    if (senderAvatar.present) {
+      map['sender_avatar'] = Variable<String>(senderAvatar.value);
+    }
+    if (createAt.present) {
+      map['create_at'] = Variable<String>(createAt.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (isRobot.present) {
+      map['is_robot'] = Variable<bool>(isRobot.value);
+    }
+    if (from.present) {
+      map['from'] = Variable<String>(from.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MessagesCompanion(')
+          ..write('id: $id, ')
+          ..write('classId: $classId, ')
+          ..write('content: $content, ')
+          ..write('senderId: $senderId, ')
+          ..write('senderName: $senderName, ')
+          ..write('senderAvatar: $senderAvatar, ')
+          ..write('createAt: $createAt, ')
+          ..write('type: $type, ')
+          ..write('isRobot: $isRobot, ')
+          ..write('from: $from, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $TeachersTable teachers = $TeachersTable(this);
   late final $ClassesTable classes = $ClassesTable(this);
+  late final $MessagesTable messages = $MessagesTable(this);
   late final TeacherDao teacherDao = TeacherDao(this as AppDatabase);
   late final ClassDao classDao = ClassDao(this as AppDatabase);
+  late final MessageDao messageDao = MessageDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [teachers, classes];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [teachers, classes, messages];
 }
 
 typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
@@ -2331,6 +2858,247 @@ typedef $$ClassesTableProcessedTableManager = ProcessedTableManager<
     (Class, BaseReferences<_$AppDatabase, $ClassesTable, Class>),
     Class,
     PrefetchHooks Function()>;
+typedef $$MessagesTableCreateCompanionBuilder = MessagesCompanion Function({
+  required String id,
+  required String classId,
+  required String content,
+  required String senderId,
+  required String senderName,
+  Value<String?> senderAvatar,
+  Value<String?> createAt,
+  Value<String?> type,
+  Value<bool?> isRobot,
+  Value<String?> from,
+  Value<int> rowid,
+});
+typedef $$MessagesTableUpdateCompanionBuilder = MessagesCompanion Function({
+  Value<String> id,
+  Value<String> classId,
+  Value<String> content,
+  Value<String> senderId,
+  Value<String> senderName,
+  Value<String?> senderAvatar,
+  Value<String?> createAt,
+  Value<String?> type,
+  Value<bool?> isRobot,
+  Value<String?> from,
+  Value<int> rowid,
+});
+
+class $$MessagesTableFilterComposer
+    extends Composer<_$AppDatabase, $MessagesTable> {
+  $$MessagesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get senderId => $composableBuilder(
+      column: $table.senderId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get senderName => $composableBuilder(
+      column: $table.senderName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get senderAvatar => $composableBuilder(
+      column: $table.senderAvatar, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isRobot => $composableBuilder(
+      column: $table.isRobot, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get from => $composableBuilder(
+      column: $table.from, builder: (column) => ColumnFilters(column));
+}
+
+class $$MessagesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MessagesTable> {
+  $$MessagesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get senderId => $composableBuilder(
+      column: $table.senderId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get senderName => $composableBuilder(
+      column: $table.senderName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get senderAvatar => $composableBuilder(
+      column: $table.senderAvatar,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isRobot => $composableBuilder(
+      column: $table.isRobot, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get from => $composableBuilder(
+      column: $table.from, builder: (column) => ColumnOrderings(column));
+}
+
+class $$MessagesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MessagesTable> {
+  $$MessagesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get classId =>
+      $composableBuilder(column: $table.classId, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<String> get senderId =>
+      $composableBuilder(column: $table.senderId, builder: (column) => column);
+
+  GeneratedColumn<String> get senderName => $composableBuilder(
+      column: $table.senderName, builder: (column) => column);
+
+  GeneratedColumn<String> get senderAvatar => $composableBuilder(
+      column: $table.senderAvatar, builder: (column) => column);
+
+  GeneratedColumn<String> get createAt =>
+      $composableBuilder(column: $table.createAt, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRobot =>
+      $composableBuilder(column: $table.isRobot, builder: (column) => column);
+
+  GeneratedColumn<String> get from =>
+      $composableBuilder(column: $table.from, builder: (column) => column);
+}
+
+class $$MessagesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $MessagesTable,
+    Message,
+    $$MessagesTableFilterComposer,
+    $$MessagesTableOrderingComposer,
+    $$MessagesTableAnnotationComposer,
+    $$MessagesTableCreateCompanionBuilder,
+    $$MessagesTableUpdateCompanionBuilder,
+    (Message, BaseReferences<_$AppDatabase, $MessagesTable, Message>),
+    Message,
+    PrefetchHooks Function()> {
+  $$MessagesTableTableManager(_$AppDatabase db, $MessagesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MessagesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MessagesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MessagesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> classId = const Value.absent(),
+            Value<String> content = const Value.absent(),
+            Value<String> senderId = const Value.absent(),
+            Value<String> senderName = const Value.absent(),
+            Value<String?> senderAvatar = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> type = const Value.absent(),
+            Value<bool?> isRobot = const Value.absent(),
+            Value<String?> from = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MessagesCompanion(
+            id: id,
+            classId: classId,
+            content: content,
+            senderId: senderId,
+            senderName: senderName,
+            senderAvatar: senderAvatar,
+            createAt: createAt,
+            type: type,
+            isRobot: isRobot,
+            from: from,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String classId,
+            required String content,
+            required String senderId,
+            required String senderName,
+            Value<String?> senderAvatar = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> type = const Value.absent(),
+            Value<bool?> isRobot = const Value.absent(),
+            Value<String?> from = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MessagesCompanion.insert(
+            id: id,
+            classId: classId,
+            content: content,
+            senderId: senderId,
+            senderName: senderName,
+            senderAvatar: senderAvatar,
+            createAt: createAt,
+            type: type,
+            isRobot: isRobot,
+            from: from,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$MessagesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $MessagesTable,
+    Message,
+    $$MessagesTableFilterComposer,
+    $$MessagesTableOrderingComposer,
+    $$MessagesTableAnnotationComposer,
+    $$MessagesTableCreateCompanionBuilder,
+    $$MessagesTableUpdateCompanionBuilder,
+    (Message, BaseReferences<_$AppDatabase, $MessagesTable, Message>),
+    Message,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2339,4 +3107,6 @@ class $AppDatabaseManager {
       $$TeachersTableTableManager(_db, _db.teachers);
   $$ClassesTableTableManager get classes =>
       $$ClassesTableTableManager(_db, _db.classes);
+  $$MessagesTableTableManager get messages =>
+      $$MessagesTableTableManager(_db, _db.messages);
 }

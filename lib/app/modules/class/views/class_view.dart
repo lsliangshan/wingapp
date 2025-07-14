@@ -227,6 +227,7 @@ class ClassView extends GetView<ClassController> {
                   );
                 }
                 return CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
                     SliverList.builder(
                       itemCount: controller.classes.length,

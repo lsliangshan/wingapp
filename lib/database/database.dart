@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:wingapp/database/daos/class.dao.dart';
+import 'package:wingapp/database/daos/message.dao.dart';
 import 'package:wingapp/database/daos/teacher.dao.dart';
 import 'tables.dart';
 import 'package:path/path.dart' as p;
@@ -31,7 +33,9 @@ LazyDatabase _openConnection() {
 }
 
 // @DriftDatabase(tables: [Activities, Users], include: {'sql.drift'})
-@DriftDatabase(tables: [Teachers, Classes], daos: [TeacherDao, ClassDao])
+@DriftDatabase(
+    tables: [Teachers, Classes, Messages],
+    daos: [TeacherDao, ClassDao, MessageDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
