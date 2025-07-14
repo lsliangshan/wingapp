@@ -51,9 +51,9 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
 
     int countInLastPage = totalCount % pageSize;
 
-    int offset = (totalPage - pageIndex! - 1) >= 0
+    int offset = (totalPage - pageIndex!) > 0
         ? (totalPage - pageIndex - 1) * pageSize + countInLastPage
-        : countInLastPage;
+        : (totalPage - pageIndex + 1) * pageSize;
 
     final msgs = await (select(messages)
           ..where((message) => message.classId.equals(classId))
