@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wingapp/app/modules/send_robot_message/views/message_bubble_view.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/need_login/need_login.dart';
-import 'package:wingapp/models/message_entity.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
+import 'package:wingapp/database/database.dart';
 
 import '../controllers/send_robot_message_controller.dart';
 
@@ -23,23 +23,24 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
 
   Widget _buildAvatar(String avatar) {
     return Container(
-      width: 48,
-      height: 48,
+      width: 32,
+      height: 32,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
+        color: Get.theme.colorScheme.surface,
       ),
       child: CachedNetworkImage(
         imageUrl: avatar,
         placeholder: (context, url) => Container(
-          width: 48,
-          height: 48,
+          width: 32,
+          height: 32,
           color: Get.theme.colorScheme.surface,
           child: const Icon(Icons.error),
         ),
         errorWidget: (context, url, error) => Container(
-          width: 48,
-          height: 48,
+          width: 32,
+          height: 32,
           color: Get.theme.colorScheme.surface,
           child: const Icon(Icons.error),
         ),
@@ -47,7 +48,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
     );
   }
 
-  Widget _buildMessageItem(MessageEntity message) {
+  Widget _buildMessageItemData(Message message, int index) {
     return Container(
       margin: EdgeInsets.only(
         top: 16,
@@ -77,12 +78,50 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                           ? Alignment.centerLeft
                           : Alignment.centerRight,
                   child: Row(
-                    spacing: 16,
                     textDirection:
                         (message.senderId != controller.loginInfo.value?.id)
                             ? TextDirection.ltr
                             : TextDirection.rtl,
                     children: [
+                      if (message.isRobot != null && message.isRobot == true)
+                        Container(
+                          width: 14,
+                          height: 14,
+                          margin: EdgeInsets.only(
+                            top: 2,
+                            right: 8,
+                          ),
+                          child: Icon(
+                            Icons.smart_toy,
+                            size: 14,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                      if (message.isRobot != null &&
+                          message.isRobot == false &&
+                          message.from == 'dingtalk')
+                        Container(
+                          width: 14,
+                          height: 14,
+                          margin: EdgeInsets.only(
+                            top: 2,
+                            left: (message.senderId !=
+                                    controller.loginInfo.value?.id)
+                                ? 0
+                                : 8,
+                            right: (message.senderId !=
+                                    controller.loginInfo.value?.id)
+                                ? 8
+                                : 0,
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                'https://img.liangqy.com/wingapp/dingtalk.png',
+                            width: 14,
+                            height: 14,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       Text(
                         message.senderName,
                         style: TextStyle(
@@ -91,8 +130,9 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                      const SizedBox(width: 16),
                       Text(
-                        message.time ?? '',
+                        message.createAt ?? '',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -101,27 +141,44 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                     ],
                   ),
                 ),
-                BubbleNormal(
-                  constraints: BoxConstraints(
-                    maxWidth: Get.width - 64 - 16,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
-                  text: message.message,
-                  isSender: message.senderId == controller.loginInfo.value?.id,
-                  color: (message.senderId == controller.loginInfo.value?.id)
-                      ? Color(0xFF07c160)
-                      : Get.theme.colorScheme.surface,
-                  tail: false,
-                  textStyle: TextStyle(
-                    fontSize: 15,
-                    color: (message.senderId == controller.loginInfo.value?.id)
-                        ? Get.theme.colorScheme.onPrimary
-                        : Get.theme.colorScheme.onSurface,
-                    // fontWeight: FontWeight.w500,
-                  ),
+                // BubbleNormal(
+                //   constraints: BoxConstraints(
+                //     maxWidth: Get.width - 64 - 16,
+                //   ),
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 12,
+                //     vertical: 12,
+                //   ),
+                //   text: message.content,
+                //   isSender: message.senderId == controller.loginInfo.value?.id,
+                //   color: (message.senderId == controller.loginInfo.value?.id)
+                //       ? Color(0xFF07c160)
+                //       : Get.theme.colorScheme.surface,
+                //   tail: false,
+                //   textStyle: TextStyle(
+                //     fontSize: 15,
+                //     color: (message.senderId == controller.loginInfo.value?.id)
+                //         ? Get.theme.colorScheme.onPrimary
+                //         : Get.theme.colorScheme.onSurface,
+                //     // fontWeight: FontWeight.w500,
+                //   ),
+                // ),
+                Row(
+                  mainAxisAlignment:
+                      message.senderId == controller.loginInfo.value?.id
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                  children: [
+                    if (message.senderId != controller.loginInfo.value?.id)
+                      SizedBox(width: 16),
+                    MessageBubbleView(
+                      message: message.content,
+                      isSender:
+                          message.senderId == controller.loginInfo.value?.id,
+                    ),
+                    if (message.senderId == controller.loginInfo.value?.id)
+                      SizedBox(width: 16),
+                  ],
                 ),
               ],
             ),
@@ -130,6 +187,43 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
             _buildAvatar(message.senderAvatar ?? ''),
         ],
       ),
+    );
+  }
+
+  Widget _buildMessageItem(Message message, int index) {
+    return Column(
+      children: [
+        if (index == 0 &&
+            controller.pageIndex.value != controller.totalPage.value)
+          Container(
+            // height: 16,
+            margin: EdgeInsets.only(
+              top: 16,
+              bottom: 16,
+            ),
+            child: Container(
+              // height: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 4,
+              ),
+              decoration: BoxDecoration(
+                color: Get.theme.hintColor.withValues(
+                  alpha: 0.06,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                'send_robot_message.load_more_message'.tr,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Get.theme.hintColor,
+                ),
+              ),
+            ),
+          ),
+        _buildMessageItemData(message, index),
+      ],
     );
   }
 
@@ -169,11 +263,14 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                   Expanded(
                     child: CustomScrollView(
                       controller: controller.scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
                       slivers: [
                         SliverList.builder(
                           itemBuilder: (context, index) {
                             return _buildMessageItem(
-                                controller.messages[index]);
+                              controller.messages[index],
+                              index,
+                            );
                           },
                           itemCount: controller.messages.length,
                         ),

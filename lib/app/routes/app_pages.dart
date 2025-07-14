@@ -103,7 +103,9 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHOOSE_AT_USERS,
-      page: () => const ChooseAtUsersView(),
+      page: () => ChooseAtUsersView(
+        classId: Get.arguments['classId'] ?? '',
+      ),
       binding: ChooseAtUsersBinding(),
       transition: Transition.downToUp,
     ),

@@ -8,11 +8,15 @@ class EmptyResult extends StatelessWidget {
   final Function()? onPressed;
   final Widget? mainButton;
   final bool showMainButton;
+  final bool showSecondaryButton;
+  final Widget? secondaryButton;
   const EmptyResult({
     super.key,
     this.onPressed,
     this.mainButton,
     this.showMainButton = true,
+    this.showSecondaryButton = false,
+    this.secondaryButton,
   });
 
   @override
@@ -42,6 +46,13 @@ class EmptyResult extends StatelessWidget {
                   onPressed: () {
                     onPressed?.call();
                   },
+                  child: Text('teacher.btn.add'.tr),
+                ),
+          if (showMainButton && showSecondaryButton) const SizedBox(height: 16),
+          if (showSecondaryButton)
+            secondaryButton ??
+                TextButton(
+                  onPressed: () {},
                   child: Text('teacher.btn.add'.tr),
                 ),
         ],

@@ -17,13 +17,13 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       const VerificationMeta('unionId');
   @override
   late final GeneratedColumn<String> unionId = GeneratedColumn<String>(
-      'union_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'union_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _openIdMeta = const VerificationMeta('openId');
   @override
   late final GeneratedColumn<String> openId = GeneratedColumn<String>(
-      'open_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'open_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
@@ -48,8 +48,8 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
   static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
   @override
   late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
-      'mobile', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'mobile', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _emailMeta = const VerificationMeta('email');
   @override
   late final GeneratedColumn<String> email = GeneratedColumn<String>(
@@ -173,14 +173,10 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
     if (data.containsKey('union_id')) {
       context.handle(_unionIdMeta,
           unionId.isAcceptableOrUnknown(data['union_id']!, _unionIdMeta));
-    } else if (isInserting) {
-      context.missing(_unionIdMeta);
     }
     if (data.containsKey('open_id')) {
       context.handle(_openIdMeta,
           openId.isAcceptableOrUnknown(data['open_id']!, _openIdMeta));
-    } else if (isInserting) {
-      context.missing(_openIdMeta);
     }
     if (data.containsKey('type')) {
       context.handle(
@@ -197,8 +193,6 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
     if (data.containsKey('mobile')) {
       context.handle(_mobileMeta,
           mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta));
-    } else if (isInserting) {
-      context.missing(_mobileMeta);
     }
     if (data.containsKey('email')) {
       context.handle(
@@ -268,9 +262,9 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       unionId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}union_id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}union_id']),
       openId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}open_id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}open_id']),
       type: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}type']),
       username: attachedDatabase.typeMapping
@@ -278,7 +272,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       stateCode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}state_code']),
       mobile: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}mobile'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}mobile']),
       email: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}email']),
       enName: attachedDatabase.typeMapping
@@ -316,8 +310,8 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
 
 class Teacher extends DataClass implements Insertable<Teacher> {
   final String id;
-  final String unionId;
-  final String openId;
+  final String? unionId;
+  final String? openId;
 
   /// 教师类型
   /// 1. full-time 全职老师
@@ -325,7 +319,7 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   final String? type;
   final String? username;
   final String? stateCode;
-  final String mobile;
+  final String? mobile;
   final String? email;
   final String? enName;
   final String? name;
@@ -341,12 +335,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   final String? loginType;
   const Teacher(
       {required this.id,
-      required this.unionId,
-      required this.openId,
+      this.unionId,
+      this.openId,
       this.type,
       this.username,
       this.stateCode,
-      required this.mobile,
+      this.mobile,
       this.email,
       this.enName,
       this.name,
@@ -364,8 +358,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
-    map['union_id'] = Variable<String>(unionId);
-    map['open_id'] = Variable<String>(openId);
+    if (!nullToAbsent || unionId != null) {
+      map['union_id'] = Variable<String>(unionId);
+    }
+    if (!nullToAbsent || openId != null) {
+      map['open_id'] = Variable<String>(openId);
+    }
     if (!nullToAbsent || type != null) {
       map['type'] = Variable<String>(type);
     }
@@ -375,7 +373,9 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     if (!nullToAbsent || stateCode != null) {
       map['state_code'] = Variable<String>(stateCode);
     }
-    map['mobile'] = Variable<String>(mobile);
+    if (!nullToAbsent || mobile != null) {
+      map['mobile'] = Variable<String>(mobile);
+    }
     if (!nullToAbsent || email != null) {
       map['email'] = Variable<String>(email);
     }
@@ -421,8 +421,11 @@ class Teacher extends DataClass implements Insertable<Teacher> {
   TeachersCompanion toCompanion(bool nullToAbsent) {
     return TeachersCompanion(
       id: Value(id),
-      unionId: Value(unionId),
-      openId: Value(openId),
+      unionId: unionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unionId),
+      openId:
+          openId == null && nullToAbsent ? const Value.absent() : Value(openId),
       type: type == null && nullToAbsent ? const Value.absent() : Value(type),
       username: username == null && nullToAbsent
           ? const Value.absent()
@@ -430,7 +433,8 @@ class Teacher extends DataClass implements Insertable<Teacher> {
       stateCode: stateCode == null && nullToAbsent
           ? const Value.absent()
           : Value(stateCode),
-      mobile: Value(mobile),
+      mobile:
+          mobile == null && nullToAbsent ? const Value.absent() : Value(mobile),
       email:
           email == null && nullToAbsent ? const Value.absent() : Value(email),
       enName:
@@ -469,12 +473,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Teacher(
       id: serializer.fromJson<String>(json['id']),
-      unionId: serializer.fromJson<String>(json['unionId']),
-      openId: serializer.fromJson<String>(json['openId']),
+      unionId: serializer.fromJson<String?>(json['unionId']),
+      openId: serializer.fromJson<String?>(json['openId']),
       type: serializer.fromJson<String?>(json['type']),
       username: serializer.fromJson<String?>(json['username']),
       stateCode: serializer.fromJson<String?>(json['stateCode']),
-      mobile: serializer.fromJson<String>(json['mobile']),
+      mobile: serializer.fromJson<String?>(json['mobile']),
       email: serializer.fromJson<String?>(json['email']),
       enName: serializer.fromJson<String?>(json['enName']),
       name: serializer.fromJson<String?>(json['name']),
@@ -495,12 +499,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
-      'unionId': serializer.toJson<String>(unionId),
-      'openId': serializer.toJson<String>(openId),
+      'unionId': serializer.toJson<String?>(unionId),
+      'openId': serializer.toJson<String?>(openId),
       'type': serializer.toJson<String?>(type),
       'username': serializer.toJson<String?>(username),
       'stateCode': serializer.toJson<String?>(stateCode),
-      'mobile': serializer.toJson<String>(mobile),
+      'mobile': serializer.toJson<String?>(mobile),
       'email': serializer.toJson<String?>(email),
       'enName': serializer.toJson<String?>(enName),
       'name': serializer.toJson<String?>(name),
@@ -519,12 +523,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
 
   Teacher copyWith(
           {String? id,
-          String? unionId,
-          String? openId,
+          Value<String?> unionId = const Value.absent(),
+          Value<String?> openId = const Value.absent(),
           Value<String?> type = const Value.absent(),
           Value<String?> username = const Value.absent(),
           Value<String?> stateCode = const Value.absent(),
-          String? mobile,
+          Value<String?> mobile = const Value.absent(),
           Value<String?> email = const Value.absent(),
           Value<String?> enName = const Value.absent(),
           Value<String?> name = const Value.absent(),
@@ -540,12 +544,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
           Value<String?> loginType = const Value.absent()}) =>
       Teacher(
         id: id ?? this.id,
-        unionId: unionId ?? this.unionId,
-        openId: openId ?? this.openId,
+        unionId: unionId.present ? unionId.value : this.unionId,
+        openId: openId.present ? openId.value : this.openId,
         type: type.present ? type.value : this.type,
         username: username.present ? username.value : this.username,
         stateCode: stateCode.present ? stateCode.value : this.stateCode,
-        mobile: mobile ?? this.mobile,
+        mobile: mobile.present ? mobile.value : this.mobile,
         email: email.present ? email.value : this.email,
         enName: enName.present ? enName.value : this.enName,
         name: name.present ? name.value : this.name,
@@ -666,12 +670,12 @@ class Teacher extends DataClass implements Insertable<Teacher> {
 
 class TeachersCompanion extends UpdateCompanion<Teacher> {
   final Value<String> id;
-  final Value<String> unionId;
-  final Value<String> openId;
+  final Value<String?> unionId;
+  final Value<String?> openId;
   final Value<String?> type;
   final Value<String?> username;
   final Value<String?> stateCode;
-  final Value<String> mobile;
+  final Value<String?> mobile;
   final Value<String?> email;
   final Value<String?> enName;
   final Value<String?> name;
@@ -711,12 +715,12 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
   });
   TeachersCompanion.insert({
     required String id,
-    required String unionId,
-    required String openId,
+    this.unionId = const Value.absent(),
+    this.openId = const Value.absent(),
     this.type = const Value.absent(),
     this.username = const Value.absent(),
     this.stateCode = const Value.absent(),
-    required String mobile,
+    this.mobile = const Value.absent(),
     this.email = const Value.absent(),
     this.enName = const Value.absent(),
     this.name = const Value.absent(),
@@ -731,10 +735,7 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
     this.token = const Value.absent(),
     this.loginType = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        unionId = Value(unionId),
-        openId = Value(openId),
-        mobile = Value(mobile);
+  }) : id = Value(id);
   static Insertable<Teacher> custom({
     Expression<String>? id,
     Expression<String>? unionId,
@@ -785,12 +786,12 @@ class TeachersCompanion extends UpdateCompanion<Teacher> {
 
   TeachersCompanion copyWith(
       {Value<String>? id,
-      Value<String>? unionId,
-      Value<String>? openId,
+      Value<String?>? unionId,
+      Value<String?>? openId,
       Value<String?>? type,
       Value<String?>? username,
       Value<String?>? stateCode,
-      Value<String>? mobile,
+      Value<String?>? mobile,
       Value<String?>? email,
       Value<String?>? enName,
       Value<String?>? name,
@@ -2164,12 +2165,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
   required String id,
-  required String unionId,
-  required String openId,
+  Value<String?> unionId,
+  Value<String?> openId,
   Value<String?> type,
   Value<String?> username,
   Value<String?> stateCode,
-  required String mobile,
+  Value<String?> mobile,
   Value<String?> email,
   Value<String?> enName,
   Value<String?> name,
@@ -2187,12 +2188,12 @@ typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
 });
 typedef $$TeachersTableUpdateCompanionBuilder = TeachersCompanion Function({
   Value<String> id,
-  Value<String> unionId,
-  Value<String> openId,
+  Value<String?> unionId,
+  Value<String?> openId,
   Value<String?> type,
   Value<String?> username,
   Value<String?> stateCode,
-  Value<String> mobile,
+  Value<String?> mobile,
   Value<String?> email,
   Value<String?> enName,
   Value<String?> name,
@@ -2444,12 +2445,12 @@ class $$TeachersTableTableManager extends RootTableManager<
               $$TeachersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
-            Value<String> unionId = const Value.absent(),
-            Value<String> openId = const Value.absent(),
+            Value<String?> unionId = const Value.absent(),
+            Value<String?> openId = const Value.absent(),
             Value<String?> type = const Value.absent(),
             Value<String?> username = const Value.absent(),
             Value<String?> stateCode = const Value.absent(),
-            Value<String> mobile = const Value.absent(),
+            Value<String?> mobile = const Value.absent(),
             Value<String?> email = const Value.absent(),
             Value<String?> enName = const Value.absent(),
             Value<String?> name = const Value.absent(),
@@ -2490,12 +2491,12 @@ class $$TeachersTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             required String id,
-            required String unionId,
-            required String openId,
+            Value<String?> unionId = const Value.absent(),
+            Value<String?> openId = const Value.absent(),
             Value<String?> type = const Value.absent(),
             Value<String?> username = const Value.absent(),
             Value<String?> stateCode = const Value.absent(),
-            required String mobile,
+            Value<String?> mobile = const Value.absent(),
             Value<String?> email = const Value.absent(),
             Value<String?> enName = const Value.absent(),
             Value<String?> name = const Value.absent(),

@@ -19,6 +19,12 @@ class LoginInfo {
   String? homepage;
   String? token;
   String? loginType;
+  // 当前身份是学生时，以下字段有效
+  String? teacherId;
+  String? classId;
+  String? courseId;
+  String? totalTimes;
+  String? usedTimes;
 
   LoginInfo({
     this.id,
@@ -41,6 +47,11 @@ class LoginInfo {
     this.homepage,
     this.token,
     this.loginType,
+    this.teacherId,
+    this.classId,
+    this.courseId,
+    this.totalTimes,
+    this.usedTimes,
   });
 
   LoginInfo.fromJson(Map<String, dynamic> json) {
@@ -64,6 +75,11 @@ class LoginInfo {
     admin = json['admin'];
     token = json['token'];
     loginType = json['loginType'];
+    teacherId = json['teacherId'];
+    classId = json['classId'];
+    courseId = json['courseId'];
+    totalTimes = json['totalTimes'];
+    usedTimes = json['usedTimes'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +104,11 @@ class LoginInfo {
     data['birthday'] = birthday;
     data['token'] = token;
     data['loginType'] = loginType;
+    data['teacherId'] = teacherId;
+    data['classId'] = classId;
+    data['courseId'] = courseId;
+    data['totalTimes'] = totalTimes;
+    data['usedTimes'] = usedTimes;
     return data;
   }
 }

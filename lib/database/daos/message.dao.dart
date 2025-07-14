@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
+import 'package:intl/intl.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/database/tables.dart';
+import 'package:wingapp/models/normal_response.model.dart';
 
 part 'message.dao.g.dart';
 
@@ -32,18 +34,43 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
       type: Value(type ?? ''),
       isRobot: Value(isRobot ?? false),
       from: Value(from ?? ''),
+      createAt: Value(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now())),
     ));
   }
 
-  Future<List<Message>> getMessages({
+  Future<NormalResponse> getMessages({
     required String classId,
     int? pageIndex = 1,
     int? pageSize = 20,
   }) async {
-    return (select(messages)
+    int totalCount = await (select(messages)
+          ..where((message) => message.classId.equals(classId)))
+        .get()
+        .then((value) => value.length);
+    int totalPage = (totalCount / pageSize!).ceil();
+
+    int countInLastPage = totalCount % pageSize;
+
+    int offset = (totalPage - pageIndex! - 1) >= 0
+        ? (totalPage - pageIndex - 1) * pageSize + countInLastPage
+        : countInLastPage;
+
+    final msgs = await (select(messages)
           ..where((message) => message.classId.equals(classId))
           ..orderBy([(tbl) => OrderingTerm.asc(tbl.createAt)])
-          ..limit(pageSize!, offset: (pageIndex! - 1) * pageSize))
+          ..limit(pageSize, offset: offset))
         .get();
+
+    return NormalResponse(
+      code: 200,
+      data: {
+        'list': msgs,
+        'totalCount': totalCount,
+        'totalPage': totalPage,
+        'pageIndex': pageIndex,
+        'pageSize': pageSize,
+      },
+      message: 'success',
+    );
   }
 }

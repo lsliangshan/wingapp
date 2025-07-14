@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:wingapp/app/modules/choose_at_users/controllers/choose_at_users_controller.dart';
@@ -8,7 +7,8 @@ import 'package:wingapp/components/custom_backward_view/custom_backward_view.dar
 import 'package:wingapp/models/login_info.model.dart';
 
 class ChooseAtUsersView extends GetView<ChooseAtUsersController> {
-  const ChooseAtUsersView({super.key});
+  final String classId;
+  const ChooseAtUsersView({super.key, required this.classId});
 
   Widget _buildUserItem(LoginInfo user, int index) {
     return GetBuilder(

@@ -7,19 +7,25 @@ import 'package:get/get.dart';
 import 'package:wingapp/database/daos/message.dao.dart';
 
 import 'package:wingapp/database/database.dart';
+import 'package:wingapp/models/normal_response.model.dart';
 
 class MessageService extends GetxService {
   EventBus eventBus = Get.find<EventBus>();
   MessageDao messageDao = Get.find<MessageDao>();
 
-  Future<List<Message>> getMessages({
+  RxMap<String, Function(Message)> messageEventCallbacks =
+      <String, Function(Message)>{}.obs;
+
+  Future<NormalResponse> getMessages({
     required String classId,
     int? pageIndex = 1,
     int? pageSize = 20,
   }) async {
-    List<Message> messages = await messageDao.getMessages(
-        classId: classId, pageIndex: pageIndex, pageSize: pageSize);
-    return messages;
+    return await messageDao.getMessages(
+      classId: classId,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+    );
   }
 
   Future<void> sendMessage({
@@ -57,6 +63,7 @@ class MessageService extends GetxService {
     ).listen((event) {
       if (event.data != null && event.data!.isNotEmpty) {
         Message data = Message.fromJson(jsonDecode(event.data!));
+        messageEventCallbacks[data.classId]?.call(data);
         sendMessage(
           id: data.id,
           classId: data.classId,
@@ -70,5 +77,18 @@ class MessageService extends GetxService {
         );
       }
     });
+  }
+
+  onMessageEvent({
+    required String classId,
+    required Function(Message) callback,
+  }) {
+    messageEventCallbacks[classId] = callback;
+  }
+
+  offMessageEvent({
+    required String classId,
+  }) {
+    messageEventCallbacks.remove(classId);
   }
 }

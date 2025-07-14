@@ -86,7 +86,7 @@ class ChooseTeacherView extends GetView<ChooseTeacherController> {
             controller.teachers[index].enName ??
             ''),
         subtitle: Text(
-          controller.teachers[index].mobile,
+          controller.teachers[index].mobile ?? '',
           style: Get.theme.textTheme.bodySmall?.copyWith(
             color: Color(0xFF888888),
           ),

@@ -95,17 +95,17 @@ class ClassView extends GetView<ClassController> {
   }
 
   Widget _buildItem(BuildContext context, int index) {
-    if (controller.totalCount.value == 0) {
-      return SizedBox(
-        width: Get.width,
-        height: Get.height - 300,
-        child: EmptyResult(
-          onPressed: () {
-            controller.gotoAddClass();
-          },
-        ),
-      );
-    }
+    // if (controller.totalCount.value == 0) {
+    //   return SizedBox(
+    //     width: Get.width,
+    //     height: Get.height - 300,
+    //     child: EmptyResult(
+    //       onPressed: () {
+    //         controller.gotoAddClass();
+    //       },
+    //     ),
+    //   );
+    // }
     if (controller.totalPage.value == controller.pageIndex.value &&
         index == controller.totalCount.value - 1) {
       return Column(
@@ -216,13 +216,28 @@ class ClassView extends GetView<ClassController> {
                   return SizedBox(
                     width: Get.width,
                     height: Get.height - 300,
-                    child: EmptyResult(
-                      mainButton: FilledButton(
-                        onPressed: () {
-                          controller.gotoAddClass();
-                        },
-                        child: Text('class.btn.add'.tr),
-                      ),
+                    child: Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        EmptyResult(
+                          mainButton: FilledButton(
+                            onPressed: () {
+                              controller.gotoAddClass();
+                            },
+                            child: Text('class.btn.add'.tr),
+                          ),
+                          showSecondaryButton: true,
+                          secondaryButton: FilledButton(
+                            onPressed: () {
+                              controller.getClasses();
+                            },
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Get.theme.colorScheme.secondary,
+                            ),
+                            child: Text('class.btn.reload'.tr),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }

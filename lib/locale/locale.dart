@@ -38,6 +38,7 @@ class Messages extends Translations {
           'class.title': '班级管理',
           'class.btn.add': '添加班级',
           'class.tip.empty': '暂无数据',
+          'class.btn.reload': '刷新',
 
           // 添加老师页面
           'add_teacher.title': '添加老师',
@@ -82,6 +83,7 @@ class Messages extends Translations {
           // 发送机器人消息页面
           'send_robot_message.title': '发送机器人消息',
           'send_robot_message.hint_text': '请输入消息内容',
+          'send_robot_message.load_more_message': '加载更多消息',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -158,6 +160,7 @@ class Messages extends Translations {
           'class.title': 'Class Management',
           'class.btn.add': 'Add Class',
           'class.tip.empty': 'No Data',
+          'class.btn.reload': 'Reload',
 
           // 添加老师页面
           'add_teacher.title': 'Add Teacher',
@@ -204,6 +207,7 @@ class Messages extends Translations {
           // 发送机器人消息页面
           'send_robot_message.title': 'Send Robot Message',
           'send_robot_message.hint_text': 'Please enter the message content',
+          'send_robot_message.load_more_message': 'Load More Message',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

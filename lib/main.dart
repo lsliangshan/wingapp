@@ -15,6 +15,7 @@ import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/message.dart';
+import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
 import 'package:wingapp/services/user.dart';
@@ -84,6 +85,9 @@ Future<void> initServices() async {
 
   TeacherService teacherService = TeacherService();
   Get.put<TeacherService>(teacherService);
+
+  StudentService studentService = StudentService();
+  Get.put<StudentService>(studentService);
 
   UserService userService = UserService();
   Get.put<UserService>(userService);

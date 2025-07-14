@@ -6,9 +6,9 @@ class Teachers extends Table {
   // 教师 ID、绑定钉钉的userid
   TextColumn get id => text()();
   // 钉钉的 unionId
-  TextColumn get unionId => text()();
+  TextColumn get unionId => text().nullable()();
   // 钉钉的 openId
-  TextColumn get openId => text()();
+  TextColumn get openId => text().nullable()();
 
   /// 教师类型
   /// 1. full-time 全职老师
@@ -21,7 +21,7 @@ class Teachers extends Table {
   TextColumn get stateCode =>
       text().nullable().withDefault(const Constant('86'))();
   // 手机号
-  TextColumn get mobile => text()();
+  TextColumn get mobile => text().nullable()();
   // 邮箱
   TextColumn get email => text().nullable()();
   // 英文名称
@@ -92,6 +92,7 @@ class Classes extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('Message')
 class Messages extends Table {
   // 消息 ID
   TextColumn get id => text()();

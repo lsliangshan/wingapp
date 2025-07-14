@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/models/login_info.model.dart';
+import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/user.dart';
 
 class ChooseAtUsersController extends GetxController {
+  final StudentService studentService = Get.find<StudentService>();
   final UserService userService = Get.find<UserService>();
 
   final TextEditingController keywordController = TextEditingController();
@@ -18,9 +21,13 @@ class ChooseAtUsersController extends GetxController {
 
   RxList<LoginInfo> selectedUsers = <LoginInfo>[].obs;
 
+  Rx<String> classId = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    classId.value = Get.arguments['classId'] ?? '';
 
     keywordController.addListener(() {
       if (keywordFocusNode.hasFocus) {
@@ -33,13 +40,26 @@ class ChooseAtUsersController extends GetxController {
 
   Future<void> initUsers() async {
     loginInfo.value = await userService.getLoginInfo();
-    users.add(loginInfo.value!);
-    users.add(LoginInfo(
-      id: '1',
-      name: '张三',
-      avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
-      unionId: '1',
-    ));
+    // users.add(loginInfo.value!);
+    // users.add(LoginInfo(
+    //   id: '1',
+    //   name: '张三',
+    //   avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    //   unionId: '1',
+    // ));
+    NormalResponse response = await studentService.getStudents(
+      classId: classId.value,
+      pageIndex: 1,
+      pageSize: 100,
+    );
+    if (response.code == 200 &&
+        response.data != null &&
+        response.data['list'] != null) {
+      users.value = response.data['list']
+          .map<LoginInfo>((e) => LoginInfo.fromJson(e))
+          .toList();
+    }
+
     update(['update-selected-users']);
   }
 
