@@ -66,4 +66,10 @@ class ClassDetailController extends GetxController {
       'classId': classId.value,
     });
   }
+
+  void goToAttachments() {
+    Get.toNamed(Routes.CLASS_ATTACHMENTS, arguments: {
+      'classId': classId.value,
+    });
+  }
 }

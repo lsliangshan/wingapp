@@ -126,6 +126,7 @@ class Messages extends Translations {
           'student': '学生',
           'schedule': '课表',
           'notification': '通知',
+          'attachments': '附件',
         },
         'en_US': {
           // 页面
@@ -253,6 +254,7 @@ class Messages extends Translations {
           'student': 'Student',
           'schedule': 'Schedule',
           'notification': 'Notification',
+          'attachments': 'Attachments',
         }
       };
 }

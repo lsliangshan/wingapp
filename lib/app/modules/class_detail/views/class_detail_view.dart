@@ -183,6 +183,48 @@ class ClassDetailView extends GetView<ClassDetailController> {
                       ),
                     ),
                   ),
+                  SliverToBoxAdapter(
+                    child: Divider(
+                      color: Get.theme.dividerColor.withValues(alpha: 0.02),
+                      thickness: 1,
+                      height: 1,
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 0,
+                      ),
+                      elevation: 0,
+                      child: ListTile(
+                        onTap: () {
+                          controller.goToAttachments();
+                        },
+                        tileColor: Get.theme.colorScheme.surface,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        leading: SvgPicture.asset(
+                          'assets/svgs/icon_attachments.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("attachments".tr),
+                        trailing: SvgPicture.asset(
+                          'assets/svgs/icon_arrow_right.svg',
+                          width: 24,
+                          height: 24,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               );
             },
