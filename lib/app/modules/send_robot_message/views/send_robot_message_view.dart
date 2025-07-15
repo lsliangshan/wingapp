@@ -171,7 +171,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
   Widget _buildMessageItem(Message message, int index) {
     return Column(
       children: [
-        if (index == 0 &&
+        if (index == controller.messages.length - 1 &&
             controller.pageIndex.value != controller.totalPage.value)
           Obx(() => controller.isLoadingMoreMessages.isTrue
               ? Container(
@@ -212,7 +212,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                           ),
                   ),
                 ))
-        else if (index == 0 &&
+        else if (index == controller.messages.length - 1 &&
             controller.pageIndex.value == controller.totalPage.value)
           Container(
             // height: 16,
@@ -286,6 +286,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                       children: [
                         CustomScrollView(
                           controller: controller.scrollController,
+                          reverse: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           slivers: [
                             SliverList.builder(
@@ -298,18 +299,19 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                               itemCount: controller.messages.length,
                             ),
                             SliverToBoxAdapter(
-                              child: Obx(() => controller.hasNewMessage.isTrue
-                                  ? Container(
-                                      height: 32,
-                                    )
-                                  : Container()),
+                              child:
+                                  Obx(() => controller.newMessageCount.value > 0
+                                      ? Container(
+                                          height: 32,
+                                        )
+                                      : Container()),
                             ),
                           ],
                         ),
                         Positioned(
                           bottom: 6,
                           left: 0,
-                          child: Obx(() => controller.hasNewMessage.isTrue
+                          child: Obx(() => controller.newMessageCount.value > 0
                               ? GestureDetector(
                                   onTap: () {
                                     controller.scrollToNewMessage();
@@ -339,7 +341,13 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                                       ),
                                       clipBehavior: Clip.hardEdge,
                                       child: Text(
-                                        'send_robot_message.has_new_message'.tr,
+                                        'send_robot_message.has_new_message'
+                                            .tr
+                                            .replaceAll(
+                                              '{count}',
+                                              controller.newMessageCount.value
+                                                  .toString(),
+                                            ),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color:

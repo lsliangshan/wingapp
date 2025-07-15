@@ -21,14 +21,14 @@ class SendRobotMessageController extends GetxController {
   final DingtalkService dingtalkService = Get.find<DingtalkService>();
 
   final ScrollController scrollController = ScrollController(
-    initialScrollOffset: 10000,
+    initialScrollOffset: 0,
   );
 
   final TextEditingController messageController = TextEditingController();
 
   final FocusNode messageFocusNode = FocusNode();
 
-  Rx<bool> hasNewMessage = false.obs;
+  Rx<int> newMessageCount = 0.obs;
 
   String prevText = '';
 
@@ -43,8 +43,6 @@ class SendRobotMessageController extends GetxController {
   RxString classId = ''.obs;
 
   Rx<bool> isLoadingMoreMessages = false.obs;
-
-  Rx<double> maxScrollExtent = 0.0.obs;
 
   RxList<Message> messages = <Message>[].obs;
 
@@ -80,24 +78,22 @@ class SendRobotMessageController extends GetxController {
     messageService.onMessageEvent(
       classId: classId.value,
       callback: (message) {
-        messages.add(message);
-        hasNewMessage.value = true;
+        messages.insert(0, message);
+        newMessageCount.value += 1;
         update(['update-messages']);
       },
     );
 
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
-          scrollController.position.minScrollExtent) {
+          scrollController.position.maxScrollExtent) {
         loadMoreMessages();
       }
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent - 100) {
-        hasNewMessage.value = false;
-      }
-      if (maxScrollExtent.value == 0 ||
-          maxScrollExtent.value < scrollController.position.maxScrollExtent) {
-        maxScrollExtent.value = scrollController.position.maxScrollExtent + 132;
+      if (scrollController.position.pixels <
+          scrollController.position.minScrollExtent + 60) {
+        newMessageCount.value = 0;
+        print(
+            '>>>>>>>>>> scrollController.position.minScrollExtent: ${scrollController.position.minScrollExtent}');
       }
     });
   }
@@ -182,13 +178,13 @@ class SendRobotMessageController extends GetxController {
       pageSize: pageSize.value,
     );
 
-    await Future.delayed(const Duration(milliseconds: 800));
+    // await Future.delayed(const Duration(milliseconds: 800));
 
     if (response.code == 200 && response.data != null) {
       if (pIndex == 1) {
         messages.clear();
       }
-      messages.insertAll(0, response.data['list']);
+      messages.addAll(response.data['list'].reversed.toList());
       pageIndex.value = pIndex ?? pageIndex.value;
       totalCount.value = response.data['totalCount'];
       totalPage.value = response.data['totalPage'];
@@ -204,14 +200,6 @@ class SendRobotMessageController extends GetxController {
     isLoadingMoreMessages.value = true;
     update(['update-messages']);
     await getMessages(pIndex: pageIndex.value + 1);
-
-    if (pageIndex.value != totalPage.value) {
-      scrollController.animateTo(
-        48,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
   }
 
   Future<void> initData() async {
@@ -303,7 +291,7 @@ class SendRobotMessageController extends GetxController {
       from: 'wingapp',
       createAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
     );
-    messages.add(newMessage);
+    messages.insert(0, newMessage);
 
     await messageService.sendMessage(
       id: newMessage.id,
@@ -336,7 +324,7 @@ class SendRobotMessageController extends GetxController {
   }) {
     if (useAnimation) {
       scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
+        0,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
@@ -347,12 +335,11 @@ class SendRobotMessageController extends GetxController {
 
   void scrollToNewMessage() {
     scrollController.animateTo(
-      maxScrollExtent.value + 10,
+      0,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
 
-    hasNewMessage.value = false;
-    maxScrollExtent.value = scrollController.position.maxScrollExtent + 132;
+    newMessageCount.value = 0;
   }
 }

@@ -85,7 +85,7 @@ class Messages extends Translations {
           'send_robot_message.hint_text': '请输入消息内容',
           'send_robot_message.load_more_message': '加载更多消息',
           'send_robot_message.no_more_message': '没有更多消息了',
-          'send_robot_message.has_new_message': '新消息',
+          'send_robot_message.has_new_message': '{count} 条新消息',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -211,7 +211,7 @@ class Messages extends Translations {
           'send_robot_message.hint_text': 'Please enter the message content',
           'send_robot_message.load_more_message': 'Load More Message',
           'send_robot_message.no_more_message': 'No More Message',
-          'send_robot_message.has_new_message': 'New Message',
+          'send_robot_message.has_new_message': '{count} New Message',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

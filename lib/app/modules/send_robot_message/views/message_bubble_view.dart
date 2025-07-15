@@ -42,24 +42,39 @@ class MessageBubbleView extends GetView {
       //       : Get.theme.colorScheme.onSurface,
       //   // fontWeight: FontWeight.w500,
       // ),
-      child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: MarkdownBlock(
-          data: message,
-          config: MarkdownConfig(
-            configs: [
-              PConfig(
-                textStyle: TextStyle(
-                  fontSize: 15,
-                  color: isSender
-                      ? Get.theme.colorScheme.onPrimary
-                      : Get.theme.colorScheme.onSurface,
-                ),
+      child: MarkdownBlock(
+        data: message,
+        config: MarkdownConfig(
+          configs: [
+            PConfig(
+              textStyle: TextStyle(
+                fontSize: 15,
+                color: isSender
+                    ? Get.theme.colorScheme.onPrimary
+                    : Get.theme.colorScheme.onSurface,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+      // child: SingleChildScrollView(
+      //   physics: const NeverScrollableScrollPhysics(),
+      //   child: MarkdownBlock(
+      //     data: message,
+      //     config: MarkdownConfig(
+      //       configs: [
+      //         PConfig(
+      //           textStyle: TextStyle(
+      //             fontSize: 15,
+      //             color: isSender
+      //                 ? Get.theme.colorScheme.onPrimary
+      //                 : Get.theme.colorScheme.onSurface,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
