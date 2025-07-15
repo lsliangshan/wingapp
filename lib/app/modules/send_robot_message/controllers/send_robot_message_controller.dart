@@ -28,6 +28,8 @@ class SendRobotMessageController extends GetxController {
 
   final FocusNode messageFocusNode = FocusNode();
 
+  Rx<bool> hasNewMessage = false.obs;
+
   String prevText = '';
 
   Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
@@ -42,27 +44,7 @@ class SendRobotMessageController extends GetxController {
 
   Rx<bool> isLoadingMoreMessages = false.obs;
 
-  // RxList<MessageEntity> messages = <MessageEntity>[
-  //   MessageEntity(
-  //     message: '以下是一些 Flutter 第三方聊天气泡组件的推荐，适合快速集成漂亮的聊天界面，也支持自定义和扩展：',
-  //     senderId: '031522673572377571',
-  //     senderName: 'John Doe',
-  //     time: '2025-01-01 12:00:00',
-  //     senderAvatar:
-  //         'https://img1.baidu.com/it/u=2269292895,825961646&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800',
-  //     messageType: MessageType.text,
-  //   ),
-  //   MessageEntity(
-  //     message:
-  //         'I am fine, thank you!Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?',
-  //     senderId: '456',
-  //     senderName: 'Jane Smith',
-  //     time: '2025-01-01 12:00:00',
-  //     senderAvatar:
-  //         'https://wx3.sinaimg.cn/mw690/a1ac48b7ly1hthawuktxwj20m80m87fs.jpg',
-  //     messageType: MessageType.text,
-  //   ),
-  // ].obs;
+  Rx<double> maxScrollExtent = 0.0.obs;
 
   RxList<Message> messages = <Message>[].obs;
 
@@ -99,7 +81,7 @@ class SendRobotMessageController extends GetxController {
       classId: classId.value,
       callback: (message) {
         messages.add(message);
-        print('>>>>>>new Message>>>>> ${messages.map((e) => e.toJson())}');
+        hasNewMessage.value = true;
         update(['update-messages']);
       },
     );
@@ -107,10 +89,15 @@ class SendRobotMessageController extends GetxController {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.minScrollExtent) {
-        print('>>>>>>>>>>> scrollController.position.minScrollExtent');
-        Future.delayed(const Duration(milliseconds: 3000), () {
-          loadMoreMessages();
-        });
+        loadMoreMessages();
+      }
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent - 100) {
+        hasNewMessage.value = false;
+      }
+      if (maxScrollExtent.value == 0 ||
+          maxScrollExtent.value < scrollController.position.maxScrollExtent) {
+        maxScrollExtent.value = scrollController.position.maxScrollExtent + 132;
       }
     });
   }
@@ -186,24 +173,27 @@ class SendRobotMessageController extends GetxController {
     }
   }
 
-  Future<void> getMessages() async {
-    print('>>>>>>>>>>> pageIndex.value ${pageIndex.value}');
+  Future<void> getMessages({
+    int? pIndex,
+  }) async {
     NormalResponse response = await messageService.getMessages(
       classId: classId.value,
-      pageIndex: pageIndex.value,
+      pageIndex: pIndex ?? pageIndex.value,
       pageSize: pageSize.value,
     );
-    print(
-        '>>>>>>>>>>>>>>>>>>>>>>>>response.data ${response.data["list"].length}');
+
+    await Future.delayed(const Duration(milliseconds: 800));
+
     if (response.code == 200 && response.data != null) {
-      if (pageIndex.value == 1) {
+      if (pIndex == 1) {
         messages.clear();
       }
       messages.insertAll(0, response.data['list']);
-
+      pageIndex.value = pIndex ?? pageIndex.value;
       totalCount.value = response.data['totalCount'];
       totalPage.value = response.data['totalPage'];
     }
+    isLoadingMoreMessages.value = false;
     update(['update-messages']);
   }
 
@@ -212,16 +202,21 @@ class SendRobotMessageController extends GetxController {
       return;
     }
     isLoadingMoreMessages.value = true;
-    pageIndex.value++;
-    await getMessages();
-    isLoadingMoreMessages.value = false;
+    update(['update-messages']);
+    await getMessages(pIndex: pageIndex.value + 1);
+
+    if (pageIndex.value != totalPage.value) {
+      scrollController.animateTo(
+        48,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   Future<void> initData() async {
     await initLoginInfo();
     await getMessages();
-
-    update(['update-messages']);
   }
 
   Future<void> initLoginInfo() async {
@@ -348,5 +343,16 @@ class SendRobotMessageController extends GetxController {
     } else {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     }
+  }
+
+  void scrollToNewMessage() {
+    scrollController.animateTo(
+      maxScrollExtent.value + 10,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+
+    hasNewMessage.value = false;
+    maxScrollExtent.value = scrollController.position.maxScrollExtent + 132;
   }
 }

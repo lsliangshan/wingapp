@@ -141,28 +141,6 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                     ],
                   ),
                 ),
-                // BubbleNormal(
-                //   constraints: BoxConstraints(
-                //     maxWidth: Get.width - 64 - 16,
-                //   ),
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 12,
-                //     vertical: 12,
-                //   ),
-                //   text: message.content,
-                //   isSender: message.senderId == controller.loginInfo.value?.id,
-                //   color: (message.senderId == controller.loginInfo.value?.id)
-                //       ? Color(0xFF07c160)
-                //       : Get.theme.colorScheme.surface,
-                //   tail: false,
-                //   textStyle: TextStyle(
-                //     fontSize: 15,
-                //     color: (message.senderId == controller.loginInfo.value?.id)
-                //         ? Get.theme.colorScheme.onPrimary
-                //         : Get.theme.colorScheme.onSurface,
-                //     // fontWeight: FontWeight.w500,
-                //   ),
-                // ),
                 Row(
                   mainAxisAlignment:
                       message.senderId == controller.loginInfo.value?.id
@@ -195,6 +173,47 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
       children: [
         if (index == 0 &&
             controller.pageIndex.value != controller.totalPage.value)
+          Obx(() => controller.isLoadingMoreMessages.isTrue
+              ? Container(
+                  margin: EdgeInsets.only(
+                    top: 16,
+                    bottom: 16,
+                  ),
+                  child: CustomLoader(
+                    size: 10,
+                  ),
+                )
+              : Container(
+                  // height: 16,
+                  margin: EdgeInsets.only(
+                    top: 16,
+                    bottom: 16,
+                  ),
+                  child: Container(
+                    // height: 20,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Get.theme.hintColor.withValues(
+                        alpha: 0.06,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: controller.isLoadingMoreMessages.isTrue
+                        ? CustomLoader()
+                        : Text(
+                            'send_robot_message.load_more_message'.tr,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.hintColor,
+                            ),
+                          ),
+                  ),
+                ))
+        else if (index == 0 &&
+            controller.pageIndex.value == controller.totalPage.value)
           Container(
             // height: 16,
             margin: EdgeInsets.only(
@@ -213,13 +232,15 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
-                'send_robot_message.load_more_message'.tr,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Get.theme.hintColor,
-                ),
-              ),
+              child: controller.isLoadingMoreMessages.isTrue
+                  ? CustomLoader()
+                  : Text(
+                      'send_robot_message.no_more_message'.tr,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Get.theme.hintColor,
+                      ),
+                    ),
             ),
           ),
         _buildMessageItemData(message, index),
@@ -261,30 +282,81 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
               return Column(
                 children: [
                   Expanded(
-                    child: CustomScrollView(
-                      controller: controller.scrollController,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      slivers: [
-                        SliverList.builder(
-                          itemBuilder: (context, index) {
-                            return _buildMessageItem(
-                              controller.messages[index],
-                              index,
-                            );
-                          },
-                          itemCount: controller.messages.length,
+                    child: Stack(
+                      children: [
+                        CustomScrollView(
+                          controller: controller.scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          slivers: [
+                            SliverList.builder(
+                              itemBuilder: (context, index) {
+                                return _buildMessageItem(
+                                  controller.messages[index],
+                                  index,
+                                );
+                              },
+                              itemCount: controller.messages.length,
+                            ),
+                            SliverToBoxAdapter(
+                              child: Obx(() => controller.hasNewMessage.isTrue
+                                  ? Container(
+                                      height: 32,
+                                    )
+                                  : Container()),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 6,
+                          left: 0,
+                          child: Obx(() => controller.hasNewMessage.isTrue
+                              ? GestureDetector(
+                                  onTap: () {
+                                    controller.scrollToNewMessage();
+                                  },
+                                  child: Container(
+                                    width: Get.width,
+                                    height: 32,
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Get.theme.primaryColor,
+                                        borderRadius: BorderRadius.circular(6),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Get.theme.hintColor.withValues(
+                                              alpha: 0.1,
+                                            ),
+                                            blurRadius: 10,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                      clipBehavior: Clip.hardEdge,
+                                      child: Text(
+                                        'send_robot_message.has_new_message'.tr,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color:
+                                              Get.theme.colorScheme.onPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container()),
                         ),
                       ],
                     ),
                   ),
                   SafeArea(
                     child: Container(
-                      // height: 64,
                       alignment: Alignment.center,
-                      margin: const EdgeInsets.only(
-                          // left: 16,
-                          // right: 8,
-                          ),
                       padding: const EdgeInsets.only(
                         top: 8,
                         bottom: 8,
@@ -327,7 +399,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 48,
                             height: 48,
                             child: IconButton(

@@ -53,7 +53,7 @@ class MessageDao extends DatabaseAccessor<AppDatabase> with _$MessageDaoMixin {
 
     int offset = (totalPage - pageIndex!) > 0
         ? (totalPage - pageIndex - 1) * pageSize + countInLastPage
-        : (totalPage - pageIndex + 1) * pageSize;
+        : 0;
 
     final msgs = await (select(messages)
           ..where((message) => message.classId.equals(classId))
