@@ -11,6 +11,7 @@ import 'package:wingapp/database/daos/message.dao.dart';
 import 'package:wingapp/database/daos/teacher.dao.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/locale/locale.dart';
+import 'package:wingapp/services/attachment.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
@@ -97,6 +98,9 @@ Future<void> initServices() async {
 
   MessageService messageService = MessageService();
   Get.put<MessageService>(messageService);
+
+  AttachmentService attachmentService = AttachmentService();
+  Get.put<AttachmentService>(attachmentService);
 
   DingtalkService dingtalkService = DingtalkService();
   Get.put<DingtalkService>(dingtalkService);

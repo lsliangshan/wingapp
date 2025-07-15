@@ -87,6 +87,9 @@ class Messages extends Translations {
           'send_robot_message.no_more_message': '没有更多消息了',
           'send_robot_message.has_new_message': '{count} 条新消息',
 
+          // 班级附件页面
+          'class_attachments.title': '【{class_name}】班级附件',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -213,6 +216,9 @@ class Messages extends Translations {
           'send_robot_message.load_more_message': 'Load More Message',
           'send_robot_message.no_more_message': 'No More Message',
           'send_robot_message.has_new_message': '{count} New Message',
+
+          // 班级附件页面
+          'class_attachments.title': '[{class_name}] Class Attachments',
 
           // 未登录页面
           'need_login.tip': 'Need Login',
