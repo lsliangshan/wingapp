@@ -9,22 +9,56 @@ import '../controllers/file_previewer_controller.dart';
 class FilePreviewerView extends GetView<FilePreviewerController> {
   final String fileUrl;
   final String? fileName;
-  const FilePreviewerView({
+  final String? mode;
+  FilePreviewerView({
     super.key,
     required this.fileUrl,
     this.fileName,
-  });
+    this.mode,
+  }) {
+    controller.fileNameController.text = fileName ?? 'file_previewer.title'.tr;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          fileName ?? 'file_previewer.title'.tr,
-          style: Get.theme.textTheme.titleMedium,
+        // title: Text(
+        //   fileName ?? 'file_previewer.title'.tr,
+        //   style: Get.theme.textTheme.titleMedium,
+        // ),
+        title: Container(
+          width: Get.width - 200,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              EditableText(
+                controller: controller.fileNameController,
+                focusNode: controller.fileNameFocusNode,
+                onTapOutside: (event) {
+                  controller.fileNameFocusNode.unfocus();
+                },
+                textAlign: TextAlign.center,
+                style: Get.theme.textTheme.titleMedium!,
+                cursorColor: Get.theme.primaryColor,
+                backgroundCursorColor: Get.theme.primaryColor,
+              ),
+              Text('.txt')
+            ],
+          ),
         ),
         centerTitle: true,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
         leading: const CustomBackwardView(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.fileNameFocusNode.unfocus();
+            },
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       // body: SfPdfViewer.network(
       //   fileUrl,
