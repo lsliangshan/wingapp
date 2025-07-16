@@ -13,6 +13,14 @@ class FilePreviewerController extends GetxController {
     initPreviewFuture = initData();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+
+    webViewController?.dispose();
+    webViewController = null;
+  }
+
   Future<void> initData() async {}
 
   void onWebViewCreated(InAppWebViewController controller) {
