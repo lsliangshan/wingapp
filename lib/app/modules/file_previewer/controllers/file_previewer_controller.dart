@@ -16,9 +16,6 @@ class FilePreviewerController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-
-    webViewController?.dispose();
-    webViewController = null;
   }
 
   Future<void> initData() async {}

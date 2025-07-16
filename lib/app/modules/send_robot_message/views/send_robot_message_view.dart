@@ -172,6 +172,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
     return Column(
       children: [
         if (index == controller.messages.length - 1 &&
+            controller.totalCount > 8 &&
             controller.pageIndex.value != controller.totalPage.value)
           Obx(() => controller.isLoadingMoreMessages.isTrue
               ? Container(
@@ -213,6 +214,7 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                   ),
                 ))
         else if (index == controller.messages.length - 1 &&
+            controller.totalCount > 8 &&
             controller.pageIndex.value == controller.totalPage.value)
           Container(
             // height: 16,
@@ -308,57 +310,61 @@ class SendRobotMessageView extends GetView<SendRobotMessageController> {
                             ),
                           ],
                         ),
-                        Positioned(
-                          bottom: 6,
-                          left: 0,
-                          child: Obx(() => controller.newMessageCount.value > 0
-                              ? GestureDetector(
-                                  onTap: () {
-                                    controller.scrollToNewMessage();
-                                  },
-                                  child: Container(
-                                    width: Get.width,
-                                    height: 32,
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Get.theme.primaryColor,
-                                        borderRadius: BorderRadius.circular(6),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Get.theme.hintColor.withValues(
-                                              alpha: 0.1,
+                        if (controller.totalCount > 8)
+                          Positioned(
+                            bottom: 6,
+                            left: 0,
+                            child:
+                                Obx(() => controller.newMessageCount.value > 0
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          controller.scrollToNewMessage();
+                                        },
+                                        child: Container(
+                                          width: Get.width,
+                                          height: 32,
+                                          alignment: Alignment.center,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 8,
                                             ),
-                                            blurRadius: 10,
-                                            offset: Offset(0, 0),
+                                            decoration: BoxDecoration(
+                                              color: Get.theme.primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Get.theme.hintColor
+                                                      .withValues(
+                                                    alpha: 0.1,
+                                                  ),
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0),
+                                                ),
+                                              ],
+                                            ),
+                                            clipBehavior: Clip.hardEdge,
+                                            child: Text(
+                                              'send_robot_message.has_new_message'
+                                                  .tr
+                                                  .replaceAll(
+                                                    '{count}',
+                                                    controller
+                                                        .newMessageCount.value
+                                                        .toString(),
+                                                  ),
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Get.theme.colorScheme
+                                                    .onPrimary,
+                                              ),
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Text(
-                                        'send_robot_message.has_new_message'
-                                            .tr
-                                            .replaceAll(
-                                              '{count}',
-                                              controller.newMessageCount.value
-                                                  .toString(),
-                                            ),
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color:
-                                              Get.theme.colorScheme.onPrimary,
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container()),
-                        ),
+                                      )
+                                    : Container()),
+                          ),
                       ],
                     ),
                   ),

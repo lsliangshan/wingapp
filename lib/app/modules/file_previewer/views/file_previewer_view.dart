@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 
 import '../controllers/file_previewer_controller.dart';
@@ -33,7 +32,7 @@ class FilePreviewerView extends GetView<FilePreviewerController> {
       body: InAppWebView(
         initialUrlRequest: URLRequest(
             url: WebUri(
-                "http://10.2.6.210:5173/file-viewer?url=${Uri.encodeComponent(fileUrl)}")),
+                "http://192.168.1.4:5173/file-viewer?url=${Uri.encodeComponent(fileUrl)}")),
         initialSettings: InAppWebViewSettings(
           javaScriptEnabled: true,
           transparentBackground: true,
