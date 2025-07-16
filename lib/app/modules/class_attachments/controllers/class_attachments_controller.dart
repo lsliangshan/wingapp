@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/attachment_entity.dart';
 import 'package:wingapp/models/normal_response.model.dart';
@@ -82,5 +83,15 @@ class ClassAttachmentsController extends GetxController {
       }
       update(['update-class-attachments']);
     }
+  }
+
+  void gotoFilePreviewer({
+    required String fileUrl,
+    String? fileName,
+  }) {
+    Get.toNamed(Routes.FILE_PREVIEWER, arguments: {
+      'fileUrl': fileUrl,
+      'fileName': fileName ?? '',
+    });
   }
 }

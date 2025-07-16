@@ -30,17 +30,47 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
       child: ListTile(
         onTap: () {
           // controller.gotoClassDetail(classId: controller.classes[index].id);
+          controller.gotoFilePreviewer(
+            fileUrl: controller.attachments[index].url,
+            fileName: controller.attachments[index].filename,
+          );
         },
-        leading: Icon(Icons.file_present),
+        leading: SvgPicture.asset(
+          'assets/svgs/icon_document.svg',
+          width: 28,
+          height: 28,
+        ),
         tileColor: Get.theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
         title: Text(controller.attachments[index].filename),
-        trailing: SvgPicture.asset(
-          'assets/svgs/icon_arrow_right.svg',
-          width: 20,
-          height: 20,
+        subtitle: Text(
+          controller.attachments[index].updateAt ?? '',
+          style: Get.theme.textTheme.bodySmall?.copyWith(
+            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
+        ),
+        contentPadding: EdgeInsets.only(left: 16, right: 0),
+        trailing: Container(
+          height: 48,
+          width: 48,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print('>>>>>>>>>> delete');
+                },
+                child: SvgPicture.asset(
+                  'assets/svgs/icon_close.svg',
+                  width: 20,
+                  height: 20,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

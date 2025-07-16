@@ -90,6 +90,9 @@ class Messages extends Translations {
           // 班级附件页面
           'class_attachments.title': '【{class_name}】班级附件',
 
+          // 文件预览页面
+          'file_previewer.title': '文件预览',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -219,6 +222,9 @@ class Messages extends Translations {
 
           // 班级附件页面
           'class_attachments.title': '[{class_name}] Class Attachments',
+
+          // 文件预览页面
+          'file_previewer.title': 'File Preview',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

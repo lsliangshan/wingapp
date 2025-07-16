@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>ONLYOFFICE Viewer</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        outline: none;
+      }
+      #placeholder {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .asc-viewer .scroller__wrap,
+      .asc-viewer .page-container {
+        padding: 0 !important; /* 去掉灰框 */
+        margin: 0 !important;
+      }
+      .navbars {
+        display: none !important;
+      }
+      .asc-header .main-logo {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="placeholder" style="width: 100%; height: 100vh"></div>
+    <script src="https://view.liangqy.com/web-apps/apps/api/documents/api.js"></script>
+    <script>
+      const p = new URLSearchParams(location.search);
+      // const fileUrl = decodeURIComponent(
+      //   // "https://img.liangqy.com/wingapp/KA-001.pdf"
+      //   "https://img.liangqy.com/wingapp/nn.pdf"
+      // ); // 自定义参数
+      const fileUrl = decodeURIComponent(p.get("url")); // 自定义参数
+      const fileName = fileUrl.split("/").pop();
+
+      const cfg = {
+        document: {
+          fileType: fileName ? fileName.split(".").pop() : "pdf",
+          title: fileName,
+          url: fileUrl,
+          permissions: { edit: true },
+        },
+        editorConfig: {
+          // mode: "view",
+          lang: "zh-CN",
+          integrationMode: "embed", // 去掉“下载/分享”等按钮
+          customization: {
+            compactToolbar: true, // 单行紧凑工具栏
+            header: false, // 不显示头部
+            toolbarNoTabs: true, // 不显示标签页（白标授权）
+            // toolbarHideFileName: true, // 不显示文件名（白标授权）
+            hideLeftMenu: true,
+            hideRightMenu: true,
+            hideRulers: true,
+            hideNotes: true,
+            logo: false,
+            help: true,
+            feedback: false,
+            zoom: 100, // -2 = Fit to Width
+            mobile: {
+              forceView: true /* 首次强制只读，更轻量 */ /* :contentReference[oaicite:2]{index=2} */,
+              info: false /* 去掉“文档信息”按钮 */,
+              standardView: false /* 关闭“桌面视图”切换 */,
+            },
+            logo: { visible: false },
+          },
+          embedded: {
+            toolbarDocked: "top",
+          },
+        },
+        height: "100%",
+        width: "100%",
+        type: "mobile",
+      };
+      window.doc = new DocsAPI.DocEditor("placeholder", cfg);
+    </script>
+  </body>
+</html>

@@ -16,6 +16,8 @@ import '../modules/class_detail/bindings/class_detail_binding.dart';
 import '../modules/class_detail/views/class_detail_view.dart';
 import '../modules/discovery/bindings/discovery_binding.dart';
 import '../modules/discovery/views/discovery_view.dart';
+import '../modules/file_previewer/bindings/file_previewer_binding.dart';
+import '../modules/file_previewer/views/file_previewer_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -117,6 +119,14 @@ class AppPages {
         classId: Get.arguments['classId'] ?? '',
       ),
       binding: ClassAttachmentsBinding(),
+    ),
+    GetPage(
+      name: _Paths.FILE_PREVIEWER,
+      page: () => FilePreviewerView(
+        fileUrl: Get.arguments['fileUrl'] ?? '',
+        fileName: Get.arguments['fileName'] ?? '',
+      ),
+      binding: FilePreviewerBinding(),
     ),
   ];
 }
