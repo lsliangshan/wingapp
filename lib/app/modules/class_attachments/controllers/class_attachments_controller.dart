@@ -67,6 +67,12 @@ class ClassAttachmentsController extends GetxController {
     }
   }
 
+  Future<void> onRefresh() async {
+    await initAttachments();
+
+    return await Future.delayed(const Duration(milliseconds: 1000));
+  }
+
   Future<void> initAttachments() async {
     NormalResponse normalResponse = await attachmentService.getAttachments(
       classId: classId.value,
@@ -93,5 +99,19 @@ class ClassAttachmentsController extends GetxController {
       'fileUrl': fileUrl,
       'fileName': fileName ?? '',
     });
+  }
+
+  Future<void> gotoCreateAttachment() async {
+    final attachment = await Get.toNamed(
+      Routes.CREATE_ATTACHMENT,
+      arguments: {
+        'classId': classId.value,
+      },
+    );
+
+    if (attachment != null) {
+      attachments.insert(0, attachment);
+      update(['update-class-attachments']);
+    }
   }
 }

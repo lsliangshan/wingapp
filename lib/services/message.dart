@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_http_sse/client/sse_client.dart';

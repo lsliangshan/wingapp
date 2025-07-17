@@ -93,6 +93,17 @@ class Messages extends Translations {
           // 文件预览页面
           'file_previewer.title': '文件预览',
 
+          // 创建附件页面
+          'create_attachment.title': '创建附件',
+          'create_attachment.file_name.label': '文件名',
+          'create_attachment.file_name.hint': '请输入文件名',
+          'create_attachment.default_name': '未命名',
+          'create_attachment.btn.save': '保存',
+          'create_attachment.valid.name.cannot_empty': '文件名不能为空',
+          'create_attachment.file_content.hint': '请输入文件内容',
+          'create_attachment.save.success': '保存成功',
+          'create_attachment.save.failed': '保存失败',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -225,6 +236,19 @@ class Messages extends Translations {
 
           // 文件预览页面
           'file_previewer.title': 'File Preview',
+
+          // 创建附件页面
+          'create_attachment.title': 'Create Attachment',
+          'create_attachment.file_name.label': 'File Name',
+          'create_attachment.file_name.hint': 'Please enter the file name',
+          'create_attachment.default_name': 'Untitled',
+          'create_attachment.btn.save': 'Save',
+          'create_attachment.valid.name.cannot_empty':
+              'File name cannot be empty',
+          'create_attachment.file_content.hint':
+              'Please enter the file content',
+          'create_attachment.save.success': 'Save Success',
+          'create_attachment.save.failed': 'Save Failed',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

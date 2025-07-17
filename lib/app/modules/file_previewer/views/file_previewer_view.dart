@@ -9,44 +9,19 @@ import '../controllers/file_previewer_controller.dart';
 class FilePreviewerView extends GetView<FilePreviewerController> {
   final String fileUrl;
   final String? fileName;
-  final String? mode;
-  FilePreviewerView({
+  const FilePreviewerView({
     super.key,
     required this.fileUrl,
     this.fileName,
-    this.mode,
-  }) {
-    controller.fileNameController.text = fileName ?? 'file_previewer.title'.tr;
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   fileName ?? 'file_previewer.title'.tr,
-        //   style: Get.theme.textTheme.titleMedium,
-        // ),
-        title: Container(
-          width: Get.width - 200,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              EditableText(
-                controller: controller.fileNameController,
-                focusNode: controller.fileNameFocusNode,
-                onTapOutside: (event) {
-                  controller.fileNameFocusNode.unfocus();
-                },
-                textAlign: TextAlign.center,
-                style: Get.theme.textTheme.titleMedium!,
-                cursorColor: Get.theme.primaryColor,
-                backgroundCursorColor: Get.theme.primaryColor,
-              ),
-              Text('.txt')
-            ],
-          ),
+        title: Text(
+          fileName ?? 'file_previewer.title'.tr,
+          style: Get.theme.textTheme.titleMedium,
         ),
         centerTitle: true,
         backgroundColor: Get.theme.scaffoldBackgroundColor,

@@ -18,6 +18,7 @@ abstract class Routes {
   static const CHOOSE_AT_USERS = _Paths.CHOOSE_AT_USERS;
   static const CLASS_ATTACHMENTS = _Paths.CLASS_ATTACHMENTS;
   static const FILE_PREVIEWER = _Paths.FILE_PREVIEWER;
+  static const CREATE_ATTACHMENT = _Paths.CREATE_ATTACHMENT;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const CHOOSE_AT_USERS = '/choose-at-users';
   static const CLASS_ATTACHMENTS = '/class-attachments';
   static const FILE_PREVIEWER = '/file-previewer';
+  static const CREATE_ATTACHMENT = '/create-attachment';
 }

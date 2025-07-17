@@ -14,6 +14,8 @@ import '../modules/class_attachments/bindings/class_attachments_binding.dart';
 import '../modules/class_attachments/views/class_attachments_view.dart';
 import '../modules/class_detail/bindings/class_detail_binding.dart';
 import '../modules/class_detail/views/class_detail_view.dart';
+import '../modules/create_attachment/bindings/create_attachment_binding.dart';
+import '../modules/create_attachment/views/create_attachment_view.dart';
 import '../modules/discovery/bindings/discovery_binding.dart';
 import '../modules/discovery/views/discovery_view.dart';
 import '../modules/file_previewer/bindings/file_previewer_binding.dart';
@@ -127,6 +129,13 @@ class AppPages {
         fileName: Get.arguments['fileName'] ?? '',
       ),
       binding: FilePreviewerBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_ATTACHMENT,
+      page: () => CreateAttachmentView(
+        classId: Get.arguments['classId'] ?? '',
+      ),
+      binding: CreateAttachmentBinding(),
     ),
   ];
 }
