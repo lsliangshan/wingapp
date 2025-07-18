@@ -89,6 +89,8 @@ class Messages extends Translations {
 
           // 班级附件页面
           'class_attachments.title': '【{class_name}】班级附件',
+          'class_attachments.btn.add': '添加附件',
+          'class_attachments.btn.reload': '刷新',
 
           // 文件预览页面
           'file_previewer.title': '文件预览',
@@ -103,6 +105,7 @@ class Messages extends Translations {
           'create_attachment.file_content.hint': '请输入文件内容',
           'create_attachment.save.success': '保存成功',
           'create_attachment.save.failed': '保存失败',
+          'create_attachment.valid.name.already_exists': '文件名已存在',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -233,6 +236,8 @@ class Messages extends Translations {
 
           // 班级附件页面
           'class_attachments.title': '[{class_name}] Class Attachments',
+          'class_attachments.btn.add': 'Add Attachment',
+          'class_attachments.btn.reload': 'Reload',
 
           // 文件预览页面
           'file_previewer.title': 'File Preview',
@@ -249,6 +254,8 @@ class Messages extends Translations {
               'Please enter the file content',
           'create_attachment.save.success': 'Save Success',
           'create_attachment.save.failed': 'Save Failed',
+          'create_attachment.valid.name.already_exists':
+              'File name already exists',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

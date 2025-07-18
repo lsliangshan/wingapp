@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/attachment_entity.dart';
 import 'package:wingapp/models/normal_response.model.dart';
@@ -22,7 +23,11 @@ class CreateAttachmentController extends GetxController {
   FocusNode fileNameFocusNode = FocusNode();
   FocusNode fileContentFocusNode = FocusNode();
 
+  Rx<String> mode = 'create'.obs;
+
   Rx<String> classId = ''.obs;
+
+  Rx<String> attachmentId = ''.obs;
 
   Rx<Class> classDetail = Class(
     id: "",
@@ -43,6 +48,8 @@ class CreateAttachmentController extends GetxController {
 
   Rx<bool> isCreating = false.obs;
 
+  RxList<AttachmentEntity> attachments = RxList<AttachmentEntity>();
+
   @override
   void onInit() {
     super.onInit();
@@ -50,9 +57,39 @@ class CreateAttachmentController extends GetxController {
     initCreateAttachmentFuture = initData();
   }
 
+  Future<void> initAttachments() async {
+    NormalResponse normalResponse = await attachmentService.getAttachments(
+      classId: classId.value,
+    );
+
+    if (normalResponse.code == 200 && normalResponse.data != null) {
+      if (normalResponse.data!['list'] != null &&
+          normalResponse.data!['list'].isNotEmpty) {
+        attachments.value = normalResponse.data!['list']
+            .map<AttachmentEntity>((e) => AttachmentEntity.fromJson(e))
+            .toList();
+      } else {
+        // 无数据
+      }
+    }
+  }
+
   Future<void> initData() async {
     if (Get.arguments != null && Get.arguments['classId'] != null) {
       classId.value = Get.arguments['classId'];
+    }
+    if (Get.arguments != null && Get.arguments['fileName'] != null) {
+      fileNameController.text =
+          Get.arguments['fileName'].replaceAll(RegExp(r'\.txt$'), '');
+    }
+    if (Get.arguments != null && Get.arguments['attachmentId'] != null) {
+      mode.value = 'edit';
+      attachmentId.value = Get.arguments['attachmentId'];
+    }
+    if (Get.arguments != null && Get.arguments['fileUrl'] != null) {
+      fileContentController.text = await attachmentService.getFileContent(
+        fileUrl: Get.arguments['fileUrl'],
+      );
     }
 
     await initClassDetail();
@@ -85,9 +122,24 @@ class CreateAttachmentController extends GetxController {
     if (isCreating.value) {
       return;
     }
+
+    if (mode.value == 'create') {
+      await initAttachments();
+
+      if (attachments.any((element) =>
+          element.filename.replaceAll(RegExp(r'\.txt$'), '') ==
+          fileNameController.text)) {
+        toastService.showError(
+            message: 'create_attachment.valid.name.already_exists'.tr);
+        fileNameFocusNode.requestFocus();
+        return;
+      }
+    }
+
     isCreating.value = true;
 
     NormalResponse normalResponse = await attachmentService.uploadAttachment(
+      attachmentId: attachmentId.value,
       content: fileContentController.text,
       filename: fileNameController.text,
       classId: classId.value,
@@ -96,11 +148,13 @@ class CreateAttachmentController extends GetxController {
       uploaderName: classDetail.value.teacherEnName ?? '',
     );
     if (normalResponse.code == 200) {
-      print('>>>>>>>> 添加成功: ${normalResponse.data}');
-      Get.back(result: AttachmentEntity.fromJson(normalResponse.data!));
+      Get.back(
+          result: AttachmentEntity.fromJson({
+        ...(normalResponse.data!),
+        'updateAt': DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()),
+      }));
       toastService.showSuccess(message: 'create_attachment.save.success'.tr);
     } else {
-      print('>>>>>>>> 添加失败: ${normalResponse.data}');
       toastService.showError(message: 'create_attachment.save.failed'.tr);
     }
 

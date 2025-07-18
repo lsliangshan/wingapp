@@ -8,9 +8,13 @@ import '../controllers/create_attachment_controller.dart';
 
 class CreateAttachmentView extends GetView<CreateAttachmentController> {
   final String classId;
+  final String? fileUrl;
+  final String? fileName;
   const CreateAttachmentView({
     super.key,
     required this.classId,
+    this.fileUrl,
+    this.fileName,
   });
 
   @override
@@ -23,6 +27,7 @@ class CreateAttachmentView extends GetView<CreateAttachmentController> {
           onTapOutside: (event) {
             controller.fileNameFocusNode.unfocus();
           },
+          readOnly: controller.mode.value == 'edit',
           style: Get.theme.textTheme.titleMedium!,
           cursorColor: Get.theme.colorScheme.primary,
           backgroundCursorColor: Get.theme.colorScheme.primary,

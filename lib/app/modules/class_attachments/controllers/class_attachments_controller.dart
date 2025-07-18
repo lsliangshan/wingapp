@@ -91,14 +91,20 @@ class ClassAttachmentsController extends GetxController {
     }
   }
 
-  void gotoFilePreviewer({
+  Future<void> gotoFilePreviewer({
     required String fileUrl,
+    required String attachmentId,
     String? fileName,
-  }) {
-    Get.toNamed(Routes.FILE_PREVIEWER, arguments: {
+  }) async {
+    final attachment = await Get.toNamed(Routes.CREATE_ATTACHMENT, arguments: {
+      'classId': classId.value,
+      'attachmentId': attachmentId,
       'fileUrl': fileUrl,
       'fileName': fileName ?? '',
     });
+    if (attachment != null) {
+      await initAttachments();
+    }
   }
 
   Future<void> gotoCreateAttachment() async {
@@ -110,8 +116,7 @@ class ClassAttachmentsController extends GetxController {
     );
 
     if (attachment != null) {
-      attachments.insert(0, attachment);
-      update(['update-class-attachments']);
+      await initAttachments();
     }
   }
 }

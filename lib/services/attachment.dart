@@ -33,6 +33,7 @@ class AttachmentService extends GetxService {
     required String className,
     required String uploaderId,
     required String uploaderName,
+    String? attachmentId,
   }) async {
     File? file;
 
@@ -52,6 +53,10 @@ class AttachmentService extends GetxService {
       ..fields['className'] = Uri.encodeComponent(className)
       ..fields['uploaderName'] = Uri.encodeComponent(uploaderName)
       ..fields['uploaderId'] = uploaderId;
+
+    if (attachmentId != null && attachmentId.isNotEmpty) {
+      request.fields['attachmentId'] = attachmentId;
+    }
 
     final bytes = utf8.encode(content);
     final multipartFile = http.MultipartFile.fromBytes(
@@ -80,5 +85,12 @@ class AttachmentService extends GetxService {
     // final data = json.decode(response.data);
     // print('>>>>>>> data: $data');
     // return NormalResponse.fromJson(data);
+  }
+
+  Future<String> getFileContent({
+    required String fileUrl,
+  }) async {
+    final response = await http.get(Uri.parse(fileUrl));
+    return utf8.decode(response.bodyBytes);
   }
 }

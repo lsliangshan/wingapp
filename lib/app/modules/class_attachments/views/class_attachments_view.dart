@@ -33,8 +33,8 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
         onTap: () {
-          // controller.gotoClassDetail(classId: controller.classes[index].id);
           controller.gotoFilePreviewer(
+            attachmentId: controller.attachments[index].id,
             fileUrl: controller.attachments[index].url,
             fileName: controller.attachments[index].filename,
           );
@@ -164,7 +164,7 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
                     EmptyResult(
                       mainButton: FilledButton(
                         onPressed: () {
-                          // controller.gotoAddClass();
+                          controller.gotoCreateAttachment();
                         },
                         child: Text('class_attachments.btn.add'.tr),
                       ),
@@ -185,7 +185,7 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
             }
             return GetBuilder(
               init: controller,
-              tag: 'update-class-attachments',
+              id: 'update-class-attachments',
               builder: (_) {
                 return CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
