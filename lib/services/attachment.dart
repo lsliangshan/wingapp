@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:wingapp/models/normal_response.model.dart';
@@ -81,10 +83,38 @@ class AttachmentService extends GetxService {
 
     // 5. 响应处理
     return NormalResponse.fromJson(data);
+  }
 
-    // final data = json.decode(response.data);
-    // print('>>>>>>> data: $data');
-    // return NormalResponse.fromJson(data);
+  Future<NormalResponse> uploadAttachmentsByFiles({
+    required List<XFile> files,
+    required String classId,
+    required String className,
+    required String uploaderId,
+    required String uploaderName,
+  }) async {
+    final uri = Uri.parse(
+        'https://wf.liangqy.com/webhook-test/add-attachments'); // 替换成你的实际 URL
+    final request = http.MultipartRequest('POST', uri)
+      ..fields['classId'] = classId
+      ..fields['className'] = Uri.encodeComponent(className)
+      ..fields['uploaderName'] = Uri.encodeComponent(uploaderName)
+      ..fields['uploaderId'] = uploaderId;
+
+    for (XFile file in files) {
+      print('>>>>>>>>>>> file.mimeType: ${file}');
+      request.files.add(await http.MultipartFile.fromPath(
+        'files',
+        file.path,
+        filename: file.name,
+        contentType: MediaType.parse(lookupMimeType(file.name) ?? 'text/plain'),
+      ));
+    }
+
+    final response = await request.send();
+
+    final data = json.decode(await response.stream.bytesToString());
+
+    return NormalResponse.fromJson(data);
   }
 
   Future<String> getFileContent({

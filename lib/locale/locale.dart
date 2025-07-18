@@ -94,6 +94,7 @@ class Messages extends Translations {
           'class_attachments.from.upload': '从本地上传',
           'class_attachments.from.create': '创建新文件',
           'class_attachments.from.cancel': '取消',
+          'class_attachments.uploading': '上传中...',
 
           // 文件预览页面
           'file_previewer.title': '文件预览',
@@ -128,6 +129,7 @@ class Messages extends Translations {
           'toast.add_class.name_required': '班级名称不能为空',
           'toast.add_class.save.success': '保存成功',
           'toast.add_class.save.fail': '保存失败',
+          'toast.uploading': '上传中...',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -244,6 +246,7 @@ class Messages extends Translations {
           'class_attachments.from.upload': 'Upload from local',
           'class_attachments.from.create': 'Create new file',
           'class_attachments.from.cancel': 'Cancel',
+          'class_attachments.uploading': 'Uploading...',
 
           // 文件预览页面
           'file_previewer.title': 'File Preview',
@@ -282,6 +285,7 @@ class Messages extends Translations {
           'toast.add_class.name_required': 'Class name cannot be empty',
           'toast.add_class.save.success': 'Save Success',
           'toast.add_class.save.fail': 'Save Failed',
+          'toast.uploading': 'Uploading...',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
