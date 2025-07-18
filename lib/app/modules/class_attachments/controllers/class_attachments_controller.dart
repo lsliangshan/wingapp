@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
@@ -108,6 +109,45 @@ class ClassAttachmentsController extends GetxController {
   }
 
   Future<void> gotoCreateAttachment() async {
+    Get.bottomSheet(
+      Container(
+        height: 200,
+        width: Get.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+          color: Get.theme.colorScheme.surface,
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ListTile(
+              title: Text('class_attachments.from.upload'.tr),
+              titleAlignment: ListTileTitleAlignment.center,
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('class_attachments.from.create'.tr),
+              titleAlignment: ListTileTitleAlignment.center,
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('class_attachments.from.cancel'.tr),
+              titleAlignment: ListTileTitleAlignment.center,
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return;
+
     final attachment = await Get.toNamed(
       Routes.CREATE_ATTACHMENT,
       arguments: {

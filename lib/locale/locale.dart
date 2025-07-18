@@ -91,6 +91,9 @@ class Messages extends Translations {
           'class_attachments.title': '【{class_name}】班级附件',
           'class_attachments.btn.add': '添加附件',
           'class_attachments.btn.reload': '刷新',
+          'class_attachments.from.upload': '从本地上传',
+          'class_attachments.from.create': '创建新文件',
+          'class_attachments.from.cancel': '取消',
 
           // 文件预览页面
           'file_previewer.title': '文件预览',
@@ -238,6 +241,9 @@ class Messages extends Translations {
           'class_attachments.title': '[{class_name}] Class Attachments',
           'class_attachments.btn.add': 'Add Attachment',
           'class_attachments.btn.reload': 'Reload',
+          'class_attachments.from.upload': 'Upload from local',
+          'class_attachments.from.create': 'Create new file',
+          'class_attachments.from.cancel': 'Cancel',
 
           // 文件预览页面
           'file_previewer.title': 'File Preview',
