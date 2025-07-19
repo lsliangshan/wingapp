@@ -28,7 +28,7 @@ List tabs = [
     "icon_selected": "assets/svgs/tab_student_selected.svg",
     "label": 'tab.student'.tr,
     "name": TabName.student,
-    "page": const StudentView(),
+    "page": StudentView(),
   },
   {
     "icon": "assets/svgs/tab_schedule_unselected.svg",

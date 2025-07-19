@@ -58,7 +58,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.STUDENT,
-      page: () => const StudentView(),
+      page: () => StudentView(),
       binding: StudentBinding(),
     ),
     GetPage(

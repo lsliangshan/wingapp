@@ -1,22 +1,201 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
+import 'package:wingapp/components/custom_loader/custom_loader.dart';
+import 'package:wingapp/components/empty_result/empty_result.dart';
 
 import '../controllers/student_controller.dart';
 
+// ignore: must_be_immutable
 class StudentView extends GetView<StudentController> {
-  const StudentView({super.key});
+  String? classId;
+  StudentView({super.key, this.classId});
+
+  Widget _buildAvatar(String avatar) {
+    return Container(
+      width: 32,
+      height: 32,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Get.theme.colorScheme.surface,
+      ),
+      child: CachedNetworkImage(
+        imageUrl: avatar,
+        placeholder: (context, url) => Container(
+          width: 32,
+          height: 32,
+          color: Get.theme.colorScheme.surface,
+          child: const Icon(Icons.error),
+        ),
+        errorWidget: (context, url, error) => Container(
+          width: 32,
+          height: 32,
+          color: Get.theme.colorScheme.surface,
+          child: const Icon(Icons.error),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItemData(BuildContext context, int index) {
+    return Container(
+      margin: EdgeInsets.only(left: 16, right: 16, top: index == 0 ? 8 : 4),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Get.theme.dividerColor.withValues(alpha: 0.02),
+            width: index == 0 ? 0 : 1,
+          ),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: ListTile(
+        onTap: () {},
+        leading: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: _buildAvatar(controller.students[index].avatar ?? ''),
+        ),
+        tileColor: Get.theme.colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        title: Text(controller.students[index].name ?? ''),
+        subtitle: Text(
+          controller.students[index].enName ?? '',
+          style: Get.theme.textTheme.bodySmall?.copyWith(
+            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
+        ),
+        contentPadding: EdgeInsets.only(left: 16, right: 0),
+        trailing: Container(
+          height: 48,
+          width: 48,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print('>>>>>>>>>> delete');
+                },
+                child: SvgPicture.asset(
+                  'assets/svgs/icon_close.svg',
+                  width: 20,
+                  height: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItem(BuildContext context, int index) {
+    if (index == controller.students.length - 1) {
+      return Column(
+        children: [
+          _buildItemData(context, index),
+          Container(
+            width: Get.width,
+            height: 40,
+            alignment: Alignment.center,
+            child: Text(
+              'load_more.tips.no_more'.tr,
+              style: Get.theme.textTheme.bodySmall?.copyWith(
+                color: Color(0xFF888888),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    return _buildItemData(context, index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('StudentView'),
+        title: Text(
+          'student.title'.tr,
+          style: Get.theme.textTheme.titleMedium,
+        ),
         centerTitle: true,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        leading: const CustomBackwardView(),
       ),
-      body: const Center(
-        child: Text(
-          'StudentView is working',
-          style: TextStyle(fontSize: 20),
+      body: CustomMaterialIndicator(
+        onRefresh: controller.onRefresh,
+        backgroundColor: Colors.white,
+        indicatorBuilder: customIndicatorBuilder,
+        child: GetBuilder(
+          init: controller,
+          id: 'update-students',
+          builder: (_) {
+            return FutureBuilder(
+              future: controller.initStudentsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Center(
+                    child: CustomLoader(),
+                  );
+                }
+                if (controller.students.isEmpty) {
+                  return ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height - 300,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            EmptyResult(
+                              mainButton: FilledButton(
+                                onPressed: () {},
+                                child: Text('student.btn.add'.tr),
+                              ),
+                              showSecondaryButton: true,
+                              secondaryButton: FilledButton(
+                                onPressed: () {
+                                  controller.onRefresh();
+                                },
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: Colors.black45,
+                                ),
+                                child: Text('student.btn.reload'.tr),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverList.builder(
+                      itemCount: controller.students.length,
+                      itemBuilder: _buildItem,
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         ),
       ),
     );

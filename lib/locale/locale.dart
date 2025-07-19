@@ -34,6 +34,12 @@ class Messages extends Translations {
           'teacher.btn.add': '添加老师',
           'teacher.tip.empty': '暂无数据',
 
+          // 学生管理页面
+          'student.title': '学生管理',
+          'student.btn.add': '添加学生',
+          'student.tip.empty': '暂无数据',
+          'student.btn.reload': '刷新',
+
           // 班级管理页面
           'class.title': '班级管理',
           'class.btn.add': '添加班级',
@@ -185,6 +191,12 @@ class Messages extends Translations {
           'teacher.title': 'Teacher Management',
           'teacher.btn.add': 'Add Teacher',
           'teacher.tip.empty': 'No Data',
+
+          // 学生管理页面
+          'student.title': 'Student Management',
+          'student.btn.add': 'Add Student',
+          'student.tip.empty': 'No Data',
+          'student.btn.reload': 'Reload',
 
           // 班级管理页面
           'class.title': 'Class Management',

@@ -30,7 +30,7 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       'type', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant('全职老师'));
+      defaultValue: const Constant('full-time'));
   static const VerificationMeta _usernameMeta =
       const VerificationMeta('username');
   @override
@@ -76,14 +76,14 @@ class $TeachersTable extends Teachers with TableInfo<$TeachersTable, Teacher> {
       'gender', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant('男'));
+      defaultValue: const Constant('male'));
   static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
   late final GeneratedColumn<String> status = GeneratedColumn<String>(
       'status', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant('在职'));
+      defaultValue: const Constant('active'));
   static const VerificationMeta _adminMeta = const VerificationMeta('admin');
   @override
   late final GeneratedColumn<String> admin = GeneratedColumn<String>(
@@ -2146,12 +2146,1064 @@ class MessagesCompanion extends UpdateCompanion<Message> {
   }
 }
 
+class $StudentsTable extends Students with TableInfo<$StudentsTable, Student> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StudentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _unionIdMeta =
+      const VerificationMeta('unionId');
+  @override
+  late final GeneratedColumn<String> unionId = GeneratedColumn<String>(
+      'union_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _openIdMeta = const VerificationMeta('openId');
+  @override
+  late final GeneratedColumn<String> openId = GeneratedColumn<String>(
+      'open_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _usernameMeta =
+      const VerificationMeta('username');
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+      'username', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _stateCodeMeta =
+      const VerificationMeta('stateCode');
+  @override
+  late final GeneratedColumn<String> stateCode = GeneratedColumn<String>(
+      'state_code', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('86'));
+  static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
+  @override
+  late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
+      'mobile', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _enNameMeta = const VerificationMeta('enName');
+  @override
+  late final GeneratedColumn<String> enName = GeneratedColumn<String>(
+      'en_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _avatarMeta = const VerificationMeta('avatar');
+  @override
+  late final GeneratedColumn<String> avatar = GeneratedColumn<String>(
+      'avatar', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _genderMeta = const VerificationMeta('gender');
+  @override
+  late final GeneratedColumn<String> gender = GeneratedColumn<String>(
+      'gender', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('male'));
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('active'));
+  static const VerificationMeta _classIdMeta =
+      const VerificationMeta('classId');
+  @override
+  late final GeneratedColumn<String> classId = GeneratedColumn<String>(
+      'class_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _teacherIdMeta =
+      const VerificationMeta('teacherId');
+  @override
+  late final GeneratedColumn<String> teacherId = GeneratedColumn<String>(
+      'teacher_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _courseIdMeta =
+      const VerificationMeta('courseId');
+  @override
+  late final GeneratedColumn<String> courseId = GeneratedColumn<String>(
+      'course_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _totalTimesMeta =
+      const VerificationMeta('totalTimes');
+  @override
+  late final GeneratedColumn<String> totalTimes = GeneratedColumn<String>(
+      'total_times', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('0'));
+  static const VerificationMeta _usedTimesMeta =
+      const VerificationMeta('usedTimes');
+  @override
+  late final GeneratedColumn<String> usedTimes = GeneratedColumn<String>(
+      'used_times', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('0'));
+  static const VerificationMeta _lastLoginTimeMeta =
+      const VerificationMeta('lastLoginTime');
+  @override
+  late final GeneratedColumn<String> lastLoginTime = GeneratedColumn<String>(
+      'last_login_time', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().millisecondsSinceEpoch.toString()));
+  static const VerificationMeta _lastLoginIpMeta =
+      const VerificationMeta('lastLoginIp');
+  @override
+  late final GeneratedColumn<String> lastLoginIp = GeneratedColumn<String>(
+      'last_login_ip', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _birthdayMeta =
+      const VerificationMeta('birthday');
+  @override
+  late final GeneratedColumn<String> birthday = GeneratedColumn<String>(
+      'birthday', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(BigInt.from(1548720488000).toString()));
+  static const VerificationMeta _homepageMeta =
+      const VerificationMeta('homepage');
+  @override
+  late final GeneratedColumn<String> homepage = GeneratedColumn<String>(
+      'homepage', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _tokenMeta = const VerificationMeta('token');
+  @override
+  late final GeneratedColumn<String> token = GeneratedColumn<String>(
+      'token', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _loginTypeMeta =
+      const VerificationMeta('loginType');
+  @override
+  late final GeneratedColumn<String> loginType = GeneratedColumn<String>(
+      'login_type', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('dingtalk'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        unionId,
+        openId,
+        username,
+        stateCode,
+        mobile,
+        email,
+        enName,
+        name,
+        avatar,
+        gender,
+        status,
+        classId,
+        teacherId,
+        courseId,
+        totalTimes,
+        usedTimes,
+        lastLoginTime,
+        lastLoginIp,
+        birthday,
+        homepage,
+        token,
+        loginType
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'students';
+  @override
+  VerificationContext validateIntegrity(Insertable<Student> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('union_id')) {
+      context.handle(_unionIdMeta,
+          unionId.isAcceptableOrUnknown(data['union_id']!, _unionIdMeta));
+    }
+    if (data.containsKey('open_id')) {
+      context.handle(_openIdMeta,
+          openId.isAcceptableOrUnknown(data['open_id']!, _openIdMeta));
+    }
+    if (data.containsKey('username')) {
+      context.handle(_usernameMeta,
+          username.isAcceptableOrUnknown(data['username']!, _usernameMeta));
+    }
+    if (data.containsKey('state_code')) {
+      context.handle(_stateCodeMeta,
+          stateCode.isAcceptableOrUnknown(data['state_code']!, _stateCodeMeta));
+    }
+    if (data.containsKey('mobile')) {
+      context.handle(_mobileMeta,
+          mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('en_name')) {
+      context.handle(_enNameMeta,
+          enName.isAcceptableOrUnknown(data['en_name']!, _enNameMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    }
+    if (data.containsKey('avatar')) {
+      context.handle(_avatarMeta,
+          avatar.isAcceptableOrUnknown(data['avatar']!, _avatarMeta));
+    }
+    if (data.containsKey('gender')) {
+      context.handle(_genderMeta,
+          gender.isAcceptableOrUnknown(data['gender']!, _genderMeta));
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    }
+    if (data.containsKey('class_id')) {
+      context.handle(_classIdMeta,
+          classId.isAcceptableOrUnknown(data['class_id']!, _classIdMeta));
+    }
+    if (data.containsKey('teacher_id')) {
+      context.handle(_teacherIdMeta,
+          teacherId.isAcceptableOrUnknown(data['teacher_id']!, _teacherIdMeta));
+    }
+    if (data.containsKey('course_id')) {
+      context.handle(_courseIdMeta,
+          courseId.isAcceptableOrUnknown(data['course_id']!, _courseIdMeta));
+    }
+    if (data.containsKey('total_times')) {
+      context.handle(
+          _totalTimesMeta,
+          totalTimes.isAcceptableOrUnknown(
+              data['total_times']!, _totalTimesMeta));
+    }
+    if (data.containsKey('used_times')) {
+      context.handle(_usedTimesMeta,
+          usedTimes.isAcceptableOrUnknown(data['used_times']!, _usedTimesMeta));
+    }
+    if (data.containsKey('last_login_time')) {
+      context.handle(
+          _lastLoginTimeMeta,
+          lastLoginTime.isAcceptableOrUnknown(
+              data['last_login_time']!, _lastLoginTimeMeta));
+    }
+    if (data.containsKey('last_login_ip')) {
+      context.handle(
+          _lastLoginIpMeta,
+          lastLoginIp.isAcceptableOrUnknown(
+              data['last_login_ip']!, _lastLoginIpMeta));
+    }
+    if (data.containsKey('birthday')) {
+      context.handle(_birthdayMeta,
+          birthday.isAcceptableOrUnknown(data['birthday']!, _birthdayMeta));
+    }
+    if (data.containsKey('homepage')) {
+      context.handle(_homepageMeta,
+          homepage.isAcceptableOrUnknown(data['homepage']!, _homepageMeta));
+    }
+    if (data.containsKey('token')) {
+      context.handle(
+          _tokenMeta, token.isAcceptableOrUnknown(data['token']!, _tokenMeta));
+    }
+    if (data.containsKey('login_type')) {
+      context.handle(_loginTypeMeta,
+          loginType.isAcceptableOrUnknown(data['login_type']!, _loginTypeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Student map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Student(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      unionId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}union_id']),
+      openId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}open_id']),
+      username: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}username']),
+      stateCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}state_code']),
+      mobile: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mobile']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      enName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}en_name']),
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name']),
+      avatar: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}avatar']),
+      gender: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gender']),
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status']),
+      classId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}class_id']),
+      teacherId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_id']),
+      courseId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}course_id']),
+      totalTimes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}total_times']),
+      usedTimes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}used_times']),
+      lastLoginTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_login_time']),
+      lastLoginIp: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_login_ip']),
+      birthday: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}birthday']),
+      homepage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}homepage']),
+      token: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}token']),
+      loginType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}login_type']),
+    );
+  }
+
+  @override
+  $StudentsTable createAlias(String alias) {
+    return $StudentsTable(attachedDatabase, alias);
+  }
+}
+
+class Student extends DataClass implements Insertable<Student> {
+  final String id;
+  final String? unionId;
+  final String? openId;
+  final String? username;
+  final String? stateCode;
+  final String? mobile;
+  final String? email;
+  final String? enName;
+  final String? name;
+  final String? avatar;
+  final String? gender;
+  final String? status;
+  final String? classId;
+  final String? teacherId;
+  final String? courseId;
+  final String? totalTimes;
+  final String? usedTimes;
+  final String? lastLoginTime;
+  final String? lastLoginIp;
+  final String? birthday;
+  final String? homepage;
+  final String? token;
+  final String? loginType;
+  const Student(
+      {required this.id,
+      this.unionId,
+      this.openId,
+      this.username,
+      this.stateCode,
+      this.mobile,
+      this.email,
+      this.enName,
+      this.name,
+      this.avatar,
+      this.gender,
+      this.status,
+      this.classId,
+      this.teacherId,
+      this.courseId,
+      this.totalTimes,
+      this.usedTimes,
+      this.lastLoginTime,
+      this.lastLoginIp,
+      this.birthday,
+      this.homepage,
+      this.token,
+      this.loginType});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || unionId != null) {
+      map['union_id'] = Variable<String>(unionId);
+    }
+    if (!nullToAbsent || openId != null) {
+      map['open_id'] = Variable<String>(openId);
+    }
+    if (!nullToAbsent || username != null) {
+      map['username'] = Variable<String>(username);
+    }
+    if (!nullToAbsent || stateCode != null) {
+      map['state_code'] = Variable<String>(stateCode);
+    }
+    if (!nullToAbsent || mobile != null) {
+      map['mobile'] = Variable<String>(mobile);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || enName != null) {
+      map['en_name'] = Variable<String>(enName);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || avatar != null) {
+      map['avatar'] = Variable<String>(avatar);
+    }
+    if (!nullToAbsent || gender != null) {
+      map['gender'] = Variable<String>(gender);
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] = Variable<String>(status);
+    }
+    if (!nullToAbsent || classId != null) {
+      map['class_id'] = Variable<String>(classId);
+    }
+    if (!nullToAbsent || teacherId != null) {
+      map['teacher_id'] = Variable<String>(teacherId);
+    }
+    if (!nullToAbsent || courseId != null) {
+      map['course_id'] = Variable<String>(courseId);
+    }
+    if (!nullToAbsent || totalTimes != null) {
+      map['total_times'] = Variable<String>(totalTimes);
+    }
+    if (!nullToAbsent || usedTimes != null) {
+      map['used_times'] = Variable<String>(usedTimes);
+    }
+    if (!nullToAbsent || lastLoginTime != null) {
+      map['last_login_time'] = Variable<String>(lastLoginTime);
+    }
+    if (!nullToAbsent || lastLoginIp != null) {
+      map['last_login_ip'] = Variable<String>(lastLoginIp);
+    }
+    if (!nullToAbsent || birthday != null) {
+      map['birthday'] = Variable<String>(birthday);
+    }
+    if (!nullToAbsent || homepage != null) {
+      map['homepage'] = Variable<String>(homepage);
+    }
+    if (!nullToAbsent || token != null) {
+      map['token'] = Variable<String>(token);
+    }
+    if (!nullToAbsent || loginType != null) {
+      map['login_type'] = Variable<String>(loginType);
+    }
+    return map;
+  }
+
+  StudentsCompanion toCompanion(bool nullToAbsent) {
+    return StudentsCompanion(
+      id: Value(id),
+      unionId: unionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unionId),
+      openId:
+          openId == null && nullToAbsent ? const Value.absent() : Value(openId),
+      username: username == null && nullToAbsent
+          ? const Value.absent()
+          : Value(username),
+      stateCode: stateCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(stateCode),
+      mobile:
+          mobile == null && nullToAbsent ? const Value.absent() : Value(mobile),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      enName:
+          enName == null && nullToAbsent ? const Value.absent() : Value(enName),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      avatar:
+          avatar == null && nullToAbsent ? const Value.absent() : Value(avatar),
+      gender:
+          gender == null && nullToAbsent ? const Value.absent() : Value(gender),
+      status:
+          status == null && nullToAbsent ? const Value.absent() : Value(status),
+      classId: classId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(classId),
+      teacherId: teacherId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(teacherId),
+      courseId: courseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(courseId),
+      totalTimes: totalTimes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalTimes),
+      usedTimes: usedTimes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usedTimes),
+      lastLoginTime: lastLoginTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastLoginTime),
+      lastLoginIp: lastLoginIp == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastLoginIp),
+      birthday: birthday == null && nullToAbsent
+          ? const Value.absent()
+          : Value(birthday),
+      homepage: homepage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(homepage),
+      token:
+          token == null && nullToAbsent ? const Value.absent() : Value(token),
+      loginType: loginType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(loginType),
+    );
+  }
+
+  factory Student.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Student(
+      id: serializer.fromJson<String>(json['id']),
+      unionId: serializer.fromJson<String?>(json['unionId']),
+      openId: serializer.fromJson<String?>(json['openId']),
+      username: serializer.fromJson<String?>(json['username']),
+      stateCode: serializer.fromJson<String?>(json['stateCode']),
+      mobile: serializer.fromJson<String?>(json['mobile']),
+      email: serializer.fromJson<String?>(json['email']),
+      enName: serializer.fromJson<String?>(json['enName']),
+      name: serializer.fromJson<String?>(json['name']),
+      avatar: serializer.fromJson<String?>(json['avatar']),
+      gender: serializer.fromJson<String?>(json['gender']),
+      status: serializer.fromJson<String?>(json['status']),
+      classId: serializer.fromJson<String?>(json['classId']),
+      teacherId: serializer.fromJson<String?>(json['teacherId']),
+      courseId: serializer.fromJson<String?>(json['courseId']),
+      totalTimes: serializer.fromJson<String?>(json['totalTimes']),
+      usedTimes: serializer.fromJson<String?>(json['usedTimes']),
+      lastLoginTime: serializer.fromJson<String?>(json['lastLoginTime']),
+      lastLoginIp: serializer.fromJson<String?>(json['lastLoginIp']),
+      birthday: serializer.fromJson<String?>(json['birthday']),
+      homepage: serializer.fromJson<String?>(json['homepage']),
+      token: serializer.fromJson<String?>(json['token']),
+      loginType: serializer.fromJson<String?>(json['loginType']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'unionId': serializer.toJson<String?>(unionId),
+      'openId': serializer.toJson<String?>(openId),
+      'username': serializer.toJson<String?>(username),
+      'stateCode': serializer.toJson<String?>(stateCode),
+      'mobile': serializer.toJson<String?>(mobile),
+      'email': serializer.toJson<String?>(email),
+      'enName': serializer.toJson<String?>(enName),
+      'name': serializer.toJson<String?>(name),
+      'avatar': serializer.toJson<String?>(avatar),
+      'gender': serializer.toJson<String?>(gender),
+      'status': serializer.toJson<String?>(status),
+      'classId': serializer.toJson<String?>(classId),
+      'teacherId': serializer.toJson<String?>(teacherId),
+      'courseId': serializer.toJson<String?>(courseId),
+      'totalTimes': serializer.toJson<String?>(totalTimes),
+      'usedTimes': serializer.toJson<String?>(usedTimes),
+      'lastLoginTime': serializer.toJson<String?>(lastLoginTime),
+      'lastLoginIp': serializer.toJson<String?>(lastLoginIp),
+      'birthday': serializer.toJson<String?>(birthday),
+      'homepage': serializer.toJson<String?>(homepage),
+      'token': serializer.toJson<String?>(token),
+      'loginType': serializer.toJson<String?>(loginType),
+    };
+  }
+
+  Student copyWith(
+          {String? id,
+          Value<String?> unionId = const Value.absent(),
+          Value<String?> openId = const Value.absent(),
+          Value<String?> username = const Value.absent(),
+          Value<String?> stateCode = const Value.absent(),
+          Value<String?> mobile = const Value.absent(),
+          Value<String?> email = const Value.absent(),
+          Value<String?> enName = const Value.absent(),
+          Value<String?> name = const Value.absent(),
+          Value<String?> avatar = const Value.absent(),
+          Value<String?> gender = const Value.absent(),
+          Value<String?> status = const Value.absent(),
+          Value<String?> classId = const Value.absent(),
+          Value<String?> teacherId = const Value.absent(),
+          Value<String?> courseId = const Value.absent(),
+          Value<String?> totalTimes = const Value.absent(),
+          Value<String?> usedTimes = const Value.absent(),
+          Value<String?> lastLoginTime = const Value.absent(),
+          Value<String?> lastLoginIp = const Value.absent(),
+          Value<String?> birthday = const Value.absent(),
+          Value<String?> homepage = const Value.absent(),
+          Value<String?> token = const Value.absent(),
+          Value<String?> loginType = const Value.absent()}) =>
+      Student(
+        id: id ?? this.id,
+        unionId: unionId.present ? unionId.value : this.unionId,
+        openId: openId.present ? openId.value : this.openId,
+        username: username.present ? username.value : this.username,
+        stateCode: stateCode.present ? stateCode.value : this.stateCode,
+        mobile: mobile.present ? mobile.value : this.mobile,
+        email: email.present ? email.value : this.email,
+        enName: enName.present ? enName.value : this.enName,
+        name: name.present ? name.value : this.name,
+        avatar: avatar.present ? avatar.value : this.avatar,
+        gender: gender.present ? gender.value : this.gender,
+        status: status.present ? status.value : this.status,
+        classId: classId.present ? classId.value : this.classId,
+        teacherId: teacherId.present ? teacherId.value : this.teacherId,
+        courseId: courseId.present ? courseId.value : this.courseId,
+        totalTimes: totalTimes.present ? totalTimes.value : this.totalTimes,
+        usedTimes: usedTimes.present ? usedTimes.value : this.usedTimes,
+        lastLoginTime:
+            lastLoginTime.present ? lastLoginTime.value : this.lastLoginTime,
+        lastLoginIp: lastLoginIp.present ? lastLoginIp.value : this.lastLoginIp,
+        birthday: birthday.present ? birthday.value : this.birthday,
+        homepage: homepage.present ? homepage.value : this.homepage,
+        token: token.present ? token.value : this.token,
+        loginType: loginType.present ? loginType.value : this.loginType,
+      );
+  Student copyWithCompanion(StudentsCompanion data) {
+    return Student(
+      id: data.id.present ? data.id.value : this.id,
+      unionId: data.unionId.present ? data.unionId.value : this.unionId,
+      openId: data.openId.present ? data.openId.value : this.openId,
+      username: data.username.present ? data.username.value : this.username,
+      stateCode: data.stateCode.present ? data.stateCode.value : this.stateCode,
+      mobile: data.mobile.present ? data.mobile.value : this.mobile,
+      email: data.email.present ? data.email.value : this.email,
+      enName: data.enName.present ? data.enName.value : this.enName,
+      name: data.name.present ? data.name.value : this.name,
+      avatar: data.avatar.present ? data.avatar.value : this.avatar,
+      gender: data.gender.present ? data.gender.value : this.gender,
+      status: data.status.present ? data.status.value : this.status,
+      classId: data.classId.present ? data.classId.value : this.classId,
+      teacherId: data.teacherId.present ? data.teacherId.value : this.teacherId,
+      courseId: data.courseId.present ? data.courseId.value : this.courseId,
+      totalTimes:
+          data.totalTimes.present ? data.totalTimes.value : this.totalTimes,
+      usedTimes: data.usedTimes.present ? data.usedTimes.value : this.usedTimes,
+      lastLoginTime: data.lastLoginTime.present
+          ? data.lastLoginTime.value
+          : this.lastLoginTime,
+      lastLoginIp:
+          data.lastLoginIp.present ? data.lastLoginIp.value : this.lastLoginIp,
+      birthday: data.birthday.present ? data.birthday.value : this.birthday,
+      homepage: data.homepage.present ? data.homepage.value : this.homepage,
+      token: data.token.present ? data.token.value : this.token,
+      loginType: data.loginType.present ? data.loginType.value : this.loginType,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Student(')
+          ..write('id: $id, ')
+          ..write('unionId: $unionId, ')
+          ..write('openId: $openId, ')
+          ..write('username: $username, ')
+          ..write('stateCode: $stateCode, ')
+          ..write('mobile: $mobile, ')
+          ..write('email: $email, ')
+          ..write('enName: $enName, ')
+          ..write('name: $name, ')
+          ..write('avatar: $avatar, ')
+          ..write('gender: $gender, ')
+          ..write('status: $status, ')
+          ..write('classId: $classId, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('courseId: $courseId, ')
+          ..write('totalTimes: $totalTimes, ')
+          ..write('usedTimes: $usedTimes, ')
+          ..write('lastLoginTime: $lastLoginTime, ')
+          ..write('lastLoginIp: $lastLoginIp, ')
+          ..write('birthday: $birthday, ')
+          ..write('homepage: $homepage, ')
+          ..write('token: $token, ')
+          ..write('loginType: $loginType')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        id,
+        unionId,
+        openId,
+        username,
+        stateCode,
+        mobile,
+        email,
+        enName,
+        name,
+        avatar,
+        gender,
+        status,
+        classId,
+        teacherId,
+        courseId,
+        totalTimes,
+        usedTimes,
+        lastLoginTime,
+        lastLoginIp,
+        birthday,
+        homepage,
+        token,
+        loginType
+      ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Student &&
+          other.id == this.id &&
+          other.unionId == this.unionId &&
+          other.openId == this.openId &&
+          other.username == this.username &&
+          other.stateCode == this.stateCode &&
+          other.mobile == this.mobile &&
+          other.email == this.email &&
+          other.enName == this.enName &&
+          other.name == this.name &&
+          other.avatar == this.avatar &&
+          other.gender == this.gender &&
+          other.status == this.status &&
+          other.classId == this.classId &&
+          other.teacherId == this.teacherId &&
+          other.courseId == this.courseId &&
+          other.totalTimes == this.totalTimes &&
+          other.usedTimes == this.usedTimes &&
+          other.lastLoginTime == this.lastLoginTime &&
+          other.lastLoginIp == this.lastLoginIp &&
+          other.birthday == this.birthday &&
+          other.homepage == this.homepage &&
+          other.token == this.token &&
+          other.loginType == this.loginType);
+}
+
+class StudentsCompanion extends UpdateCompanion<Student> {
+  final Value<String> id;
+  final Value<String?> unionId;
+  final Value<String?> openId;
+  final Value<String?> username;
+  final Value<String?> stateCode;
+  final Value<String?> mobile;
+  final Value<String?> email;
+  final Value<String?> enName;
+  final Value<String?> name;
+  final Value<String?> avatar;
+  final Value<String?> gender;
+  final Value<String?> status;
+  final Value<String?> classId;
+  final Value<String?> teacherId;
+  final Value<String?> courseId;
+  final Value<String?> totalTimes;
+  final Value<String?> usedTimes;
+  final Value<String?> lastLoginTime;
+  final Value<String?> lastLoginIp;
+  final Value<String?> birthday;
+  final Value<String?> homepage;
+  final Value<String?> token;
+  final Value<String?> loginType;
+  final Value<int> rowid;
+  const StudentsCompanion({
+    this.id = const Value.absent(),
+    this.unionId = const Value.absent(),
+    this.openId = const Value.absent(),
+    this.username = const Value.absent(),
+    this.stateCode = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.email = const Value.absent(),
+    this.enName = const Value.absent(),
+    this.name = const Value.absent(),
+    this.avatar = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.status = const Value.absent(),
+    this.classId = const Value.absent(),
+    this.teacherId = const Value.absent(),
+    this.courseId = const Value.absent(),
+    this.totalTimes = const Value.absent(),
+    this.usedTimes = const Value.absent(),
+    this.lastLoginTime = const Value.absent(),
+    this.lastLoginIp = const Value.absent(),
+    this.birthday = const Value.absent(),
+    this.homepage = const Value.absent(),
+    this.token = const Value.absent(),
+    this.loginType = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StudentsCompanion.insert({
+    required String id,
+    this.unionId = const Value.absent(),
+    this.openId = const Value.absent(),
+    this.username = const Value.absent(),
+    this.stateCode = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.email = const Value.absent(),
+    this.enName = const Value.absent(),
+    this.name = const Value.absent(),
+    this.avatar = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.status = const Value.absent(),
+    this.classId = const Value.absent(),
+    this.teacherId = const Value.absent(),
+    this.courseId = const Value.absent(),
+    this.totalTimes = const Value.absent(),
+    this.usedTimes = const Value.absent(),
+    this.lastLoginTime = const Value.absent(),
+    this.lastLoginIp = const Value.absent(),
+    this.birthday = const Value.absent(),
+    this.homepage = const Value.absent(),
+    this.token = const Value.absent(),
+    this.loginType = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id);
+  static Insertable<Student> custom({
+    Expression<String>? id,
+    Expression<String>? unionId,
+    Expression<String>? openId,
+    Expression<String>? username,
+    Expression<String>? stateCode,
+    Expression<String>? mobile,
+    Expression<String>? email,
+    Expression<String>? enName,
+    Expression<String>? name,
+    Expression<String>? avatar,
+    Expression<String>? gender,
+    Expression<String>? status,
+    Expression<String>? classId,
+    Expression<String>? teacherId,
+    Expression<String>? courseId,
+    Expression<String>? totalTimes,
+    Expression<String>? usedTimes,
+    Expression<String>? lastLoginTime,
+    Expression<String>? lastLoginIp,
+    Expression<String>? birthday,
+    Expression<String>? homepage,
+    Expression<String>? token,
+    Expression<String>? loginType,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (unionId != null) 'union_id': unionId,
+      if (openId != null) 'open_id': openId,
+      if (username != null) 'username': username,
+      if (stateCode != null) 'state_code': stateCode,
+      if (mobile != null) 'mobile': mobile,
+      if (email != null) 'email': email,
+      if (enName != null) 'en_name': enName,
+      if (name != null) 'name': name,
+      if (avatar != null) 'avatar': avatar,
+      if (gender != null) 'gender': gender,
+      if (status != null) 'status': status,
+      if (classId != null) 'class_id': classId,
+      if (teacherId != null) 'teacher_id': teacherId,
+      if (courseId != null) 'course_id': courseId,
+      if (totalTimes != null) 'total_times': totalTimes,
+      if (usedTimes != null) 'used_times': usedTimes,
+      if (lastLoginTime != null) 'last_login_time': lastLoginTime,
+      if (lastLoginIp != null) 'last_login_ip': lastLoginIp,
+      if (birthday != null) 'birthday': birthday,
+      if (homepage != null) 'homepage': homepage,
+      if (token != null) 'token': token,
+      if (loginType != null) 'login_type': loginType,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StudentsCompanion copyWith(
+      {Value<String>? id,
+      Value<String?>? unionId,
+      Value<String?>? openId,
+      Value<String?>? username,
+      Value<String?>? stateCode,
+      Value<String?>? mobile,
+      Value<String?>? email,
+      Value<String?>? enName,
+      Value<String?>? name,
+      Value<String?>? avatar,
+      Value<String?>? gender,
+      Value<String?>? status,
+      Value<String?>? classId,
+      Value<String?>? teacherId,
+      Value<String?>? courseId,
+      Value<String?>? totalTimes,
+      Value<String?>? usedTimes,
+      Value<String?>? lastLoginTime,
+      Value<String?>? lastLoginIp,
+      Value<String?>? birthday,
+      Value<String?>? homepage,
+      Value<String?>? token,
+      Value<String?>? loginType,
+      Value<int>? rowid}) {
+    return StudentsCompanion(
+      id: id ?? this.id,
+      unionId: unionId ?? this.unionId,
+      openId: openId ?? this.openId,
+      username: username ?? this.username,
+      stateCode: stateCode ?? this.stateCode,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
+      enName: enName ?? this.enName,
+      name: name ?? this.name,
+      avatar: avatar ?? this.avatar,
+      gender: gender ?? this.gender,
+      status: status ?? this.status,
+      classId: classId ?? this.classId,
+      teacherId: teacherId ?? this.teacherId,
+      courseId: courseId ?? this.courseId,
+      totalTimes: totalTimes ?? this.totalTimes,
+      usedTimes: usedTimes ?? this.usedTimes,
+      lastLoginTime: lastLoginTime ?? this.lastLoginTime,
+      lastLoginIp: lastLoginIp ?? this.lastLoginIp,
+      birthday: birthday ?? this.birthday,
+      homepage: homepage ?? this.homepage,
+      token: token ?? this.token,
+      loginType: loginType ?? this.loginType,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (unionId.present) {
+      map['union_id'] = Variable<String>(unionId.value);
+    }
+    if (openId.present) {
+      map['open_id'] = Variable<String>(openId.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (stateCode.present) {
+      map['state_code'] = Variable<String>(stateCode.value);
+    }
+    if (mobile.present) {
+      map['mobile'] = Variable<String>(mobile.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (enName.present) {
+      map['en_name'] = Variable<String>(enName.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (avatar.present) {
+      map['avatar'] = Variable<String>(avatar.value);
+    }
+    if (gender.present) {
+      map['gender'] = Variable<String>(gender.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (classId.present) {
+      map['class_id'] = Variable<String>(classId.value);
+    }
+    if (teacherId.present) {
+      map['teacher_id'] = Variable<String>(teacherId.value);
+    }
+    if (courseId.present) {
+      map['course_id'] = Variable<String>(courseId.value);
+    }
+    if (totalTimes.present) {
+      map['total_times'] = Variable<String>(totalTimes.value);
+    }
+    if (usedTimes.present) {
+      map['used_times'] = Variable<String>(usedTimes.value);
+    }
+    if (lastLoginTime.present) {
+      map['last_login_time'] = Variable<String>(lastLoginTime.value);
+    }
+    if (lastLoginIp.present) {
+      map['last_login_ip'] = Variable<String>(lastLoginIp.value);
+    }
+    if (birthday.present) {
+      map['birthday'] = Variable<String>(birthday.value);
+    }
+    if (homepage.present) {
+      map['homepage'] = Variable<String>(homepage.value);
+    }
+    if (token.present) {
+      map['token'] = Variable<String>(token.value);
+    }
+    if (loginType.present) {
+      map['login_type'] = Variable<String>(loginType.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StudentsCompanion(')
+          ..write('id: $id, ')
+          ..write('unionId: $unionId, ')
+          ..write('openId: $openId, ')
+          ..write('username: $username, ')
+          ..write('stateCode: $stateCode, ')
+          ..write('mobile: $mobile, ')
+          ..write('email: $email, ')
+          ..write('enName: $enName, ')
+          ..write('name: $name, ')
+          ..write('avatar: $avatar, ')
+          ..write('gender: $gender, ')
+          ..write('status: $status, ')
+          ..write('classId: $classId, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('courseId: $courseId, ')
+          ..write('totalTimes: $totalTimes, ')
+          ..write('usedTimes: $usedTimes, ')
+          ..write('lastLoginTime: $lastLoginTime, ')
+          ..write('lastLoginIp: $lastLoginIp, ')
+          ..write('birthday: $birthday, ')
+          ..write('homepage: $homepage, ')
+          ..write('token: $token, ')
+          ..write('loginType: $loginType, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $TeachersTable teachers = $TeachersTable(this);
   late final $ClassesTable classes = $ClassesTable(this);
   late final $MessagesTable messages = $MessagesTable(this);
+  late final $StudentsTable students = $StudentsTable(this);
   late final TeacherDao teacherDao = TeacherDao(this as AppDatabase);
   late final ClassDao classDao = ClassDao(this as AppDatabase);
   late final MessageDao messageDao = MessageDao(this as AppDatabase);
@@ -2160,7 +3212,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [teachers, classes, messages];
+      [teachers, classes, messages, students];
 }
 
 typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
@@ -3100,6 +4152,442 @@ typedef $$MessagesTableProcessedTableManager = ProcessedTableManager<
     (Message, BaseReferences<_$AppDatabase, $MessagesTable, Message>),
     Message,
     PrefetchHooks Function()>;
+typedef $$StudentsTableCreateCompanionBuilder = StudentsCompanion Function({
+  required String id,
+  Value<String?> unionId,
+  Value<String?> openId,
+  Value<String?> username,
+  Value<String?> stateCode,
+  Value<String?> mobile,
+  Value<String?> email,
+  Value<String?> enName,
+  Value<String?> name,
+  Value<String?> avatar,
+  Value<String?> gender,
+  Value<String?> status,
+  Value<String?> classId,
+  Value<String?> teacherId,
+  Value<String?> courseId,
+  Value<String?> totalTimes,
+  Value<String?> usedTimes,
+  Value<String?> lastLoginTime,
+  Value<String?> lastLoginIp,
+  Value<String?> birthday,
+  Value<String?> homepage,
+  Value<String?> token,
+  Value<String?> loginType,
+  Value<int> rowid,
+});
+typedef $$StudentsTableUpdateCompanionBuilder = StudentsCompanion Function({
+  Value<String> id,
+  Value<String?> unionId,
+  Value<String?> openId,
+  Value<String?> username,
+  Value<String?> stateCode,
+  Value<String?> mobile,
+  Value<String?> email,
+  Value<String?> enName,
+  Value<String?> name,
+  Value<String?> avatar,
+  Value<String?> gender,
+  Value<String?> status,
+  Value<String?> classId,
+  Value<String?> teacherId,
+  Value<String?> courseId,
+  Value<String?> totalTimes,
+  Value<String?> usedTimes,
+  Value<String?> lastLoginTime,
+  Value<String?> lastLoginIp,
+  Value<String?> birthday,
+  Value<String?> homepage,
+  Value<String?> token,
+  Value<String?> loginType,
+  Value<int> rowid,
+});
+
+class $$StudentsTableFilterComposer
+    extends Composer<_$AppDatabase, $StudentsTable> {
+  $$StudentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get unionId => $composableBuilder(
+      column: $table.unionId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get openId => $composableBuilder(
+      column: $table.openId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get username => $composableBuilder(
+      column: $table.username, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get stateCode => $composableBuilder(
+      column: $table.stateCode, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get mobile => $composableBuilder(
+      column: $table.mobile, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get enName => $composableBuilder(
+      column: $table.enName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get avatar => $composableBuilder(
+      column: $table.avatar, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get gender => $composableBuilder(
+      column: $table.gender, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get courseId => $composableBuilder(
+      column: $table.courseId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get totalTimes => $composableBuilder(
+      column: $table.totalTimes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get usedTimes => $composableBuilder(
+      column: $table.usedTimes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lastLoginTime => $composableBuilder(
+      column: $table.lastLoginTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lastLoginIp => $composableBuilder(
+      column: $table.lastLoginIp, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get birthday => $composableBuilder(
+      column: $table.birthday, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get homepage => $composableBuilder(
+      column: $table.homepage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get token => $composableBuilder(
+      column: $table.token, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get loginType => $composableBuilder(
+      column: $table.loginType, builder: (column) => ColumnFilters(column));
+}
+
+class $$StudentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $StudentsTable> {
+  $$StudentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get unionId => $composableBuilder(
+      column: $table.unionId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get openId => $composableBuilder(
+      column: $table.openId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get username => $composableBuilder(
+      column: $table.username, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get stateCode => $composableBuilder(
+      column: $table.stateCode, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get mobile => $composableBuilder(
+      column: $table.mobile, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get enName => $composableBuilder(
+      column: $table.enName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get avatar => $composableBuilder(
+      column: $table.avatar, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get gender => $composableBuilder(
+      column: $table.gender, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get courseId => $composableBuilder(
+      column: $table.courseId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get totalTimes => $composableBuilder(
+      column: $table.totalTimes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get usedTimes => $composableBuilder(
+      column: $table.usedTimes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lastLoginTime => $composableBuilder(
+      column: $table.lastLoginTime,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lastLoginIp => $composableBuilder(
+      column: $table.lastLoginIp, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get birthday => $composableBuilder(
+      column: $table.birthday, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get homepage => $composableBuilder(
+      column: $table.homepage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get token => $composableBuilder(
+      column: $table.token, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get loginType => $composableBuilder(
+      column: $table.loginType, builder: (column) => ColumnOrderings(column));
+}
+
+class $$StudentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $StudentsTable> {
+  $$StudentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get unionId =>
+      $composableBuilder(column: $table.unionId, builder: (column) => column);
+
+  GeneratedColumn<String> get openId =>
+      $composableBuilder(column: $table.openId, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get stateCode =>
+      $composableBuilder(column: $table.stateCode, builder: (column) => column);
+
+  GeneratedColumn<String> get mobile =>
+      $composableBuilder(column: $table.mobile, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get enName =>
+      $composableBuilder(column: $table.enName, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get avatar =>
+      $composableBuilder(column: $table.avatar, builder: (column) => column);
+
+  GeneratedColumn<String> get gender =>
+      $composableBuilder(column: $table.gender, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get classId =>
+      $composableBuilder(column: $table.classId, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherId =>
+      $composableBuilder(column: $table.teacherId, builder: (column) => column);
+
+  GeneratedColumn<String> get courseId =>
+      $composableBuilder(column: $table.courseId, builder: (column) => column);
+
+  GeneratedColumn<String> get totalTimes => $composableBuilder(
+      column: $table.totalTimes, builder: (column) => column);
+
+  GeneratedColumn<String> get usedTimes =>
+      $composableBuilder(column: $table.usedTimes, builder: (column) => column);
+
+  GeneratedColumn<String> get lastLoginTime => $composableBuilder(
+      column: $table.lastLoginTime, builder: (column) => column);
+
+  GeneratedColumn<String> get lastLoginIp => $composableBuilder(
+      column: $table.lastLoginIp, builder: (column) => column);
+
+  GeneratedColumn<String> get birthday =>
+      $composableBuilder(column: $table.birthday, builder: (column) => column);
+
+  GeneratedColumn<String> get homepage =>
+      $composableBuilder(column: $table.homepage, builder: (column) => column);
+
+  GeneratedColumn<String> get token =>
+      $composableBuilder(column: $table.token, builder: (column) => column);
+
+  GeneratedColumn<String> get loginType =>
+      $composableBuilder(column: $table.loginType, builder: (column) => column);
+}
+
+class $$StudentsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $StudentsTable,
+    Student,
+    $$StudentsTableFilterComposer,
+    $$StudentsTableOrderingComposer,
+    $$StudentsTableAnnotationComposer,
+    $$StudentsTableCreateCompanionBuilder,
+    $$StudentsTableUpdateCompanionBuilder,
+    (Student, BaseReferences<_$AppDatabase, $StudentsTable, Student>),
+    Student,
+    PrefetchHooks Function()> {
+  $$StudentsTableTableManager(_$AppDatabase db, $StudentsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$StudentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$StudentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$StudentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String?> unionId = const Value.absent(),
+            Value<String?> openId = const Value.absent(),
+            Value<String?> username = const Value.absent(),
+            Value<String?> stateCode = const Value.absent(),
+            Value<String?> mobile = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> enName = const Value.absent(),
+            Value<String?> name = const Value.absent(),
+            Value<String?> avatar = const Value.absent(),
+            Value<String?> gender = const Value.absent(),
+            Value<String?> status = const Value.absent(),
+            Value<String?> classId = const Value.absent(),
+            Value<String?> teacherId = const Value.absent(),
+            Value<String?> courseId = const Value.absent(),
+            Value<String?> totalTimes = const Value.absent(),
+            Value<String?> usedTimes = const Value.absent(),
+            Value<String?> lastLoginTime = const Value.absent(),
+            Value<String?> lastLoginIp = const Value.absent(),
+            Value<String?> birthday = const Value.absent(),
+            Value<String?> homepage = const Value.absent(),
+            Value<String?> token = const Value.absent(),
+            Value<String?> loginType = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              StudentsCompanion(
+            id: id,
+            unionId: unionId,
+            openId: openId,
+            username: username,
+            stateCode: stateCode,
+            mobile: mobile,
+            email: email,
+            enName: enName,
+            name: name,
+            avatar: avatar,
+            gender: gender,
+            status: status,
+            classId: classId,
+            teacherId: teacherId,
+            courseId: courseId,
+            totalTimes: totalTimes,
+            usedTimes: usedTimes,
+            lastLoginTime: lastLoginTime,
+            lastLoginIp: lastLoginIp,
+            birthday: birthday,
+            homepage: homepage,
+            token: token,
+            loginType: loginType,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            Value<String?> unionId = const Value.absent(),
+            Value<String?> openId = const Value.absent(),
+            Value<String?> username = const Value.absent(),
+            Value<String?> stateCode = const Value.absent(),
+            Value<String?> mobile = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> enName = const Value.absent(),
+            Value<String?> name = const Value.absent(),
+            Value<String?> avatar = const Value.absent(),
+            Value<String?> gender = const Value.absent(),
+            Value<String?> status = const Value.absent(),
+            Value<String?> classId = const Value.absent(),
+            Value<String?> teacherId = const Value.absent(),
+            Value<String?> courseId = const Value.absent(),
+            Value<String?> totalTimes = const Value.absent(),
+            Value<String?> usedTimes = const Value.absent(),
+            Value<String?> lastLoginTime = const Value.absent(),
+            Value<String?> lastLoginIp = const Value.absent(),
+            Value<String?> birthday = const Value.absent(),
+            Value<String?> homepage = const Value.absent(),
+            Value<String?> token = const Value.absent(),
+            Value<String?> loginType = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              StudentsCompanion.insert(
+            id: id,
+            unionId: unionId,
+            openId: openId,
+            username: username,
+            stateCode: stateCode,
+            mobile: mobile,
+            email: email,
+            enName: enName,
+            name: name,
+            avatar: avatar,
+            gender: gender,
+            status: status,
+            classId: classId,
+            teacherId: teacherId,
+            courseId: courseId,
+            totalTimes: totalTimes,
+            usedTimes: usedTimes,
+            lastLoginTime: lastLoginTime,
+            lastLoginIp: lastLoginIp,
+            birthday: birthday,
+            homepage: homepage,
+            token: token,
+            loginType: loginType,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$StudentsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $StudentsTable,
+    Student,
+    $$StudentsTableFilterComposer,
+    $$StudentsTableOrderingComposer,
+    $$StudentsTableAnnotationComposer,
+    $$StudentsTableCreateCompanionBuilder,
+    $$StudentsTableUpdateCompanionBuilder,
+    (Student, BaseReferences<_$AppDatabase, $StudentsTable, Student>),
+    Student,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3110,4 +4598,6 @@ class $AppDatabaseManager {
       $$ClassesTableTableManager(_db, _db.classes);
   $$MessagesTableTableManager get messages =>
       $$MessagesTableTableManager(_db, _db.messages);
+  $$StudentsTableTableManager get students =>
+      $$StudentsTableTableManager(_db, _db.students);
 }

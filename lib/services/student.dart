@@ -34,4 +34,23 @@ class StudentService extends GetxService {
 
     return NormalResponse.fromJson(data);
   }
+
+  Future<NormalResponse> getStudentsCount({
+    required String classId,
+    String? status,
+  }) async {
+    String queryStr = 'classId=$classId';
+    if (status != null && status.isNotEmpty) {
+      queryStr += '&status=$status';
+    }
+    http.Response response = await http.get(
+      Uri.parse('https://wf.liangqy.com/webhook/get-students-count?$queryStr'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    final data = json.decode(response.body);
+
+    return NormalResponse.fromJson(data);
+  }
 }

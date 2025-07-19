@@ -27,7 +27,7 @@ class ClassView extends GetView<ClassController> {
           ),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
         onTap: () {
           controller.gotoClassDetail(classId: controller.classes[index].id);

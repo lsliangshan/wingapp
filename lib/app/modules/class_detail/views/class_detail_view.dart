@@ -63,7 +63,7 @@ class ClassDetailView extends GetView<ClassDetailController> {
                         trailing: Text(
                           "${controller.classDetail.value.teacherName ?? ''} (${controller.classDetail.value.teacherEnName ?? ''})",
                           style: Get.theme.textTheme.bodyMedium?.copyWith(
-                            color: Get.theme.hintColor,
+                            color: Get.theme.hintColor.withValues(alpha: 0.5),
                           ),
                         ),
                       ),
@@ -86,6 +86,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                       ),
                       elevation: 0,
                       child: ListTile(
+                        onTap: () {
+                          controller.goToStudents();
+                        },
                         tileColor: Get.theme.colorScheme.surface,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -95,12 +98,32 @@ class ClassDetailView extends GetView<ClassDetailController> {
                           width: 24,
                           height: 24,
                         ),
+                        contentPadding: EdgeInsets.only(
+                          left: 16,
+                          right: 12,
+                        ),
                         title: Text("student".tr),
-                        trailing: Text(
-                          "${controller.classDetail.value.teacherName ?? ''} (${controller.classDetail.value.teacherEnName ?? ''})",
-                          style: Get.theme.textTheme.bodyMedium?.copyWith(
-                            color: Get.theme.hintColor,
-                          ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "${controller.studentsCount.value}",
+                              style: Get.theme.textTheme.bodyMedium?.copyWith(
+                                color:
+                                    Get.theme.hintColor.withValues(alpha: 0.5),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            SvgPicture.asset(
+                              'assets/svgs/icon_arrow_right.svg',
+                              width: 20,
+                              height: 20,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.grey,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -135,7 +158,7 @@ class ClassDetailView extends GetView<ClassDetailController> {
                         trailing: Text(
                           "${controller.classDetail.value.teacherName ?? ''} (${controller.classDetail.value.teacherEnName ?? ''})",
                           style: Get.theme.textTheme.bodyMedium?.copyWith(
-                            color: Get.theme.hintColor,
+                            color: Get.theme.hintColor.withValues(alpha: 0.5),
                           ),
                         ),
                       ),
@@ -170,11 +193,15 @@ class ClassDetailView extends GetView<ClassDetailController> {
                           width: 24,
                           height: 24,
                         ),
+                        contentPadding: EdgeInsets.only(
+                          left: 16,
+                          right: 12,
+                        ),
                         title: Text("notification".tr),
                         trailing: SvgPicture.asset(
                           'assets/svgs/icon_arrow_right.svg',
-                          width: 24,
-                          height: 24,
+                          width: 20,
+                          height: 20,
                           colorFilter: const ColorFilter.mode(
                             Colors.grey,
                             BlendMode.srcIn,
@@ -209,14 +236,18 @@ class ClassDetailView extends GetView<ClassDetailController> {
                         ),
                         leading: SvgPicture.asset(
                           'assets/svgs/icon_attachments.svg',
-                          width: 24,
-                          height: 24,
+                          width: 26,
+                          height: 26,
+                        ),
+                        contentPadding: EdgeInsets.only(
+                          left: 16,
+                          right: 12,
                         ),
                         title: Text("attachments".tr),
                         trailing: SvgPicture.asset(
                           'assets/svgs/icon_arrow_right.svg',
-                          width: 24,
-                          height: 24,
+                          width: 20,
+                          height: 20,
                           colorFilter: const ColorFilter.mode(
                             Colors.grey,
                             BlendMode.srcIn,
