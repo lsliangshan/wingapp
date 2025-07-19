@@ -93,6 +93,7 @@ class ClassAttachmentsController extends GetxController {
             .toList();
       } else {
         // 无数据
+        attachments.clear();
       }
       update(['update-class-attachments']);
     }
@@ -305,8 +306,6 @@ class ClassAttachmentsController extends GetxController {
         uploaderId: classDetail.value.teacherId ?? '',
         uploaderName: classDetail.value.teacherEnName ?? '',
       );
-
-      print('>>>>>>>>>>>>>> response.data: ${response.data}');
 
       if (response.code == 200) {
         await initAttachments();

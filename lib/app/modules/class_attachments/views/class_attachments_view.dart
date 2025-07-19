@@ -1,12 +1,10 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
 
@@ -112,81 +110,53 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
       body: CustomMaterialIndicator(
         onRefresh: controller.onRefresh,
         backgroundColor: Colors.white,
-        indicatorBuilder: (context, controller) {
-          return Stack(
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(40),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter:
-                          ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 设置模糊程度
-                      child: Container(
-                        color: Colors.white.withAlpha(0), // 透明背景
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: CircularProgressIndicator(
-                  color: Get.theme.primaryColor,
-                  strokeWidth: 2,
-                  value: controller.state.isLoading
-                      ? null
-                      : min(controller.value, 1.0),
-                ),
-              )
-            ],
-          );
-        },
-        child: FutureBuilder(
-          future: controller.initClassAttachmentsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(
-                child: CustomLoader(),
-              );
-            }
-            if (controller.attachments.isEmpty) {
-              return SizedBox(
-                width: Get.width,
-                height: Get.height - 300,
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    EmptyResult(
-                      mainButton: FilledButton(
-                        onPressed: () {
-                          controller.gotoCreateAttachment();
-                        },
-                        child: Text('class_attachments.btn.add'.tr),
-                      ),
-                      showSecondaryButton: true,
-                      secondaryButton: FilledButton(
-                        onPressed: () {
-                          controller.initAttachments();
-                        },
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Get.theme.colorScheme.secondary,
+        indicatorBuilder: customIndicatorBuilder,
+        child: GetBuilder(
+          init: controller,
+          id: 'update-class-attachments',
+          builder: (_) {
+            return FutureBuilder(
+              future: controller.initClassAttachmentsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Center(
+                    child: CustomLoader(),
+                  );
+                }
+                if (controller.attachments.isEmpty) {
+                  return ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height - 300,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            EmptyResult(
+                              mainButton: FilledButton(
+                                onPressed: () {
+                                  controller.gotoCreateAttachment();
+                                },
+                                child: Text('class_attachments.btn.add'.tr),
+                              ),
+                              showSecondaryButton: true,
+                              secondaryButton: FilledButton(
+                                onPressed: () {
+                                  controller.onRefresh();
+                                },
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: Colors.black45,
+                                ),
+                                child: Text('class_attachments.btn.reload'.tr),
+                              ),
+                            ),
+                          ],
                         ),
-                        child: Text('class_attachments.btn.reload'.tr),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return GetBuilder(
-              init: controller,
-              id: 'update-class-attachments',
-              builder: (_) {
+                    ],
+                  );
+                }
                 return CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [

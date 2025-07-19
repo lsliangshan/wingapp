@@ -95,6 +95,7 @@ class Messages extends Translations {
           'class_attachments.from.create': '创建新文件',
           'class_attachments.from.cancel': '取消',
           'class_attachments.uploading': '上传中...',
+          'class_attachments.upload.failed': '上传失败',
 
           // 文件预览页面
           'file_previewer.title': '文件预览',
@@ -247,6 +248,7 @@ class Messages extends Translations {
           'class_attachments.from.create': 'Create new file',
           'class_attachments.from.cancel': 'Cancel',
           'class_attachments.uploading': 'Uploading...',
+          'class_attachments.upload.failed': 'Upload Failed',
 
           // 文件预览页面
           'file_previewer.title': 'File Preview',

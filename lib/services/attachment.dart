@@ -101,7 +101,6 @@ class AttachmentService extends GetxService {
       ..fields['uploaderId'] = uploaderId;
 
     for (XFile file in files) {
-      print('>>>>>>>>>>> file.mimeType: ${file}');
       request.files.add(await http.MultipartFile.fromPath(
         'files',
         file.path,
@@ -110,7 +109,9 @@ class AttachmentService extends GetxService {
       ));
     }
 
-    final response = await request.send();
+    final response = await request.send().timeout(
+          Duration(minutes: 30),
+        );
 
     final data = json.decode(await response.stream.bytesToString());
 
