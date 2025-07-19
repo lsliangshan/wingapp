@@ -309,6 +309,8 @@ class ClassAttachmentsController extends GetxController {
 
       if (response.code == 200) {
         await initAttachments();
+        toastService.showSuccess(
+            message: 'class_attachments.upload.success'.tr);
       } else {
         toastService.showError(message: 'class_attachments.upload.failed'.tr);
       }
