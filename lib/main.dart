@@ -13,6 +13,7 @@ import 'package:wingapp/database/database.dart';
 import 'package:wingapp/locale/locale.dart';
 import 'package:wingapp/services/attachment.dart';
 import 'package:wingapp/services/class.dart';
+import 'package:wingapp/services/date.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/message.dart';
@@ -70,6 +71,9 @@ Future<void> initServices() async {
 
   ToastService toastService = ToastService();
   Get.lazyPut(() => toastService);
+
+  DateService dateService = DateService();
+  Get.lazyPut(() => dateService);
 
   EventBus eventBus = EventBus();
   Get.put<EventBus>(eventBus);

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
+import 'package:wingapp/services/date.dart';
 import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/toast.dart';
 
@@ -21,7 +24,10 @@ class AddStudentFormData {
   String? unionId;
   String? openId;
   String? classId;
+  String? className;
   String? teacherId;
+  String? teacherName;
+  String? teacherEnName;
   String? birthday;
 
   AddStudentFormData({
@@ -36,7 +42,10 @@ class AddStudentFormData {
     this.unionId,
     this.openId,
     this.classId,
+    this.className,
     this.teacherId,
+    this.teacherName,
+    this.teacherEnName,
     this.birthday,
   });
 
@@ -53,7 +62,10 @@ class AddStudentFormData {
       'unionId': unionId,
       'openId': openId,
       'classId': classId,
+      'className': className,
       'teacherId': teacherId,
+      'teacherName': teacherName,
+      'teacherEnName': teacherEnName,
       'birthday': birthday,
     };
   }
@@ -63,6 +75,7 @@ class AddStudentController extends GetxController {
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
   StudentService studentService = Get.find<StudentService>();
+  DateService dateService = Get.find<DateService>();
 
   final formKey = GlobalKey<FormState>();
 
@@ -83,7 +96,10 @@ class AddStudentController extends GetxController {
     avatar: '',
     id: '',
     classId: '',
+    className: '',
     teacherId: '',
+    teacherName: '',
+    teacherEnName: '',
     birthday: '',
   ).obs;
 
@@ -106,6 +122,18 @@ class AddStudentController extends GetxController {
     });
 
     initAddStudentFuture = initData();
+  }
+
+  void clearName() {
+    nameController.clear();
+    formData.value.name = null;
+    update(['update-form-data']);
+  }
+
+  void clearEnName() {
+    enNameController.clear();
+    formData.value.enName = null;
+    update(['update-form-data']);
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
@@ -232,7 +260,27 @@ class AddStudentController extends GetxController {
     );
   }
 
-  void chooseClass() {}
+  Future<void> chooseClass() async {
+    final result = await Get.toNamed(
+      Routes.CHOOSE_CLASS,
+    );
+    if (result != null && result['classInfo'] != null) {
+      formData.value.classId = result['classInfo'].id;
+      formData.value.className = result['classInfo'].name;
+      formData.value.teacherId = result['classInfo'].teacherId;
+      formData.value.teacherName = result['classInfo'].teacherName;
+      formData.value.teacherEnName = result['classInfo'].teacherEnName;
+      update(['update-form-data']);
+    }
+  }
+
+  void setBirthday() async {
+    DateTime? result = await dateService.showDatePicker();
+    if (result != null) {
+      formData.value.birthday = DateFormat('yyyy-MM-dd').format(result);
+      update(['update-form-data']);
+    }
+  }
 
   void clearFormData() {
     nameController.clear();
@@ -247,7 +295,10 @@ class AddStudentController extends GetxController {
       id: '',
       avatar: '',
       classId: '',
+      className: '',
       teacherId: '',
+      teacherName: '',
+      teacherEnName: '',
       birthday: '',
     );
     update(['update-form-data']);

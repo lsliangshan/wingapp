@@ -96,6 +96,9 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': '选择老师',
 
+          // 选择班级页面
+          'choose_class.title': '选择班级',
+
           // 选择@用户页面
           'choose_at_users.title': '选择提醒用户',
           'choose_at_users.search': '搜索',
@@ -189,7 +192,14 @@ class Messages extends Translations {
           'student': '学生',
           'schedule': '课表',
           'notification': '通知',
-          'attachments': '附件',
+
+          'datetime.locale': 'zh',
+          'datetime.locale.today': '今天',
+          'datetime.locale.tomorrow': '明天',
+          'datetime.locale.yesterday': '昨天',
+          'datetime.locale.now': '现在',
+
+          'btn.save': '保存',
         },
         'en_US': {
           // 页面
@@ -290,6 +300,9 @@ class Messages extends Translations {
           // 选择老师页面
           'choose_teacher.title': 'Choose Teacher',
 
+          // 选择班级页面
+          'choose_class.title': 'Choose Class',
+
           // 选择@用户页面
           'choose_at_users.title': 'Choose Remind Users',
           'choose_at_users.search': 'Search',
@@ -388,6 +401,14 @@ class Messages extends Translations {
           'schedule': 'Schedule',
           'notification': 'Notification',
           'attachments': 'Attachments',
+
+          'datetime.locale': 'en',
+          'datetime.locale.today': 'Today',
+          'datetime.locale.tomorrow': 'Tomorrow',
+          'datetime.locale.yesterday': 'Yesterday',
+          'datetime.locale.now': 'Now',
+
+          'btn.save': 'Save',
         }
       };
 }

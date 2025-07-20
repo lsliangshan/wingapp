@@ -104,14 +104,14 @@ class AddStudentView extends GetView<AddStudentController> {
                                                     .isNotEmpty
                                             ? GestureDetector(
                                                 onTap: () {
-                                                  // controller.clearUsername();
+                                                  controller.clearName();
                                                 },
                                                 child: const SizedBox(
                                                   width: 36,
                                                   height: 36,
                                                   child: Icon(
                                                     Icons.clear_outlined,
-                                                    size: 16,
+                                                    size: 20,
                                                     color: Colors.red,
                                                   ),
                                                 ),
@@ -197,14 +197,14 @@ class AddStudentView extends GetView<AddStudentController> {
                                                     .enName!.isNotEmpty
                                             ? GestureDetector(
                                                 onTap: () {
-                                                  // controller.clearUsername();
+                                                  controller.clearEnName();
                                                 },
                                                 child: const SizedBox(
                                                   width: 36,
                                                   height: 36,
                                                   child: Icon(
                                                     Icons.clear_outlined,
-                                                    size: 16,
+                                                    size: 20,
                                                     color: Colors.red,
                                                   ),
                                                 ),
@@ -271,10 +271,11 @@ class AddStudentView extends GetView<AddStudentController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'add_student.form_data.class.hint'.tr,
+                                      controller.formData.value.className ??
+                                          'add_student.form_data.class.hint'.tr,
                                       style: Get.theme.textTheme.titleMedium
                                           ?.copyWith(
-                                        color: Get.theme.disabledColor,
+                                        color: Get.theme.hintColor,
                                       ),
                                     ),
                                     SvgPicture.asset(
@@ -297,7 +298,6 @@ class AddStudentView extends GetView<AddStudentController> {
                     height: 1,
                     color: Get.theme.dividerColor.withValues(alpha: 0.02),
                   ),
-
                   ListTile(
                     tileColor: Colors.white,
                     dense: true,
@@ -376,81 +376,84 @@ class AddStudentView extends GetView<AddStudentController> {
                     height: 1,
                     color: Get.theme.dividerColor.withValues(alpha: 0.02),
                   ),
-                  // ListTile(
-                  //   tileColor: Colors.white,
-                  //   dense: true,
-                  //   onTap: () {
-                  //     // controller.chooseTeacherType();
-                  //   },
-                  //   leading: SizedBox(
-                  //     width: 100,
-                  //     height: 48,
-                  //     child: Row(
-                  //       children: [
-                  //         Text(
-                  //           'add_student.form_data.type'.tr,
-                  //           style: Get.theme.textTheme.labelLarge?.copyWith(
-                  //             color: Get.theme.hintColor,
-                  //           ),
-                  //         ),
-                  //         // const SizedBox(
-                  //         //   width: 4,
-                  //         // ),
-                  //         // Text(
-                  //         //   '*',
-                  //         //   style: Get.theme.textTheme.labelLarge?.copyWith(
-                  //         //     color: Colors.red,
-                  //         //     fontWeight: FontWeight.bold,
-                  //         //   ),
-                  //         // ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  //   title: Row(
-                  //     mainAxisSize: MainAxisSize.max,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       GetBuilder(
-                  //         id: 'update-form-data',
-                  //         init: controller,
-                  //         builder: (_) {
-                  //           return Expanded(
-                  //             child: SizedBox(
-                  //               height: 40,
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Text(
-                  //                     controller.formData.value.typeName ??
-                  //                         'add_student.form_data.type.hint'.tr,
-                  //                     style:
-                  //                         Get.theme.textTheme.titleMedium?.copyWith(
-                  //                       color: controller.formData.value.typeName !=
-                  //                               null
-                  //                           ? Get.theme.hintColor
-                  //                           : Get.theme.disabledColor,
-                  //                     ),
-                  //                   ),
-                  //                   SvgPicture.asset(
-                  //                     'assets/svgs/icon_arrow_right.svg',
-                  //                     width: 20,
-                  //                     height: 20,
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           );
-                  //         },
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  //   visualDensity: VisualDensity.compact,
-                  // ),
-                  // Divider(
-                  //   height: 1,
-                  //   color: Get.theme.dividerColor.withValues(alpha: 0.02),
-                  // ),
+                  ListTile(
+                    tileColor: Colors.white,
+                    dense: true,
+                    onTap: () {
+                      controller.setBirthday();
+                    },
+                    leading: SizedBox(
+                      width: 100,
+                      height: 48,
+                      child: Row(
+                        children: [
+                          Text(
+                            'add_student.form_data.birthday'.tr,
+                            style: Get.theme.textTheme.labelLarge?.copyWith(
+                              color: Get.theme.hintColor,
+                            ),
+                          ),
+                          // const SizedBox(
+                          //   width: 4,
+                          // ),
+                          // Text(
+                          //   '*',
+                          //   style: Get.theme.textTheme.labelLarge?.copyWith(
+                          //     color: Colors.red,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                    title: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GetBuilder(
+                          id: 'update-form-data',
+                          init: controller,
+                          builder: (_) {
+                            return Expanded(
+                              child: SizedBox(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      controller.formData.value.birthday ??
+                                          'add_student.form_data.birthday.hint'
+                                              .tr,
+                                      style: Get.theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                        color: controller
+                                                    .formData.value.birthday !=
+                                                null
+                                            ? Get.theme.hintColor
+                                            : Get.theme.disabledColor,
+                                      ),
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/svgs/icon_arrow_right.svg',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  Divider(
+                    height: 1,
+                    color: Get.theme.dividerColor.withValues(alpha: 0.02),
+                  ),
                   ListTile(
                     tileColor: Colors.white,
                     dense: true,

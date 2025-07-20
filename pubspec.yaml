@@ -83,6 +83,8 @@ dependencies:
 
   sliver_tools: ^0.2.12
 
+  board_datetime_picker: ^2.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/modules/choose_class/bindings/choose_class_binding.dart';
+import 'package:wingapp/app/modules/choose_class/views/choose_class_view.dart';
 
 import '../modules/add_class/bindings/add_class_binding.dart';
 import '../modules/add_class/views/add_class_view.dart';
@@ -94,6 +96,11 @@ class AppPages {
       name: _Paths.CHOOSE_TEACHER,
       page: () => const ChooseTeacherView(),
       binding: ChooseTeacherBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHOOSE_CLASS,
+      page: () => const ChooseClassView(),
+      binding: ChooseClassBinding(),
     ),
     GetPage(
       name: _Paths.CLASS_DETAIL,

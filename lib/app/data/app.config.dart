@@ -21,7 +21,7 @@ List tabs = [
     "icon_selected": "assets/svgs/tab_class_selected.svg",
     "label": 'tab.class'.tr,
     "name": TabName.tclass,
-    "page": const ClassView(),
+    "page": ClassView(),
   },
   {
     "icon": "assets/svgs/tab_student_unselected.svg",

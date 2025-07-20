@@ -21,6 +21,7 @@ abstract class Routes {
   static const CREATE_ATTACHMENT = _Paths.CREATE_ATTACHMENT;
   static const STUDENT_DETAIL = _Paths.STUDENT_DETAIL;
   static const ADD_STUDENT = _Paths.ADD_STUDENT;
+  static const CHOOSE_CLASS = _Paths.CHOOSE_CLASS;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const CREATE_ATTACHMENT = '/create-attachment';
   static const STUDENT_DETAIL = '/student-detail';
   static const ADD_STUDENT = '/add-student';
+  static const CHOOSE_CLASS = '/choose-class';
 }
