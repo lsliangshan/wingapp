@@ -192,6 +192,7 @@ class Messages extends Translations {
           'student': '学生',
           'schedule': '课表',
           'notification': '通知',
+          'attachments': '附件',
 
           'datetime.locale': 'zh',
           'datetime.locale.today': '今天',

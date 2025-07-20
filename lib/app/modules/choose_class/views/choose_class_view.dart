@@ -9,9 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/modules/choose_class/controllers/choose_class_controller.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
-import 'package:wingapp/components/need_login/need_login.dart';
 
 class ChooseClassView extends GetView<ChooseClassController> {
   const ChooseClassView({super.key});
@@ -133,53 +133,20 @@ class ChooseClassView extends GetView<ChooseClassController> {
         onRefresh: () async {
           await controller.onRefresh();
         },
-        indicatorBuilder: (context, controller) {
-          return Stack(
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(40),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter:
-                          ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 设置模糊程度
-                      child: Container(
-                        color: Colors.white.withAlpha(0), // 透明背景
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: CircularProgressIndicator(
-                  color: Get.theme.primaryColor,
-                  strokeWidth: 2,
-                  value: controller.state.isLoading
-                      ? null
-                      : min(controller.value, 1.0),
-                ),
-              )
-            ],
-          );
-        },
+        indicatorBuilder: customIndicatorBuilder,
         child: GetBuilder(
           id: 'update-classes',
           init: controller,
           builder: (_) {
-            if (controller.loginInfo.value == null) {
-              return Center(
-                child: NeedLogin(
-                  onPressed: () {
-                    controller.needLogin();
-                  },
-                ),
-              );
-            }
+            // if (controller.loginInfo.value == null) {
+            //   return Center(
+            //     child: NeedLogin(
+            //       onPressed: () {
+            //         controller.needLogin();
+            //       },
+            //     ),
+            //   );
+            // }
             return FutureBuilder(
               future: controller.initClassesFuture,
               builder: (context, snapshot) {

@@ -124,6 +124,12 @@ class AddStudentController extends GetxController {
     initAddStudentFuture = initData();
   }
 
+  @override
+  void onClose() {
+    InAppWebViewController.clearAllCache();
+    super.onClose();
+  }
+
   void clearName() {
     nameController.clear();
     formData.value.name = null;
@@ -275,7 +281,12 @@ class AddStudentController extends GetxController {
   }
 
   void setBirthday() async {
-    DateTime? result = await dateService.showDatePicker();
+    DateTime? result = await dateService.showDatePicker(
+      initialDate:
+          formData.value.birthday != null && formData.value.birthday!.isNotEmpty
+              ? DateTime.parse(formData.value.birthday!)
+              : null,
+    );
     if (result != null) {
       formData.value.birthday = DateFormat('yyyy-MM-dd').format(result);
       update(['update-form-data']);

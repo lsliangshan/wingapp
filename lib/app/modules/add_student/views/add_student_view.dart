@@ -271,11 +271,22 @@ class AddStudentView extends GetView<AddStudentController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      controller.formData.value.className ??
-                                          'add_student.form_data.class.hint'.tr,
+                                      controller.formData.value.className !=
+                                                  null &&
+                                              controller.formData.value
+                                                  .className!.isNotEmpty
+                                          ? controller.formData.value.className!
+                                          : 'add_student.form_data.class.hint'
+                                              .tr,
                                       style: Get.theme.textTheme.titleMedium
                                           ?.copyWith(
-                                        color: Get.theme.hintColor,
+                                        color: controller.formData.value
+                                                        .className !=
+                                                    null &&
+                                                controller.formData.value
+                                                    .className!.isNotEmpty
+                                            ? Get.theme.hintColor
+                                            : Get.theme.disabledColor,
                                       ),
                                     ),
                                     SvgPicture.asset(
@@ -344,14 +355,21 @@ class AddStudentView extends GetView<AddStudentController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      controller.formData.value.genderName ??
-                                          'add_student.form_data.gender.hint'
+                                      controller.formData.value.genderName !=
+                                                  null &&
+                                              controller.formData.value
+                                                  .genderName!.isNotEmpty
+                                          ? controller
+                                              .formData.value.genderName!
+                                          : 'add_student.form_data.gender.hint'
                                               .tr,
                                       style: Get.theme.textTheme.titleMedium
                                           ?.copyWith(
                                         color: controller.formData.value
-                                                    .genderName !=
-                                                null
+                                                        .genderName !=
+                                                    null &&
+                                                controller.formData.value
+                                                    .genderName!.isNotEmpty
                                             ? Get.theme.hintColor
                                             : Get.theme.disabledColor,
                                       ),
@@ -422,14 +440,20 @@ class AddStudentView extends GetView<AddStudentController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      controller.formData.value.birthday ??
-                                          'add_student.form_data.birthday.hint'
+                                      controller.formData.value.birthday !=
+                                                  null &&
+                                              controller.formData.value
+                                                  .birthday!.isNotEmpty
+                                          ? controller.formData.value.birthday!
+                                          : 'add_student.form_data.birthday.hint'
                                               .tr,
                                       style: Get.theme.textTheme.titleMedium
                                           ?.copyWith(
-                                        color: controller
-                                                    .formData.value.birthday !=
-                                                null
+                                        color: controller.formData.value
+                                                        .birthday !=
+                                                    null &&
+                                                controller.formData.value
+                                                    .birthday!.isNotEmpty
                                             ? Get.theme.hintColor
                                             : Get.theme.disabledColor,
                                       ),
@@ -482,44 +506,20 @@ class AddStudentView extends GetView<AddStudentController> {
                         ],
                       ),
                     ),
-                    title: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GetBuilder(
-                          id: 'update-dingtalk-login',
-                          init: controller,
-                          builder: (_) {
-                            return Expanded(
-                              child: Container(
-                                height: 200,
-                                child: InAppWebView(
-                                  // key: UniqueKey(),
-                                  initialUrlRequest: URLRequest(
-                                      url: WebUri(
-                                          'http://192.168.1.4:5173/dingtalk/login')),
-                                  // initialUrlRequest: URLRequest(url: WebUri('http://127.0.0.1:5173')),
-                                  initialSettings: InAppWebViewSettings(
-                                    javaScriptEnabled: true,
-                                    transparentBackground: true,
-                                  ),
-                                  onWebViewCreated: controller.onWebViewCreated,
-                                  onLoadStop: (ctrl, url) async {
-                                    // await Future.delayed(Duration(milliseconds: 100));
-                                    // await ctrl.evaluateJavascript(source: controller.initDataStr);
-                                  },
-                                  onConsoleMessage:
-                                      (controller, consoleMessage) {
-                                    // print(
-                                    //     '>>>>> consoleMessage: ${consoleMessage.message}');
-                                    // it will print: {message: {"foo":1,"bar":false}, messageLevel: 1}
-                                  },
-                                ),
-                              ),
-                            );
-                          },
+                    title: SizedBox(
+                      height: 200,
+                      child: InAppWebView(
+                        // key: UniqueKey(),
+                        initialUrlRequest: URLRequest(
+                            url: WebUri(
+                                'https://wing.liangqy.com/dingtalk/login')),
+                        // initialUrlRequest: URLRequest(url: WebUri('http://127.0.0.1:5173')),
+                        initialSettings: InAppWebViewSettings(
+                          javaScriptEnabled: true,
+                          transparentBackground: true,
                         ),
-                      ],
+                        onWebViewCreated: controller.onWebViewCreated,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     visualDensity: VisualDensity.compact,
