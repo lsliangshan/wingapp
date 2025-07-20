@@ -70,9 +70,15 @@ class StudentController extends GetxController {
     );
   }
 
-  void gotoAddStudent() {
-    Get.toNamed(
+  Future<void> gotoAddStudent() async {
+    var newStudents = await Get.toNamed(
       Routes.ADD_STUDENT,
     );
+    if (newStudents != null && newStudents.isNotEmpty) {
+      students.insertAll(0, newStudents);
+      print('>>>>>>>>>>> ${newStudents.map((e) => e.toJson())}');
+      totalCount.value = (totalCount.value + newStudents.length).toInt();
+      update(['update-students']);
+    }
   }
 }

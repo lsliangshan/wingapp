@@ -171,6 +171,8 @@ class Messages extends Translations {
           'toast.add_class.save.success': '保存成功',
           'toast.add_class.save.fail': '保存失败',
           'toast.uploading': '上传中...',
+          'toast.add_student.save.success': '添加成功',
+          'toast.add_student.save.fail': '添加失败',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -380,6 +382,8 @@ class Messages extends Translations {
           'toast.add_class.save.success': 'Save Success',
           'toast.add_class.save.fail': 'Save Failed',
           'toast.uploading': 'Uploading...',
+          'toast.add_student.save.success': 'Create Success',
+          'toast.add_student.save.fail': 'Create Failed',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
