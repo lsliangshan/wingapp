@@ -53,4 +53,18 @@ class StudentService extends GetxService {
 
     return NormalResponse.fromJson(data);
   }
+
+  Future<NormalResponse> getStudentDetail({
+    required String id,
+  }) async {
+    http.Response response = await http.get(
+      Uri.parse('https://wf.liangqy.com/webhook/get-student-detail?id=$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    final data = json.decode(response.body);
+
+    return NormalResponse.fromJson(data);
+  }
 }

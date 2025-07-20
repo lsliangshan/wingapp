@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/student.dart';
@@ -58,5 +59,14 @@ class StudentController extends GetxController {
     await initStudents();
 
     return await Future.delayed(const Duration(milliseconds: 1000));
+  }
+
+  void gotoStudentDetail({required String id}) {
+    Get.toNamed(
+      Routes.STUDENT_DETAIL,
+      arguments: {
+        'id': id,
+      },
+    );
   }
 }

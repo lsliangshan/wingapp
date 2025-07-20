@@ -56,7 +56,11 @@ class StudentView extends GetView<StudentController> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          controller.gotoStudentDetail(
+            id: controller.students[index].id,
+          );
+        },
         leading: Container(
           width: 48,
           height: 48,

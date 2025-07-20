@@ -2238,22 +2238,22 @@ class $StudentsTable extends Students with TableInfo<$StudentsTable, Student> {
   late final GeneratedColumn<String> courseId = GeneratedColumn<String>(
       'course_id', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _totalTimesMeta =
-      const VerificationMeta('totalTimes');
+  static const VerificationMeta _totalSessionsMeta =
+      const VerificationMeta('totalSessions');
   @override
-  late final GeneratedColumn<String> totalTimes = GeneratedColumn<String>(
-      'total_times', aliasedName, true,
+  late final GeneratedColumn<String> totalSessions = GeneratedColumn<String>(
+      'total_sessions', aliasedName, true,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant('0'));
-  static const VerificationMeta _usedTimesMeta =
-      const VerificationMeta('usedTimes');
+  static const VerificationMeta _completedSessionsMeta =
+      const VerificationMeta('completedSessions');
   @override
-  late final GeneratedColumn<String> usedTimes = GeneratedColumn<String>(
-      'used_times', aliasedName, true,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant('0'));
+  late final GeneratedColumn<String> completedSessions =
+      GeneratedColumn<String>('completed_sessions', aliasedName, true,
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          defaultValue: const Constant('0'));
   static const VerificationMeta _lastLoginTimeMeta =
       const VerificationMeta('lastLoginTime');
   @override
@@ -2312,8 +2312,8 @@ class $StudentsTable extends Students with TableInfo<$StudentsTable, Student> {
         classId,
         teacherId,
         courseId,
-        totalTimes,
-        usedTimes,
+        totalSessions,
+        completedSessions,
         lastLoginTime,
         lastLoginIp,
         birthday,
@@ -2392,15 +2392,17 @@ class $StudentsTable extends Students with TableInfo<$StudentsTable, Student> {
       context.handle(_courseIdMeta,
           courseId.isAcceptableOrUnknown(data['course_id']!, _courseIdMeta));
     }
-    if (data.containsKey('total_times')) {
+    if (data.containsKey('total_sessions')) {
       context.handle(
-          _totalTimesMeta,
-          totalTimes.isAcceptableOrUnknown(
-              data['total_times']!, _totalTimesMeta));
+          _totalSessionsMeta,
+          totalSessions.isAcceptableOrUnknown(
+              data['total_sessions']!, _totalSessionsMeta));
     }
-    if (data.containsKey('used_times')) {
-      context.handle(_usedTimesMeta,
-          usedTimes.isAcceptableOrUnknown(data['used_times']!, _usedTimesMeta));
+    if (data.containsKey('completed_sessions')) {
+      context.handle(
+          _completedSessionsMeta,
+          completedSessions.isAcceptableOrUnknown(
+              data['completed_sessions']!, _completedSessionsMeta));
     }
     if (data.containsKey('last_login_time')) {
       context.handle(
@@ -2469,10 +2471,10 @@ class $StudentsTable extends Students with TableInfo<$StudentsTable, Student> {
           .read(DriftSqlType.string, data['${effectivePrefix}teacher_id']),
       courseId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}course_id']),
-      totalTimes: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}total_times']),
-      usedTimes: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}used_times']),
+      totalSessions: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}total_sessions']),
+      completedSessions: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}completed_sessions']),
       lastLoginTime: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}last_login_time']),
       lastLoginIp: attachedDatabase.typeMapping
@@ -2510,8 +2512,8 @@ class Student extends DataClass implements Insertable<Student> {
   final String? classId;
   final String? teacherId;
   final String? courseId;
-  final String? totalTimes;
-  final String? usedTimes;
+  final String? totalSessions;
+  final String? completedSessions;
   final String? lastLoginTime;
   final String? lastLoginIp;
   final String? birthday;
@@ -2534,8 +2536,8 @@ class Student extends DataClass implements Insertable<Student> {
       this.classId,
       this.teacherId,
       this.courseId,
-      this.totalTimes,
-      this.usedTimes,
+      this.totalSessions,
+      this.completedSessions,
       this.lastLoginTime,
       this.lastLoginIp,
       this.birthday,
@@ -2588,11 +2590,11 @@ class Student extends DataClass implements Insertable<Student> {
     if (!nullToAbsent || courseId != null) {
       map['course_id'] = Variable<String>(courseId);
     }
-    if (!nullToAbsent || totalTimes != null) {
-      map['total_times'] = Variable<String>(totalTimes);
+    if (!nullToAbsent || totalSessions != null) {
+      map['total_sessions'] = Variable<String>(totalSessions);
     }
-    if (!nullToAbsent || usedTimes != null) {
-      map['used_times'] = Variable<String>(usedTimes);
+    if (!nullToAbsent || completedSessions != null) {
+      map['completed_sessions'] = Variable<String>(completedSessions);
     }
     if (!nullToAbsent || lastLoginTime != null) {
       map['last_login_time'] = Variable<String>(lastLoginTime);
@@ -2651,12 +2653,12 @@ class Student extends DataClass implements Insertable<Student> {
       courseId: courseId == null && nullToAbsent
           ? const Value.absent()
           : Value(courseId),
-      totalTimes: totalTimes == null && nullToAbsent
+      totalSessions: totalSessions == null && nullToAbsent
           ? const Value.absent()
-          : Value(totalTimes),
-      usedTimes: usedTimes == null && nullToAbsent
+          : Value(totalSessions),
+      completedSessions: completedSessions == null && nullToAbsent
           ? const Value.absent()
-          : Value(usedTimes),
+          : Value(completedSessions),
       lastLoginTime: lastLoginTime == null && nullToAbsent
           ? const Value.absent()
           : Value(lastLoginTime),
@@ -2696,8 +2698,9 @@ class Student extends DataClass implements Insertable<Student> {
       classId: serializer.fromJson<String?>(json['classId']),
       teacherId: serializer.fromJson<String?>(json['teacherId']),
       courseId: serializer.fromJson<String?>(json['courseId']),
-      totalTimes: serializer.fromJson<String?>(json['totalTimes']),
-      usedTimes: serializer.fromJson<String?>(json['usedTimes']),
+      totalSessions: serializer.fromJson<String?>(json['totalSessions']),
+      completedSessions:
+          serializer.fromJson<String?>(json['completedSessions']),
       lastLoginTime: serializer.fromJson<String?>(json['lastLoginTime']),
       lastLoginIp: serializer.fromJson<String?>(json['lastLoginIp']),
       birthday: serializer.fromJson<String?>(json['birthday']),
@@ -2725,8 +2728,8 @@ class Student extends DataClass implements Insertable<Student> {
       'classId': serializer.toJson<String?>(classId),
       'teacherId': serializer.toJson<String?>(teacherId),
       'courseId': serializer.toJson<String?>(courseId),
-      'totalTimes': serializer.toJson<String?>(totalTimes),
-      'usedTimes': serializer.toJson<String?>(usedTimes),
+      'totalSessions': serializer.toJson<String?>(totalSessions),
+      'completedSessions': serializer.toJson<String?>(completedSessions),
       'lastLoginTime': serializer.toJson<String?>(lastLoginTime),
       'lastLoginIp': serializer.toJson<String?>(lastLoginIp),
       'birthday': serializer.toJson<String?>(birthday),
@@ -2752,8 +2755,8 @@ class Student extends DataClass implements Insertable<Student> {
           Value<String?> classId = const Value.absent(),
           Value<String?> teacherId = const Value.absent(),
           Value<String?> courseId = const Value.absent(),
-          Value<String?> totalTimes = const Value.absent(),
-          Value<String?> usedTimes = const Value.absent(),
+          Value<String?> totalSessions = const Value.absent(),
+          Value<String?> completedSessions = const Value.absent(),
           Value<String?> lastLoginTime = const Value.absent(),
           Value<String?> lastLoginIp = const Value.absent(),
           Value<String?> birthday = const Value.absent(),
@@ -2776,8 +2779,11 @@ class Student extends DataClass implements Insertable<Student> {
         classId: classId.present ? classId.value : this.classId,
         teacherId: teacherId.present ? teacherId.value : this.teacherId,
         courseId: courseId.present ? courseId.value : this.courseId,
-        totalTimes: totalTimes.present ? totalTimes.value : this.totalTimes,
-        usedTimes: usedTimes.present ? usedTimes.value : this.usedTimes,
+        totalSessions:
+            totalSessions.present ? totalSessions.value : this.totalSessions,
+        completedSessions: completedSessions.present
+            ? completedSessions.value
+            : this.completedSessions,
         lastLoginTime:
             lastLoginTime.present ? lastLoginTime.value : this.lastLoginTime,
         lastLoginIp: lastLoginIp.present ? lastLoginIp.value : this.lastLoginIp,
@@ -2803,9 +2809,12 @@ class Student extends DataClass implements Insertable<Student> {
       classId: data.classId.present ? data.classId.value : this.classId,
       teacherId: data.teacherId.present ? data.teacherId.value : this.teacherId,
       courseId: data.courseId.present ? data.courseId.value : this.courseId,
-      totalTimes:
-          data.totalTimes.present ? data.totalTimes.value : this.totalTimes,
-      usedTimes: data.usedTimes.present ? data.usedTimes.value : this.usedTimes,
+      totalSessions: data.totalSessions.present
+          ? data.totalSessions.value
+          : this.totalSessions,
+      completedSessions: data.completedSessions.present
+          ? data.completedSessions.value
+          : this.completedSessions,
       lastLoginTime: data.lastLoginTime.present
           ? data.lastLoginTime.value
           : this.lastLoginTime,
@@ -2836,8 +2845,8 @@ class Student extends DataClass implements Insertable<Student> {
           ..write('classId: $classId, ')
           ..write('teacherId: $teacherId, ')
           ..write('courseId: $courseId, ')
-          ..write('totalTimes: $totalTimes, ')
-          ..write('usedTimes: $usedTimes, ')
+          ..write('totalSessions: $totalSessions, ')
+          ..write('completedSessions: $completedSessions, ')
           ..write('lastLoginTime: $lastLoginTime, ')
           ..write('lastLoginIp: $lastLoginIp, ')
           ..write('birthday: $birthday, ')
@@ -2865,8 +2874,8 @@ class Student extends DataClass implements Insertable<Student> {
         classId,
         teacherId,
         courseId,
-        totalTimes,
-        usedTimes,
+        totalSessions,
+        completedSessions,
         lastLoginTime,
         lastLoginIp,
         birthday,
@@ -2893,8 +2902,8 @@ class Student extends DataClass implements Insertable<Student> {
           other.classId == this.classId &&
           other.teacherId == this.teacherId &&
           other.courseId == this.courseId &&
-          other.totalTimes == this.totalTimes &&
-          other.usedTimes == this.usedTimes &&
+          other.totalSessions == this.totalSessions &&
+          other.completedSessions == this.completedSessions &&
           other.lastLoginTime == this.lastLoginTime &&
           other.lastLoginIp == this.lastLoginIp &&
           other.birthday == this.birthday &&
@@ -2919,8 +2928,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
   final Value<String?> classId;
   final Value<String?> teacherId;
   final Value<String?> courseId;
-  final Value<String?> totalTimes;
-  final Value<String?> usedTimes;
+  final Value<String?> totalSessions;
+  final Value<String?> completedSessions;
   final Value<String?> lastLoginTime;
   final Value<String?> lastLoginIp;
   final Value<String?> birthday;
@@ -2944,8 +2953,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     this.classId = const Value.absent(),
     this.teacherId = const Value.absent(),
     this.courseId = const Value.absent(),
-    this.totalTimes = const Value.absent(),
-    this.usedTimes = const Value.absent(),
+    this.totalSessions = const Value.absent(),
+    this.completedSessions = const Value.absent(),
     this.lastLoginTime = const Value.absent(),
     this.lastLoginIp = const Value.absent(),
     this.birthday = const Value.absent(),
@@ -2970,8 +2979,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     this.classId = const Value.absent(),
     this.teacherId = const Value.absent(),
     this.courseId = const Value.absent(),
-    this.totalTimes = const Value.absent(),
-    this.usedTimes = const Value.absent(),
+    this.totalSessions = const Value.absent(),
+    this.completedSessions = const Value.absent(),
     this.lastLoginTime = const Value.absent(),
     this.lastLoginIp = const Value.absent(),
     this.birthday = const Value.absent(),
@@ -2996,8 +3005,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     Expression<String>? classId,
     Expression<String>? teacherId,
     Expression<String>? courseId,
-    Expression<String>? totalTimes,
-    Expression<String>? usedTimes,
+    Expression<String>? totalSessions,
+    Expression<String>? completedSessions,
     Expression<String>? lastLoginTime,
     Expression<String>? lastLoginIp,
     Expression<String>? birthday,
@@ -3022,8 +3031,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
       if (classId != null) 'class_id': classId,
       if (teacherId != null) 'teacher_id': teacherId,
       if (courseId != null) 'course_id': courseId,
-      if (totalTimes != null) 'total_times': totalTimes,
-      if (usedTimes != null) 'used_times': usedTimes,
+      if (totalSessions != null) 'total_sessions': totalSessions,
+      if (completedSessions != null) 'completed_sessions': completedSessions,
       if (lastLoginTime != null) 'last_login_time': lastLoginTime,
       if (lastLoginIp != null) 'last_login_ip': lastLoginIp,
       if (birthday != null) 'birthday': birthday,
@@ -3050,8 +3059,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
       Value<String?>? classId,
       Value<String?>? teacherId,
       Value<String?>? courseId,
-      Value<String?>? totalTimes,
-      Value<String?>? usedTimes,
+      Value<String?>? totalSessions,
+      Value<String?>? completedSessions,
       Value<String?>? lastLoginTime,
       Value<String?>? lastLoginIp,
       Value<String?>? birthday,
@@ -3075,8 +3084,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
       classId: classId ?? this.classId,
       teacherId: teacherId ?? this.teacherId,
       courseId: courseId ?? this.courseId,
-      totalTimes: totalTimes ?? this.totalTimes,
-      usedTimes: usedTimes ?? this.usedTimes,
+      totalSessions: totalSessions ?? this.totalSessions,
+      completedSessions: completedSessions ?? this.completedSessions,
       lastLoginTime: lastLoginTime ?? this.lastLoginTime,
       lastLoginIp: lastLoginIp ?? this.lastLoginIp,
       birthday: birthday ?? this.birthday,
@@ -3135,11 +3144,11 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     if (courseId.present) {
       map['course_id'] = Variable<String>(courseId.value);
     }
-    if (totalTimes.present) {
-      map['total_times'] = Variable<String>(totalTimes.value);
+    if (totalSessions.present) {
+      map['total_sessions'] = Variable<String>(totalSessions.value);
     }
-    if (usedTimes.present) {
-      map['used_times'] = Variable<String>(usedTimes.value);
+    if (completedSessions.present) {
+      map['completed_sessions'] = Variable<String>(completedSessions.value);
     }
     if (lastLoginTime.present) {
       map['last_login_time'] = Variable<String>(lastLoginTime.value);
@@ -3183,8 +3192,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
           ..write('classId: $classId, ')
           ..write('teacherId: $teacherId, ')
           ..write('courseId: $courseId, ')
-          ..write('totalTimes: $totalTimes, ')
-          ..write('usedTimes: $usedTimes, ')
+          ..write('totalSessions: $totalSessions, ')
+          ..write('completedSessions: $completedSessions, ')
           ..write('lastLoginTime: $lastLoginTime, ')
           ..write('lastLoginIp: $lastLoginIp, ')
           ..write('birthday: $birthday, ')
@@ -4168,8 +4177,8 @@ typedef $$StudentsTableCreateCompanionBuilder = StudentsCompanion Function({
   Value<String?> classId,
   Value<String?> teacherId,
   Value<String?> courseId,
-  Value<String?> totalTimes,
-  Value<String?> usedTimes,
+  Value<String?> totalSessions,
+  Value<String?> completedSessions,
   Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
   Value<String?> birthday,
@@ -4194,8 +4203,8 @@ typedef $$StudentsTableUpdateCompanionBuilder = StudentsCompanion Function({
   Value<String?> classId,
   Value<String?> teacherId,
   Value<String?> courseId,
-  Value<String?> totalTimes,
-  Value<String?> usedTimes,
+  Value<String?> totalSessions,
+  Value<String?> completedSessions,
   Value<String?> lastLoginTime,
   Value<String?> lastLoginIp,
   Value<String?> birthday,
@@ -4259,11 +4268,12 @@ class $$StudentsTableFilterComposer
   ColumnFilters<String> get courseId => $composableBuilder(
       column: $table.courseId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get totalTimes => $composableBuilder(
-      column: $table.totalTimes, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get totalSessions => $composableBuilder(
+      column: $table.totalSessions, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get usedTimes => $composableBuilder(
-      column: $table.usedTimes, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get completedSessions => $composableBuilder(
+      column: $table.completedSessions,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime, builder: (column) => ColumnFilters(column));
@@ -4338,11 +4348,13 @@ class $$StudentsTableOrderingComposer
   ColumnOrderings<String> get courseId => $composableBuilder(
       column: $table.courseId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get totalTimes => $composableBuilder(
-      column: $table.totalTimes, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get totalSessions => $composableBuilder(
+      column: $table.totalSessions,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get usedTimes => $composableBuilder(
-      column: $table.usedTimes, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get completedSessions => $composableBuilder(
+      column: $table.completedSessions,
+      builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime,
@@ -4418,11 +4430,11 @@ class $$StudentsTableAnnotationComposer
   GeneratedColumn<String> get courseId =>
       $composableBuilder(column: $table.courseId, builder: (column) => column);
 
-  GeneratedColumn<String> get totalTimes => $composableBuilder(
-      column: $table.totalTimes, builder: (column) => column);
+  GeneratedColumn<String> get totalSessions => $composableBuilder(
+      column: $table.totalSessions, builder: (column) => column);
 
-  GeneratedColumn<String> get usedTimes =>
-      $composableBuilder(column: $table.usedTimes, builder: (column) => column);
+  GeneratedColumn<String> get completedSessions => $composableBuilder(
+      column: $table.completedSessions, builder: (column) => column);
 
   GeneratedColumn<String> get lastLoginTime => $composableBuilder(
       column: $table.lastLoginTime, builder: (column) => column);
@@ -4481,8 +4493,8 @@ class $$StudentsTableTableManager extends RootTableManager<
             Value<String?> classId = const Value.absent(),
             Value<String?> teacherId = const Value.absent(),
             Value<String?> courseId = const Value.absent(),
-            Value<String?> totalTimes = const Value.absent(),
-            Value<String?> usedTimes = const Value.absent(),
+            Value<String?> totalSessions = const Value.absent(),
+            Value<String?> completedSessions = const Value.absent(),
             Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
             Value<String?> birthday = const Value.absent(),
@@ -4507,8 +4519,8 @@ class $$StudentsTableTableManager extends RootTableManager<
             classId: classId,
             teacherId: teacherId,
             courseId: courseId,
-            totalTimes: totalTimes,
-            usedTimes: usedTimes,
+            totalSessions: totalSessions,
+            completedSessions: completedSessions,
             lastLoginTime: lastLoginTime,
             lastLoginIp: lastLoginIp,
             birthday: birthday,
@@ -4533,8 +4545,8 @@ class $$StudentsTableTableManager extends RootTableManager<
             Value<String?> classId = const Value.absent(),
             Value<String?> teacherId = const Value.absent(),
             Value<String?> courseId = const Value.absent(),
-            Value<String?> totalTimes = const Value.absent(),
-            Value<String?> usedTimes = const Value.absent(),
+            Value<String?> totalSessions = const Value.absent(),
+            Value<String?> completedSessions = const Value.absent(),
             Value<String?> lastLoginTime = const Value.absent(),
             Value<String?> lastLoginIp = const Value.absent(),
             Value<String?> birthday = const Value.absent(),
@@ -4559,8 +4571,8 @@ class $$StudentsTableTableManager extends RootTableManager<
             classId: classId,
             teacherId: teacherId,
             courseId: courseId,
-            totalTimes: totalTimes,
-            usedTimes: usedTimes,
+            totalSessions: totalSessions,
+            completedSessions: completedSessions,
             lastLoginTime: lastLoginTime,
             lastLoginIp: lastLoginIp,
             birthday: birthday,

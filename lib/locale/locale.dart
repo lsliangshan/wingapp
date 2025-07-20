@@ -119,6 +119,18 @@ class Messages extends Translations {
           'create_attachment.save.failed': '保存失败',
           'create_attachment.valid.name.already_exists': '文件名已存在',
 
+          // 学生详情页面
+          'student_detail.group.base': '基本信息',
+          'student_detail.label.name': '姓名',
+          'student_detail.label.mobile': '手机号',
+          'student_detail.label.birthday': '生日',
+          'student_detail.group.class': '班级信息',
+          'student_detail.label.class': '班级',
+          'student_detail.label.teacher': '老师',
+          'student_detail.group.sessions': '课时信息',
+          'student_detail.label.total_sessions': '总课时',
+          'student_detail.label.completed_sessions': '已使用课时',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -281,6 +293,18 @@ class Messages extends Translations {
           'create_attachment.save.failed': 'Save Failed',
           'create_attachment.valid.name.already_exists':
               'File name already exists',
+
+          // 学生详情页面
+          'student_detail.group.base': 'Base Information',
+          'student_detail.label.name': 'Name',
+          'student_detail.label.mobile': 'Mobile',
+          'student_detail.label.birthday': 'Birthday',
+          'student_detail.group.class': 'Class Information',
+          'student_detail.label.class': 'Class',
+          'student_detail.label.teacher': 'Teacher',
+          'student_detail.group.sessions': 'Sessions Information',
+          'student_detail.label.total_sessions': 'Total Sessions',
+          'student_detail.label.completed_sessions': 'Completed Sessions',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

@@ -23,8 +23,8 @@ class LoginInfo {
   String? teacherId;
   String? classId;
   String? courseId;
-  String? totalTimes;
-  String? usedTimes;
+  String? totalSessions;
+  String? completedSessions;
 
   LoginInfo({
     this.id,
@@ -50,8 +50,8 @@ class LoginInfo {
     this.teacherId,
     this.classId,
     this.courseId,
-    this.totalTimes,
-    this.usedTimes,
+    this.totalSessions,
+    this.completedSessions,
   });
 
   LoginInfo.fromJson(Map<String, dynamic> json) {
@@ -78,8 +78,8 @@ class LoginInfo {
     teacherId = json['teacherId'];
     classId = json['classId'];
     courseId = json['courseId'];
-    totalTimes = json['totalTimes'];
-    usedTimes = json['usedTimes'];
+    totalSessions = json['totalSessions'];
+    completedSessions = json['completedSessions'];
   }
 
   Map<String, dynamic> toJson() {
@@ -107,8 +107,8 @@ class LoginInfo {
     data['teacherId'] = teacherId;
     data['classId'] = classId;
     data['courseId'] = courseId;
-    data['totalTimes'] = totalTimes;
-    data['usedTimes'] = usedTimes;
+    data['totalSessions'] = totalSessions;
+    data['completedSessions'] = completedSessions;
     return data;
   }
 }

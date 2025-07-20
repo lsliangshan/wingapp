@@ -30,6 +30,8 @@ import '../modules/send_robot_message/bindings/send_robot_message_binding.dart';
 import '../modules/send_robot_message/views/send_robot_message_view.dart';
 import '../modules/student/bindings/student_binding.dart';
 import '../modules/student/views/student_view.dart';
+import '../modules/student_detail/bindings/student_detail_binding.dart';
+import '../modules/student_detail/views/student_detail_view.dart';
 import '../modules/teacher/bindings/teacher_binding.dart';
 import '../modules/teacher/views/teacher_view.dart';
 
@@ -136,6 +138,13 @@ class AppPages {
         classId: Get.arguments['classId'] ?? '',
       ),
       binding: CreateAttachmentBinding(),
+    ),
+    GetPage(
+      name: _Paths.STUDENT_DETAIL,
+      page: () => StudentDetailView(
+        id: Get.arguments['id'] ?? '',
+      ),
+      binding: StudentDetailBinding(),
     ),
   ];
 }

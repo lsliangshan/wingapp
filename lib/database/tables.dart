@@ -171,10 +171,10 @@ class Students extends Table {
   // 课程 ID
   TextColumn get courseId => text().nullable()();
   // 总课时
-  TextColumn get totalTimes =>
+  TextColumn get totalSessions =>
       text().nullable().withDefault(const Constant('0'))();
   // 已上课时
-  TextColumn get usedTimes =>
+  TextColumn get completedSessions =>
       text().nullable().withDefault(const Constant('0'))();
 
   // 最后登录时间

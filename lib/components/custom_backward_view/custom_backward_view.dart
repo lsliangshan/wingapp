@@ -5,14 +5,15 @@ import 'package:get/get.dart';
 
 class CustomBackwardView extends GetView {
   final Color? color;
-  const CustomBackwardView({super.key, this.color});
+  final double? size;
+  const CustomBackwardView({super.key, this.color, this.size});
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: SvgPicture.asset(
         'assets/svgs/icon_arrow_left.svg',
-        width: 20,
-        height: 20,
+        width: size ?? 20,
+        height: size ?? 20,
         colorFilter: ColorFilter.mode(
           color ?? Color(0xFF000000),
           BlendMode.srcIn,
