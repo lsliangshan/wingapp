@@ -20,6 +20,7 @@ abstract class Routes {
   static const FILE_PREVIEWER = _Paths.FILE_PREVIEWER;
   static const CREATE_ATTACHMENT = _Paths.CREATE_ATTACHMENT;
   static const STUDENT_DETAIL = _Paths.STUDENT_DETAIL;
+  static const ADD_STUDENT = _Paths.ADD_STUDENT;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const FILE_PREVIEWER = '/file-previewer';
   static const CREATE_ATTACHMENT = '/create-attachment';
   static const STUDENT_DETAIL = '/student-detail';
+  static const ADD_STUDENT = '/add-student';
 }

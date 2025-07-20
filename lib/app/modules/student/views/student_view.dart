@@ -139,6 +139,19 @@ class StudentView extends GetView<StudentController> {
         centerTitle: true,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
         leading: const CustomBackwardView(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.gotoAddStudent();
+            },
+            icon: SvgPicture.asset(
+              'assets/svgs/icon_plus.svg',
+              width: 24,
+              height: 24,
+            ),
+          ),
+          const SizedBox(width: 12),
+        ],
       ),
       body: CustomMaterialIndicator(
         onRefresh: controller.onRefresh,

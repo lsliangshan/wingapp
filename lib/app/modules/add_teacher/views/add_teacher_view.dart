@@ -406,7 +406,7 @@ class AddTeacherView extends GetView<AddTeacherController> {
                               // key: UniqueKey(),
                               initialUrlRequest: URLRequest(
                                   url: WebUri(
-                                      'http://10.2.6.210:5173/dingtalk/login')),
+                                      'http://192.168.1.4:5173/dingtalk/login')),
                               // initialUrlRequest: URLRequest(url: WebUri('http://127.0.0.1:5173')),
                               initialSettings: InAppWebViewSettings(
                                 javaScriptEnabled: true,

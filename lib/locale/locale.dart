@@ -60,6 +60,24 @@ class Messages extends Translations {
           'add_teacher.form_data.btn.save': '保存',
           'add_teacher.form_data.btn.saveAndBack': '保存并返回',
 
+          // 添加学生页面
+          'add_student.title': '添加学生',
+          'add_student.form_data.name': '姓名',
+          'add_student.form_data.name.hint': '请输入学生姓名',
+          'add_student.form_data.en_name': '英文名',
+          'add_student.form_data.en_name.hint': '请输入学生英文名',
+          'add_student.form_data.gender': '性别',
+          'add_student.form_data.gender.hint': '请选择学生性别',
+          'add_student.form_data.birthday': '生日',
+          'add_student.form_data.birthday.hint': '请选择学生生日',
+          'add_student.form_data.class': '班级',
+          'add_student.form_data.class.hint': '请选择学生班级',
+          'add_student.form_data.avatar': '头像',
+          'add_student.form_data.avatar.hint': '请选择学生头像',
+          'add_student.form_data.dingtalk.login': '钉钉登录',
+          'add_student.form_data.btn.save': '保存',
+          'add_student.form_data.btn.saveAndBack': '保存并返回',
+
           // 添加班级页面
           'add_class.title': '添加班级',
           'add_class.form_data.name': '班级名称',
@@ -231,6 +249,28 @@ class Messages extends Translations {
           'add_teacher.form_data.dingtalk.login': 'Dingtalk Login',
           'add_teacher.form_data.btn.save': 'Save',
           'add_teacher.form_data.btn.saveAndBack': 'Save and Back',
+
+          // 添加学生页面
+          'add_student.title': 'Add Student',
+          'add_student.form_data.name': 'Name',
+          'add_student.form_data.name.hint': 'Please enter the student name',
+          'add_student.form_data.en_name': 'English Name',
+          'add_student.form_data.en_name.hint':
+              'Please enter the student English name',
+          'add_student.form_data.gender': 'Gender',
+          'add_student.form_data.gender.hint':
+              'Please select the student gender',
+          'add_student.form_data.birthday': 'Birthday',
+          'add_student.form_data.birthday.hint':
+              'Please select the student birthday',
+          'add_student.form_data.class': 'Class',
+          'add_student.form_data.class.hint': 'Please select the student class',
+          'add_student.form_data.avatar': 'Avatar',
+          'add_student.form_data.avatar.hint':
+              'Please select the student avatar',
+          'add_student.form_data.dingtalk.login': 'Dingtalk Login',
+          'add_student.form_data.btn.save': 'Save',
+          'add_student.form_data.btn.saveAndBack': 'Save and Back',
 
           // 添加班级页面
           'add_class.title': 'Add Class',

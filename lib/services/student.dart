@@ -67,4 +67,43 @@ class StudentService extends GetxService {
 
     return NormalResponse.fromJson(data);
   }
+
+  Future<NormalResponse> addStudent({
+    required String id,
+    required String openId,
+    required String unionId,
+    required String mobile,
+    required String name,
+    required String enName,
+    required String birthday,
+    required String gender,
+    required String classId,
+    required String teacherId,
+    String? stateCode,
+    String? avatar,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse('https://wf.liangqy.com/webhook-test/add-student'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id,
+        'unionId': unionId,
+        'openId': openId,
+        'name': name,
+        'enName': enName,
+        'stateCode': stateCode ?? '86',
+        'mobile': mobile,
+        'gender': gender,
+        'classId': classId,
+        'teacherId': teacherId,
+        'birthday': birthday,
+        'avatar': avatar ?? '',
+      }),
+    );
+    final data = json.decode(response.body);
+
+    return NormalResponse.fromJson(data);
+  }
 }

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/add_class/bindings/add_class_binding.dart';
 import '../modules/add_class/views/add_class_view.dart';
+import '../modules/add_student/bindings/add_student_binding.dart';
+import '../modules/add_student/views/add_student_view.dart';
 import '../modules/add_teacher/bindings/add_teacher_binding.dart';
 import '../modules/add_teacher/views/add_teacher_view.dart';
 import '../modules/choose_at_users/bindings/choose_at_users_binding.dart';
@@ -145,6 +147,11 @@ class AppPages {
         id: Get.arguments['id'] ?? '',
       ),
       binding: StudentDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_STUDENT,
+      page: () => const AddStudentView(),
+      binding: AddStudentBinding(),
     ),
   ];
 }

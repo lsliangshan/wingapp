@@ -69,4 +69,10 @@ class StudentController extends GetxController {
       },
     );
   }
+
+  void gotoAddStudent() {
+    Get.toNamed(
+      Routes.ADD_STUDENT,
+    );
+  }
 }
