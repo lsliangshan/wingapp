@@ -22,6 +22,7 @@ abstract class Routes {
   static const STUDENT_DETAIL = _Paths.STUDENT_DETAIL;
   static const ADD_STUDENT = _Paths.ADD_STUDENT;
   static const CHOOSE_CLASS = _Paths.CHOOSE_CLASS;
+  static const TEACHER_DETAIL = _Paths.TEACHER_DETAIL;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const STUDENT_DETAIL = '/student-detail';
   static const ADD_STUDENT = '/add-student';
   static const CHOOSE_CLASS = '/choose-class';
+  static const TEACHER_DETAIL = '/teacher-detail';
 }

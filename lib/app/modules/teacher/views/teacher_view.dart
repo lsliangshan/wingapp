@@ -1,6 +1,3 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +26,9 @@ class TeacherView extends GetView<TeacherController> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          controller.gotoTeacherDetail(id: controller.teachers[index].id);
+        },
         tileColor: Get.theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

@@ -152,6 +152,23 @@ class Messages extends Translations {
           'student_detail.label.total_sessions': '总课时',
           'student_detail.label.completed_sessions': '已使用课时',
 
+          // 老师详情页面
+          'teacher_detail.group.base': '基本信息',
+          'teacher_detail.label.name': '姓名',
+          'teacher_detail.label.mobile': '手机号',
+          'teacher_detail.label.is_admin': '是否管理员',
+          'teacher_detail.label.is_admin.true': '是',
+          'teacher_detail.label.is_admin.false': '否',
+          'teacher_detail.label.type': '类型',
+          'teacher_detail.label.type.full-time': '全职老师',
+          'teacher_detail.label.type.part-time': '兼职老师',
+          'teacher_detail.group.class': '班级信息',
+          'teacher_detail.label.class': '班级',
+          'teacher_detail.group.student': '学生信息',
+          'teacher_detail.label.student': '学生',
+          'teacher_detail.group.sessions': '课时信息',
+          'teacher_detail.label.sessions': '课时',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -363,6 +380,23 @@ class Messages extends Translations {
           'student_detail.group.sessions': 'Sessions Information',
           'student_detail.label.total_sessions': 'Total Sessions',
           'student_detail.label.completed_sessions': 'Completed Sessions',
+
+          // 老师详情页面
+          'teacher_detail.group.base': 'Base Information',
+          'teacher_detail.label.name': 'Name',
+          'teacher_detail.label.mobile': 'Mobile',
+          'teacher_detail.label.is_admin': 'Is Admin',
+          'teacher_detail.label.is_admin.true': 'Yes',
+          'teacher_detail.label.is_admin.false': 'No',
+          'teacher_detail.label.type': 'Type',
+          'teacher_detail.label.type.full-time': 'Full-time Teacher',
+          'teacher_detail.label.type.part-time': 'Part-time Teacher',
+          'teacher_detail.group.class': 'Class Information',
+          'teacher_detail.label.class': 'Class',
+          'teacher_detail.group.student': 'Student Information',
+          'teacher_detail.label.student': 'Student',
+          'teacher_detail.group.sessions': 'Sessions Information',
+          'teacher_detail.label.sessions': 'Sessions',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

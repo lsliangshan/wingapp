@@ -47,6 +47,23 @@ class TeacherService extends GetxService {
     return NormalResponse.fromJson(data);
   }
 
+  Future<NormalResponse> getTeacherDetail({
+    required String id,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse('https://wf.liangqy.com/webhook/get-teacher-detail'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id,
+      }),
+    );
+    final data = json.decode(response.body);
+
+    return NormalResponse.fromJson(data);
+  }
+
   Future<NormalResponse> addTeacher({
     required String name,
     required String enName,

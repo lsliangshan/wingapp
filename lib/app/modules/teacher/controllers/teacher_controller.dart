@@ -69,4 +69,8 @@ class TeacherController extends GetxController {
       update(['update-teachers']);
     }
   }
+
+  void gotoTeacherDetail({required String id}) {
+    Get.toNamed(Routes.TEACHER_DETAIL, arguments: {'id': id});
+  }
 }
