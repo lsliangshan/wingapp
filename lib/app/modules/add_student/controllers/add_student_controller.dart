@@ -269,6 +269,9 @@ class AddStudentController extends GetxController {
   Future<void> chooseClass() async {
     final result = await Get.toNamed(
       Routes.CHOOSE_CLASS,
+      arguments: {
+        'classId': formData.value.classId,
+      },
     );
     if (result != null && result['classInfo'] != null) {
       formData.value.classId = result['classInfo'].id;

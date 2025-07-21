@@ -24,6 +24,8 @@ class ChooseClassController extends GetxController {
   RxInt totalCount = 0.obs;
   RxInt totalPage = 1.obs;
 
+  Rx<String> initClassId = ''.obs;
+
   late Future<void> initClassesFuture;
 
   @override
@@ -46,6 +48,10 @@ class ChooseClassController extends GetxController {
         toastService.showError(message: 'toast.login.failed'.tr);
       }
     });
+
+    if (Get.arguments != null && Get.arguments['classId'] != null) {
+      initClassId.value = Get.arguments['classId'];
+    }
 
     initClassesFuture = initData();
   }

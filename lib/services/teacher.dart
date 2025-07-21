@@ -26,6 +26,7 @@ class TeacherService extends GetxService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+
     final data = json.decode(response.body);
     return NormalResponse.fromJson(data);
   }

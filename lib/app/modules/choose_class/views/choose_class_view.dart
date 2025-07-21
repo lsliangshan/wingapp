@@ -85,11 +85,18 @@ class ChooseClassView extends GetView<ChooseClassController> {
             color: Color(0xFF888888),
           ),
         ),
-        trailing: SvgPicture.asset(
-          'assets/svgs/icon_arrow_right.svg',
-          width: 20,
-          height: 20,
-        ),
+        trailing: Obx(
+            () => (controller.initClassId.value == controller.classes[index].id)
+                ? SvgPicture.asset(
+                    'assets/svgs/icon_checked.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      Get.theme.colorScheme.primary,
+                      BlendMode.srcIn,
+                    ),
+                  )
+                : SizedBox.shrink()),
       ),
     );
   }

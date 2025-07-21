@@ -279,7 +279,29 @@ class StudentDetailView extends GetView<StudentDetailController> {
 
                           SliverToBoxAdapter(
                             child: ListTile(
-                              subtitle: Text('student_detail.group.class'.tr),
+                              onTap: () {
+                                controller.gotoChooseClass();
+                              },
+                              subtitle: Row(
+                                spacing: 8,
+                                children: [
+                                  Text('student_detail.group.class'.tr),
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    alignment: Alignment.center,
+                                    child: SvgPicture.asset(
+                                      'assets/svgs/icon_edit.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: ColorFilter.mode(
+                                        Get.theme.colorScheme.primary,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           SliverToBoxAdapter(
