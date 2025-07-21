@@ -158,7 +158,7 @@ class StudentView extends GetView<StudentController> {
         backgroundColor: Colors.white,
         indicatorBuilder: customIndicatorBuilder,
         child: GetBuilder(
-          init: controller,
+          init: StudentController(),
           id: 'update-students',
           builder: (_) {
             return FutureBuilder(

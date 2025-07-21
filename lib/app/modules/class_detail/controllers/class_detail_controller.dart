@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:wingapp/app/modules/student/controllers/student_controller.dart';
+import 'package:wingapp/app/modules/student/views/student_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';

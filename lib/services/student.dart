@@ -24,6 +24,7 @@ class StudentService extends GetxService {
     if (status != null && status.isNotEmpty) {
       queryStr += '&status=$status';
     }
+
     http.Response response = await http.get(
       Uri.parse('https://wf.liangqy.com/webhook/get-students?$queryStr'),
       headers: <String, String>{

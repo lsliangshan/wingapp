@@ -22,14 +22,21 @@ class StudentController extends GetxController {
   void onInit() {
     super.onInit();
 
+    // if (Get.arguments != null && Get.arguments['classId'] != null) {
+    //   classId.value = Get.arguments['classId']!;
+    // }
+    classId.value =
+        Get.arguments?['classId'] ?? Get.parameters['classId'] ?? '';
     initStudentsFuture = initData();
   }
 
-  Future<void> initData() async {
-    if (Get.arguments != null && Get.arguments['classId'] != null) {
-      classId.value = Get.arguments['classId'];
-    }
+  @override
+  void onReady() {
+    super.onReady();
+    ever(classId, (val) => print('>>>>>>>>>>>.. classId: $val'));
+  }
 
+  Future<void> initData() async {
     await initStudents();
   }
 
@@ -42,6 +49,7 @@ class StudentController extends GetxController {
     );
 
     if (normalResponse.code == 200 && normalResponse.data != null) {
+      print('>>>>>>>>>>>>>>> normalResponse.data: ${normalResponse.data}');
       if (normalResponse.data!['list'] != null &&
           normalResponse.data!['list'].isNotEmpty) {
         students.value = normalResponse.data!['list']
