@@ -173,4 +173,8 @@ class ProfileController extends GetxController {
     await Get.toNamed(Routes.CLASS);
     initSummaryCounts();
   }
+
+  Future<void> onRefresh() async {
+    await initSummaryCounts();
+  }
 }

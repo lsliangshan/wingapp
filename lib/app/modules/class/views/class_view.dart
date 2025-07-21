@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/modules/class/controllers/class_controller.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
 import 'package:wingapp/components/need_login/need_login.dart';
@@ -157,40 +158,7 @@ class ClassView extends GetView<ClassController> {
         onRefresh: () async {
           await controller.onRefresh();
         },
-        indicatorBuilder: (context, controller) {
-          return Stack(
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(40),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter:
-                          ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 设置模糊程度
-                      child: Container(
-                        color: Colors.white.withAlpha(0), // 透明背景
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: CircularProgressIndicator(
-                  color: Get.theme.primaryColor,
-                  strokeWidth: 2,
-                  value: controller.state.isLoading
-                      ? null
-                      : min(controller.value, 1.0),
-                ),
-              )
-            ],
-          );
-        },
+        indicatorBuilder: customIndicatorBuilder,
         child: GetBuilder(
           id: 'update-classes',
           init: controller,
@@ -213,32 +181,38 @@ class ClassView extends GetView<ClassController> {
                   );
                 }
                 if (controller.classes.isEmpty) {
-                  return SizedBox(
-                    width: Get.width,
-                    height: Get.height - 300,
-                    child: Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        EmptyResult(
-                          mainButton: FilledButton(
-                            onPressed: () {
-                              controller.gotoAddClass();
-                            },
-                            child: Text('class.btn.add'.tr),
-                          ),
-                          showSecondaryButton: true,
-                          secondaryButton: FilledButton(
-                            onPressed: () {
-                              controller.getClasses();
-                            },
-                            style: FilledButton.styleFrom(
-                              backgroundColor: Get.theme.colorScheme.secondary,
+                  return ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height - 300,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            EmptyResult(
+                              mainButton: FilledButton(
+                                onPressed: () {
+                                  controller.gotoAddClass();
+                                },
+                                child: Text('class.btn.add'.tr),
+                              ),
+                              showSecondaryButton: true,
+                              secondaryButton: FilledButton(
+                                onPressed: () {
+                                  controller.getClasses();
+                                },
+                                style: FilledButton.styleFrom(
+                                  backgroundColor:
+                                      Get.theme.colorScheme.secondary,
+                                ),
+                                child: Text('class.btn.reload'.tr),
+                              ),
                             ),
-                            child: Text('class.btn.reload'.tr),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }
                 return CustomScrollView(

@@ -156,17 +156,22 @@ class ChooseClassView extends GetView<ChooseClassController> {
                   );
                 }
                 if (controller.classes.isEmpty) {
-                  return SizedBox(
-                    width: Get.width,
-                    height: Get.height - 300,
-                    child: Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        EmptyResult(
-                          showMainButton: false,
+                  return ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height - 300,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            EmptyResult(
+                              showMainButton: false,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }
                 return CustomScrollView(

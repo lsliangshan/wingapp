@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
+import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
 
 import '../controllers/choose_teacher_controller.dart';
@@ -144,40 +145,7 @@ class ChooseTeacherView extends GetView<ChooseTeacherController> {
       body: CustomMaterialIndicator(
         onRefresh: controller.onRefresh,
         backgroundColor: Colors.white,
-        indicatorBuilder: (context, controller) {
-          return Stack(
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(40),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter:
-                          ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 设置模糊程度
-                      child: Container(
-                        color: Colors.white.withAlpha(0), // 透明背景
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: CircularProgressIndicator(
-                  color: Get.theme.primaryColor,
-                  strokeWidth: 2,
-                  value: controller.state.isLoading
-                      ? null
-                      : min(controller.value, 1.0),
-                ),
-              )
-            ],
-          );
-        },
+        indicatorBuilder: customIndicatorBuilder,
         child: GetBuilder(
           id: 'update-teachers',
           init: controller,
