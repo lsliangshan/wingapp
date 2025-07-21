@@ -76,7 +76,7 @@ class ClassView extends GetView<ClassController> {
                   ),
                 ),
               ),
-        title: Text(controller.classes[index].name),
+        title: Text(controller.classes[index].name ?? ''),
         subtitle: Text(
           '${'teacher'.tr}: ${controller.classes[index].teacherName ?? ''} (${controller.classes[index].teacherEnName ?? ''})',
           style: Get.theme.textTheme.bodySmall?.copyWith(

@@ -67,7 +67,7 @@ class Classes extends Table {
   // 班级 ID
   TextColumn get id => text()();
   // 班级名称
-  TextColumn get name => text()();
+  TextColumn get name => text().nullable()();
   // 班级图标
   TextColumn get icon => text().nullable()();
   // 班级老师 ID

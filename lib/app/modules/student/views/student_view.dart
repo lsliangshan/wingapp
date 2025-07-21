@@ -88,34 +88,39 @@ class StudentView extends GetView {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        title: Text(controller.students[index].name ?? ''),
-        subtitle: Text(
-          controller.students[index].enName ?? '',
-          style: Get.theme.textTheme.bodySmall?.copyWith(
-            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
-          ),
+        title: Row(
+          spacing: 4,
+          children: [
+            Text(controller.students[index].name ?? ''),
+            Text(
+              controller.students[index].enName != null &&
+                      controller.students[index].enName!.isNotEmpty
+                  ? '(${controller.students[index].enName})'
+                  : '',
+              style: TextStyle(
+                color: Get.theme.primaryColor.withValues(alpha: 0.5),
+              ),
+            ),
+          ],
+        ),
+        subtitle: Row(
+          spacing: 8,
+          children: [
+            Text(
+              controller.students[index].classInfo?.name ?? '',
+              style: Get.theme.textTheme.bodySmall?.copyWith(
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ),
+            Text(
+              controller.students[index].classInfo?.teacherName ?? '',
+              style: Get.theme.textTheme.bodySmall?.copyWith(
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            )
+          ],
         ),
         contentPadding: EdgeInsets.only(left: 16, right: 0),
-        trailing: Container(
-          height: 48,
-          width: 48,
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  print('>>>>>>>>>> delete');
-                },
-                child: SvgPicture.asset(
-                  'assets/svgs/icon_close.svg',
-                  width: 20,
-                  height: 20,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

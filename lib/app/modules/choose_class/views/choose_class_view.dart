@@ -78,7 +78,7 @@ class ChooseClassView extends GetView<ChooseClassController> {
                   ),
                 ),
               ),
-        title: Text(controller.classes[index].name),
+        title: Text(controller.classes[index].name ?? ''),
         subtitle: Text(
           '${'teacher'.tr}: ${controller.classes[index].teacherEnName ?? controller.classes[index].teacherName ?? ''}',
           style: Get.theme.textTheme.bodySmall?.copyWith(

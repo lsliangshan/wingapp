@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/models/student_entity.dart';
 import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/toast.dart';
 
@@ -14,7 +15,7 @@ class StudentController extends GetxController {
 
   StudentService studentService = Get.find<StudentService>();
 
-  RxList<Student> students = <Student>[].obs;
+  RxList<StudentEntity> students = <StudentEntity>[].obs;
 
   late Future<void> initStudentsFuture;
 
@@ -49,9 +50,12 @@ class StudentController extends GetxController {
     if (normalResponse.code == 200 && normalResponse.data != null) {
       if (normalResponse.data!['list'] != null &&
           normalResponse.data!['list'].isNotEmpty) {
-        students.value = normalResponse.data!['list']
-            .map<Student>((e) => Student.fromJson(e))
-            .toList();
+        students.value = normalResponse.data!['list'].map<StudentEntity>((e) {
+          StudentEntity std = StudentEntity.fromJson(e);
+          std.classInfo = Class.fromJson(e['classInfo']);
+          return std;
+        }).toList();
+        print('>>>>>>>>>>>...... ${students.map((itm) => itm.toJson())}');
       } else {
         // 无数据
         students.clear();
@@ -82,7 +86,7 @@ class StudentController extends GetxController {
     );
     if (newStudents != null && newStudents.isNotEmpty) {
       students.insertAll(0, newStudents);
-      print('>>>>>>>>>>> ${newStudents.map((e) => e.toJson())}');
+
       totalCount.value = (totalCount.value + newStudents.length).toInt();
       update(['update-students']);
     }

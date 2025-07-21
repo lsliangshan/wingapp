@@ -143,7 +143,7 @@ class CreateAttachmentController extends GetxController {
       content: fileContentController.text,
       filename: fileNameController.text,
       classId: classId.value,
-      className: classDetail.value.name,
+      className: classDetail.value.name ?? '',
       uploaderId: classDetail.value.teacherId ?? '',
       uploaderName: classDetail.value.teacherEnName ?? '',
     );

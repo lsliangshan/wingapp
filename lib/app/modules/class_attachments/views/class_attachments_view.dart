@@ -84,7 +84,7 @@ class ClassAttachmentsView extends GetView<ClassAttachmentsController> {
       appBar: AppBar(
         title: Obx(() => Text(
               'class_attachments.title'.tr.replaceAll(
-                  '{class_name}', controller.classDetail.value.name),
+                  '{class_name}', controller.classDetail.value.name ?? ''),
               style: Get.theme.textTheme.titleMedium,
             )),
         centerTitle: true,

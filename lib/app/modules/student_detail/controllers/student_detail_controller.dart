@@ -3,9 +3,11 @@ import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/models/student_entity.dart';
 import 'package:wingapp/services/student.dart';
+import 'package:wingapp/services/toast.dart';
 
 class StudentDetailController extends GetxController {
   final StudentService studentService = StudentService();
+  ToastService toastService = ToastService();
 
   RxString id = ''.obs;
 
@@ -56,7 +58,21 @@ class StudentDetailController extends GetxController {
     if (result != null &&
         result['classInfo'] != null &&
         result['classInfo'].id != student.value.classId) {
-      print('>>>>>>>>> 修改了班级信息 classInfo: ${result['classInfo']}');
+      NormalResponse normalResponse = await studentService.updateStudentClass(
+        id: student.value.id,
+        classId: result['classInfo'].id,
+        teacherId: result['classInfo'].teacherId,
+      );
+
+      if (normalResponse.code == 200 && normalResponse.data != null) {
+        student.value.classId = result['classInfo'].id;
+        student.value.teacherId = result['classInfo'].teacherId;
+        student.value.classInfo = result['classInfo'];
+        update(['update-student-detail']);
+        toastService.showSuccess(message: 'toast.update.success'.tr);
+      } else {
+        toastService.showError(message: 'toast.update.failed'.tr);
+      }
     }
   }
 }

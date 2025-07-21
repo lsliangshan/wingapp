@@ -1,30 +1,30 @@
 import 'package:wingapp/database/database.dart';
 
 class StudentEntity {
-  final String id;
-  final String? unionId;
-  final String? openId;
-  final String? username;
-  final String? stateCode;
-  final String? mobile;
-  final String? email;
-  final String? enName;
-  final String? name;
-  final String? avatar;
-  final String? gender;
-  final String? status;
-  final String? classId;
-  final String? teacherId;
-  final String? courseId;
-  final String? totalSessions;
-  final String? completedSessions;
-  final String? lastLoginTime;
-  final String? lastLoginIp;
-  final String? birthday;
-  final String? homepage;
-  final String? token;
-  final String? loginType;
-  final Class? classInfo;
+  String id;
+  String? unionId;
+  String? openId;
+  String? username;
+  String? stateCode;
+  String? mobile;
+  String? email;
+  String? enName;
+  String? name;
+  String? avatar;
+  String? gender;
+  String? status;
+  String? classId;
+  String? teacherId;
+  String? courseId;
+  String? totalSessions;
+  String? completedSessions;
+  String? lastLoginTime;
+  String? lastLoginIp;
+  String? birthday;
+  String? homepage;
+  String? token;
+  String? loginType;
+  Class? classInfo;
 
   StudentEntity({
     required this.id,

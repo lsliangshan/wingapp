@@ -302,7 +302,7 @@ class ClassAttachmentsController extends GetxController {
           await attachmentService.uploadAttachmentsByFiles(
         files: result.files.map((item) => XFile(item.path!)).toList(),
         classId: classId.value,
-        className: classDetail.value.name,
+        className: classDetail.value.name ?? '',
         uploaderId: classDetail.value.teacherId ?? '',
         uploaderName: classDetail.value.teacherEnName ?? '',
       );

@@ -942,8 +942,8 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _iconMeta = const VerificationMeta('icon');
   @override
   late final GeneratedColumn<String> icon = GeneratedColumn<String>(
@@ -1048,8 +1048,6 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
     if (data.containsKey('name')) {
       context.handle(
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('icon')) {
       context.handle(
@@ -1119,7 +1117,7 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}name']),
       icon: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}icon']),
       teacherId: attachedDatabase.typeMapping
@@ -1155,7 +1153,7 @@ class $ClassesTable extends Classes with TableInfo<$ClassesTable, Class> {
 
 class Class extends DataClass implements Insertable<Class> {
   final String id;
-  final String name;
+  final String? name;
   final String? icon;
   final String? teacherId;
   final String? teacherName;
@@ -1170,7 +1168,7 @@ class Class extends DataClass implements Insertable<Class> {
   final String? updateAt;
   const Class(
       {required this.id,
-      required this.name,
+      this.name,
       this.icon,
       this.teacherId,
       this.teacherName,
@@ -1187,7 +1185,9 @@ class Class extends DataClass implements Insertable<Class> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
-    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
     if (!nullToAbsent || icon != null) {
       map['icon'] = Variable<String>(icon);
     }
@@ -1230,7 +1230,7 @@ class Class extends DataClass implements Insertable<Class> {
   ClassesCompanion toCompanion(bool nullToAbsent) {
     return ClassesCompanion(
       id: Value(id),
-      name: Value(name),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
       icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
       teacherId: teacherId == null && nullToAbsent
           ? const Value.absent()
@@ -1270,7 +1270,7 @@ class Class extends DataClass implements Insertable<Class> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Class(
       id: serializer.fromJson<String>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
+      name: serializer.fromJson<String?>(json['name']),
       icon: serializer.fromJson<String?>(json['icon']),
       teacherId: serializer.fromJson<String?>(json['teacherId']),
       teacherName: serializer.fromJson<String?>(json['teacherName']),
@@ -1291,7 +1291,7 @@ class Class extends DataClass implements Insertable<Class> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
-      'name': serializer.toJson<String>(name),
+      'name': serializer.toJson<String?>(name),
       'icon': serializer.toJson<String?>(icon),
       'teacherId': serializer.toJson<String?>(teacherId),
       'teacherName': serializer.toJson<String?>(teacherName),
@@ -1309,7 +1309,7 @@ class Class extends DataClass implements Insertable<Class> {
 
   Class copyWith(
           {String? id,
-          String? name,
+          Value<String?> name = const Value.absent(),
           Value<String?> icon = const Value.absent(),
           Value<String?> teacherId = const Value.absent(),
           Value<String?> teacherName = const Value.absent(),
@@ -1324,7 +1324,7 @@ class Class extends DataClass implements Insertable<Class> {
           Value<String?> updateAt = const Value.absent()}) =>
       Class(
         id: id ?? this.id,
-        name: name ?? this.name,
+        name: name.present ? name.value : this.name,
         icon: icon.present ? icon.value : this.icon,
         teacherId: teacherId.present ? teacherId.value : this.teacherId,
         teacherName: teacherName.present ? teacherName.value : this.teacherName,
@@ -1427,7 +1427,7 @@ class Class extends DataClass implements Insertable<Class> {
 
 class ClassesCompanion extends UpdateCompanion<Class> {
   final Value<String> id;
-  final Value<String> name;
+  final Value<String?> name;
   final Value<String?> icon;
   final Value<String?> teacherId;
   final Value<String?> teacherName;
@@ -1460,7 +1460,7 @@ class ClassesCompanion extends UpdateCompanion<Class> {
   });
   ClassesCompanion.insert({
     required String id,
-    required String name,
+    this.name = const Value.absent(),
     this.icon = const Value.absent(),
     this.teacherId = const Value.absent(),
     this.teacherName = const Value.absent(),
@@ -1474,8 +1474,7 @@ class ClassesCompanion extends UpdateCompanion<Class> {
     this.createAt = const Value.absent(),
     this.updateAt = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        name = Value(name);
+  }) : id = Value(id);
   static Insertable<Class> custom({
     Expression<String>? id,
     Expression<String>? name,
@@ -1515,7 +1514,7 @@ class ClassesCompanion extends UpdateCompanion<Class> {
 
   ClassesCompanion copyWith(
       {Value<String>? id,
-      Value<String>? name,
+      Value<String?>? name,
       Value<String?>? icon,
       Value<String?>? teacherId,
       Value<String?>? teacherName,
@@ -3617,7 +3616,7 @@ typedef $$TeachersTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function()>;
 typedef $$ClassesTableCreateCompanionBuilder = ClassesCompanion Function({
   required String id,
-  required String name,
+  Value<String?> name,
   Value<String?> icon,
   Value<String?> teacherId,
   Value<String?> teacherName,
@@ -3634,7 +3633,7 @@ typedef $$ClassesTableCreateCompanionBuilder = ClassesCompanion Function({
 });
 typedef $$ClassesTableUpdateCompanionBuilder = ClassesCompanion Function({
   Value<String> id,
-  Value<String> name,
+  Value<String?> name,
   Value<String?> icon,
   Value<String?> teacherId,
   Value<String?> teacherName,
@@ -3835,7 +3834,7 @@ class $$ClassesTableTableManager extends RootTableManager<
               $$ClassesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
+            Value<String?> name = const Value.absent(),
             Value<String?> icon = const Value.absent(),
             Value<String?> teacherId = const Value.absent(),
             Value<String?> teacherName = const Value.absent(),
@@ -3869,7 +3868,7 @@ class $$ClassesTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             required String id,
-            required String name,
+            Value<String?> name = const Value.absent(),
             Value<String?> icon = const Value.absent(),
             Value<String?> teacherId = const Value.absent(),
             Value<String?> teacherName = const Value.absent(),
