@@ -15,9 +15,15 @@ class ChooseTeacherController extends GetxController {
 
   late Future<void> initFuture;
 
+  Rx<String> initTeacherId = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    if (Get.arguments != null && Get.arguments['teacherId'] != null) {
+      initTeacherId.value = Get.arguments['teacherId'];
+    }
 
     initFuture = getTeachers();
   }

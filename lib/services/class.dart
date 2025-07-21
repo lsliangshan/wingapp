@@ -113,6 +113,14 @@ class ClassService extends GetxService {
         'teacherUnionId': teacherUnionId ?? '',
       }),
     );
+
+    if (response.body.isEmpty) {
+      return NormalResponse(
+        code: 1001,
+        data: {},
+      );
+    }
+
     final data = json.decode(response.body);
     return NormalResponse.fromJson(data);
   }
