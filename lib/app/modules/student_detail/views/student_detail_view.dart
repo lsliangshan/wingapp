@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:sliver_tools/sliver_tools.dart';
-import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
@@ -473,18 +471,4 @@ class StudentDetailView extends GetView<StudentDetailController> {
       ),
     );
   }
-}
-
-class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget child;
-
-  const MyCustomAppBar({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return child;
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 20.0);
 }

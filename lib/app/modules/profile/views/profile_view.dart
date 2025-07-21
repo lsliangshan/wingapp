@@ -45,60 +45,65 @@ class ProfileView extends GetView<ProfileController> {
         break;
     }
 
-    return Card(
-      elevation: 1,
-      shadowColor: Color(0xFFfefefe),
-      child: Container(
-        // width: 150,
-        height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: isAdminTeacher ? 6 : 16,
-          children: [
-            SvgPicture.asset(
-              iconPath,
-              width: isAdminTeacher ? 24 : 32,
-              height: isAdminTeacher ? 24 : 32,
-              colorFilter: const ColorFilter.mode(
-                Color(0xFFB59F9D),
-                BlendMode.srcIn,
+    return GestureDetector(
+      onTap: () {
+        controller.gotoDetail(type: type);
+      },
+      child: Card(
+        elevation: 1,
+        shadowColor: Color(0xFFfefefe),
+        child: Container(
+          // width: 150,
+          height: 80,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: isAdminTeacher ? 6 : 16,
+            children: [
+              SvgPicture.asset(
+                iconPath,
+                width: isAdminTeacher ? 24 : 32,
+                height: isAdminTeacher ? 24 : 32,
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFFB59F9D),
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            VerticalDivider(
-              color: const Color(0xFFB59F9D).withValues(
-                alpha: 0.4,
+              VerticalDivider(
+                color: const Color(0xFFB59F9D).withValues(
+                  alpha: 0.4,
+                ),
+                thickness: 0.7,
+                width: 1,
+                indent: 28,
+                endIndent: 28,
               ),
-              thickness: 0.7,
-              width: 1,
-              indent: 28,
-              endIndent: 28,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    count,
-                    style: Get.theme.textTheme.titleMedium?.copyWith(
-                      color: Get.theme.primaryColor,
-                      fontSize: 26,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      count,
+                      style: Get.theme.textTheme.titleMedium?.copyWith(
+                        color: Get.theme.primaryColor,
+                        fontSize: 26,
+                      ),
                     ),
-                  ),
-                  Text(
-                    label,
-                    style: Get.theme.textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFFB59F9D),
-                      fontSize: 12,
+                    Text(
+                      label,
+                      style: Get.theme.textTheme.bodyMedium?.copyWith(
+                        color: const Color(0xFFB59F9D),
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

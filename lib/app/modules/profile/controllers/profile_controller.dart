@@ -177,4 +177,20 @@ class ProfileController extends GetxController {
   Future<void> onRefresh() async {
     await initSummaryCounts();
   }
+
+  void gotoDetail({required String type}) {
+    switch (type) {
+      case 'teacher':
+        Get.toNamed(Routes.TEACHER);
+        break;
+      case 'student':
+        Get.toNamed(Routes.STUDENT);
+        break;
+      case 'class':
+        Get.toNamed(Routes.CLASS);
+        break;
+      default:
+        break;
+    }
+  }
 }
