@@ -147,7 +147,7 @@ class StudentView extends GetView {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          classId ?? 'student.title'.tr,
+          'student.title'.tr,
           style: Get.theme.textTheme.titleMedium,
         ),
         centerTitle: true,

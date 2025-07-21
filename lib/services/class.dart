@@ -12,6 +12,33 @@ class ClassService extends GetxService {
   ClassDao classDao = Get.find<ClassDao>();
   ToastService toastService = Get.find<ToastService>();
 
+  Future<NormalResponse> updateClassTeacher({
+    required String classId,
+    required String teacherId,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse('https://wf.liangqy.com/webhook/update-class-teacher'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': classId,
+        'teacherId': teacherId,
+      }),
+    );
+
+    if (response.body.isEmpty) {
+      return NormalResponse(
+        code: 1001,
+        data: {},
+      );
+    }
+
+    final data = json.decode(response.body);
+
+    return NormalResponse.fromJson(data);
+  }
+
   Future<NormalResponse> getClassDetailByClassId({
     required String classId,
   }) async {

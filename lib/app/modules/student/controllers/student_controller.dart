@@ -3,11 +3,14 @@ import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/student.dart';
+import 'package:wingapp/services/toast.dart';
 
 class StudentController extends GetxController {
   final String? classId;
 
   StudentController({this.classId});
+
+  ToastService toastService = Get.find<ToastService>();
 
   StudentService studentService = Get.find<StudentService>();
 
@@ -60,7 +63,7 @@ class StudentController extends GetxController {
 
   Future<void> onRefresh() async {
     await initStudents();
-
+    toastService.showSuccess(message: 'toast.refresh.success'.tr);
     return await Future.delayed(const Duration(milliseconds: 1000));
   }
 

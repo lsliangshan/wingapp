@@ -1,17 +1,24 @@
-import 'package:get/get.dart';
-import 'package:wingapp/app/modules/student/controllers/student_controller.dart';
+import 'package:drift/drift.dart' show Value;
+import 'package:event_bus/event_bus.dart';
+import 'package:get/get.dart' hide Value;
 import 'package:wingapp/app/modules/student/views/student_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
+import 'package:wingapp/events/events.dart';
+import 'package:wingapp/models/login_info.model.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/toast.dart';
+import 'package:wingapp/services/user.dart';
 
 class ClassDetailController extends GetxController {
   final StudentService studentService = Get.find<StudentService>();
   final ClassService classService = Get.find<ClassService>();
+  final UserService userService = Get.find<UserService>();
   final ToastService toastService = Get.find<ToastService>();
+
+  final EventBus eventBus = Get.find<EventBus>();
 
   late Future<void> initClassDetailFuture;
   RxString classId = ''.obs;
@@ -35,9 +42,21 @@ class ClassDetailController extends GetxController {
     updateAt: "",
   ).obs;
 
+  Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
+
+  RxBool get isAdminTeacher => (loginInfo.value?.admin == '1').obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    eventBus.on<LoginEvent>().listen((event) {
+      loginInfo.value = event.loginInfo;
+    });
+
+    eventBus.on<LogoutEvent>().listen((event) {
+      loginInfo.value = null;
+    });
 
     initClassDetailFuture = initData();
   }
@@ -47,11 +66,17 @@ class ClassDetailController extends GetxController {
       classId.value = Get.arguments['classId'];
     }
 
+    await initLoginInfo();
+
     await initClassDetail();
 
     await initStudentsCount();
 
     return await Future.delayed(const Duration(milliseconds: 500));
+  }
+
+  Future<void> initLoginInfo() async {
+    loginInfo.value = await userService.getLoginInfo();
   }
 
   Future<void> onRefresh() async {
@@ -106,5 +131,31 @@ class ClassDetailController extends GetxController {
     // });
     await Get.to(() => StudentView(classId: classId.value));
     await initData();
+  }
+
+  Future<void> gotoChooseTeacher() async {
+    final result = await Get.toNamed(Routes.CHOOSE_TEACHER, arguments: {
+      'teacherId': classDetail.value.teacherId,
+    });
+    if (result != null) {
+      // 修改班级老师信息
+      NormalResponse normalResponse = await classService.updateClassTeacher(
+        classId: classId.value,
+        teacherId: result.id,
+      );
+
+      if (normalResponse.code == 200) {
+        toastService.showSuccess(message: 'toast.update.success'.tr);
+        classDetail.value = classDetail.value.copyWith(
+          teacherId: Value<String?>(result.id),
+          teacherName: Value<String?>(result.name),
+          teacherEnName: Value<String?>(result.enName),
+          teacherUnionId: Value<String?>(result.unionId),
+        );
+        update(['update-class-detail']);
+      } else {
+        toastService.showError(message: 'toast.update.failed'.tr);
+      }
+    }
   }
 }

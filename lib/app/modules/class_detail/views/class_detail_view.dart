@@ -39,7 +39,7 @@ class ClassDetailView extends GetView<ClassDetailController> {
             }
             return GetBuilder(
               init: controller,
-              tag: 'update-class-detail',
+              id: 'update-class-detail',
               builder: (_) {
                 return CustomScrollView(
                   slivers: [
@@ -56,6 +56,11 @@ class ClassDetailView extends GetView<ClassDetailController> {
                         ),
                         elevation: 0,
                         child: ListTile(
+                          onTap: controller.isAdminTeacher.isFalse
+                              ? null
+                              : () {
+                                  controller.gotoChooseTeacher();
+                                },
                           tileColor: Get.theme.colorScheme.surface,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -65,13 +70,36 @@ class ClassDetailView extends GetView<ClassDetailController> {
                             width: 24,
                             height: 24,
                           ),
-                          title: Text("teacher".tr),
-                          trailing: Text(
-                            "${controller.classDetail.value.teacherName ?? ''} (${controller.classDetail.value.teacherEnName ?? ''})",
-                            style: Get.theme.textTheme.bodyMedium?.copyWith(
-                              color: Get.theme.hintColor.withValues(alpha: 0.5),
-                            ),
+                          contentPadding: EdgeInsets.only(
+                            left: 16,
+                            right: 12,
                           ),
+                          title: Text("teacher".tr),
+                          trailing: Obx(() => Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Obx(() => Text(
+                                        "${controller.classDetail.value.teacherName ?? ''} (${controller.classDetail.value.teacherEnName ?? ''})",
+                                        style: Get.theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                          color: Get.theme.hintColor
+                                              .withValues(alpha: 0.5),
+                                        ),
+                                      )),
+                                  if (controller.isAdminTeacher.isTrue)
+                                    const SizedBox(width: 4),
+                                  if (controller.isAdminTeacher.isTrue)
+                                    SvgPicture.asset(
+                                      'assets/svgs/icon_arrow_right.svg',
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.grey,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                ],
+                              )),
                         ),
                       ),
                     ),

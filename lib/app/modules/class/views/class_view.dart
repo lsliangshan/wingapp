@@ -1,6 +1,3 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +78,7 @@ class ClassView extends GetView<ClassController> {
               ),
         title: Text(controller.classes[index].name),
         subtitle: Text(
-          '${'teacher'.tr}: ${controller.classes[index].teacherEnName ?? controller.classes[index].teacherName ?? ''}',
+          '${'teacher'.tr}: ${controller.classes[index].teacherName ?? ''} (${controller.classes[index].teacherEnName ?? ''})',
           style: Get.theme.textTheme.bodySmall?.copyWith(
             color: Color(0xFF888888),
           ),
