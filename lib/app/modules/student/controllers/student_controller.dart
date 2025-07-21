@@ -5,9 +5,11 @@ import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/student.dart';
 
 class StudentController extends GetxController {
-  StudentService studentService = Get.find<StudentService>();
+  final String? classId;
 
-  RxString classId = ''.obs;
+  StudentController({this.classId});
+
+  StudentService studentService = Get.find<StudentService>();
 
   RxList<Student> students = <Student>[].obs;
 
@@ -25,15 +27,8 @@ class StudentController extends GetxController {
     // if (Get.arguments != null && Get.arguments['classId'] != null) {
     //   classId.value = Get.arguments['classId']!;
     // }
-    classId.value =
-        Get.arguments?['classId'] ?? Get.parameters['classId'] ?? '';
-    initStudentsFuture = initData();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-    ever(classId, (val) => print('>>>>>>>>>>>.. classId: $val'));
+    initStudentsFuture = initData();
   }
 
   Future<void> initData() async {
@@ -42,14 +37,13 @@ class StudentController extends GetxController {
 
   Future<void> initStudents() async {
     NormalResponse normalResponse = await studentService.getStudents(
-      classId: classId.value,
+      classId: classId,
       pageIndex: pageIndex.value,
       pageSize: pageSize.value,
       status: 'active',
     );
 
     if (normalResponse.code == 200 && normalResponse.data != null) {
-      print('>>>>>>>>>>>>>>> normalResponse.data: ${normalResponse.data}');
       if (normalResponse.data!['list'] != null &&
           normalResponse.data!['list'].isNotEmpty) {
         students.value = normalResponse.data!['list']
@@ -59,6 +53,7 @@ class StudentController extends GetxController {
         // 无数据
         students.clear();
       }
+
       update(['update-students']);
     }
   }

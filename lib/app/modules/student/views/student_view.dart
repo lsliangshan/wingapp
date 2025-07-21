@@ -12,9 +12,23 @@ import 'package:wingapp/components/empty_result/empty_result.dart';
 import '../controllers/student_controller.dart';
 
 // ignore: must_be_immutable
-class StudentView extends GetView<StudentController> {
+class StudentView extends GetView {
   String? classId;
-  StudentView({super.key, this.classId});
+  StudentView({super.key, this.classId}) {
+    if (classId != null) {
+      Get.put<StudentController>(
+        StudentController(
+          classId: classId ?? '',
+        ),
+        tag: 'student-$classId',
+      );
+    }
+  }
+
+  @override
+  StudentController get controller => classId != null
+      ? Get.find<StudentController>(tag: 'student-$classId')
+      : Get.find<StudentController>();
 
   Widget _buildAvatar(String avatar) {
     return Container(
@@ -133,7 +147,7 @@ class StudentView extends GetView<StudentController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'student.title'.tr,
+          classId ?? 'student.title'.tr,
           style: Get.theme.textTheme.titleMedium,
         ),
         centerTitle: true,
@@ -158,8 +172,9 @@ class StudentView extends GetView<StudentController> {
         backgroundColor: Colors.white,
         indicatorBuilder: customIndicatorBuilder,
         child: GetBuilder(
-          init: StudentController(),
+          init: controller,
           id: 'update-students',
+          tag: classId != null ? 'student-$classId' : '',
           builder: (_) {
             return FutureBuilder(
               future: controller.initStudentsFuture,
@@ -169,6 +184,7 @@ class StudentView extends GetView<StudentController> {
                     child: CustomLoader(),
                   );
                 }
+
                 if (controller.students.isEmpty) {
                   return ListView(
                     physics: AlwaysScrollableScrollPhysics(),

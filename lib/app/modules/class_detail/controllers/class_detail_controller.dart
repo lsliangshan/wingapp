@@ -54,6 +54,12 @@ class ClassDetailController extends GetxController {
     return await Future.delayed(const Duration(milliseconds: 500));
   }
 
+  Future<void> onRefresh() async {
+    await initData();
+    toastService.showSuccess(message: 'toast.refresh.success'.tr);
+    return await Future.delayed(const Duration(milliseconds: 500));
+  }
+
   Future<void> initStudentsCount() async {
     NormalResponse normalResponse = await studentService.getStudentsCount(
       classId: classId.value,
@@ -61,10 +67,10 @@ class ClassDetailController extends GetxController {
 
     if (normalResponse.code == 200 && normalResponse.data != null) {
       studentsCount.value = normalResponse.data!['total'];
-      update(['update-students-count']);
     } else {
       studentsCount.value = 0;
     }
+    update(['update-class-detail']);
   }
 
   Future<void> initClassDetail() async {
@@ -94,9 +100,11 @@ class ClassDetailController extends GetxController {
     });
   }
 
-  void goToStudents() {
-    Get.toNamed(Routes.STUDENT, arguments: {
-      'classId': classId.value,
-    });
+  Future<void> goToStudents() async {
+    // Get.toNamed(Routes.STUDENT, arguments: {
+    //   'classId': classId.value,
+    // });
+    await Get.to(() => StudentView(classId: classId.value));
+    await initData();
   }
 }
