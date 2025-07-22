@@ -217,7 +217,9 @@ class StudentView extends GetView {
                           children: [
                             EmptyResult(
                               mainButton: FilledButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  controller.gotoAddStudent();
+                                },
                                 child: Text('student.btn.add'.tr),
                               ),
                               showSecondaryButton: true,

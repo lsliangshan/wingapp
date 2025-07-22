@@ -160,6 +160,9 @@ class AddClassController extends GetxController {
       toastService.showError(
         message: response.message ?? 'toast.add_class.save.fail'.tr,
       );
+      if (response.code == 1002) {
+        nameFocusNode.requestFocus();
+      }
     }
   }
 
@@ -176,5 +179,11 @@ class AddClassController extends GetxController {
         update(['update-form-data']);
       }
     }
+  }
+
+  void clearName() {
+    nameController.clear();
+    formData.value.name = '';
+    update(['update-form-data']);
   }
 }

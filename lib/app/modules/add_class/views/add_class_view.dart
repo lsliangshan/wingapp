@@ -118,7 +118,7 @@ class AddClassView extends GetView {
                                                     .isNotEmpty
                                             ? GestureDetector(
                                                 onTap: () {
-                                                  // controller.clearUsername();
+                                                  controller.clearName();
                                                 },
                                                 child: const SizedBox(
                                                   width: 36,
