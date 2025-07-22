@@ -11,8 +11,22 @@ import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
 import 'package:wingapp/components/need_login/need_login.dart';
 
-class ClassView extends GetView<ClassController> {
-  const ClassView({super.key});
+// ignore: must_be_immutable
+class ClassView extends GetView {
+  String? teacherId;
+  ClassView({super.key, this.teacherId}) {
+    if (teacherId != null && teacherId!.isNotEmpty) {
+      Get.put<ClassController>(
+        ClassController(teacherId: teacherId),
+        tag: 'class-$teacherId',
+      );
+    }
+  }
+
+  @override
+  ClassController get controller => teacherId != null
+      ? Get.find<ClassController>(tag: 'class-$teacherId')
+      : Get.find<ClassController>();
 
   Widget _buildItemData(BuildContext context, int index) {
     return Container(
@@ -160,21 +174,28 @@ class ClassView extends GetView<ClassController> {
           id: 'update-classes',
           init: controller,
           builder: (_) {
-            if (controller.loginInfo.value == null) {
-              return Center(
-                child: NeedLogin(
-                  onPressed: () {
-                    controller.needLogin();
-                  },
-                ),
-              );
-            }
             return FutureBuilder(
               future: controller.initClassesFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
                   return const Center(
                     child: CustomLoader(),
+                  );
+                }
+                if (controller.loginInfo.value == null) {
+                  return SizedBox(
+                    width: Get.width,
+                    height: Get.height - 300,
+                    child: Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        NeedLogin(
+                          onPressed: () {
+                            controller.needLogin();
+                          },
+                        ),
+                      ],
+                    ),
                   );
                 }
                 if (controller.classes.isEmpty) {

@@ -166,8 +166,8 @@ class Messages extends Translations {
           'teacher_detail.label.class': '班级',
           'teacher_detail.group.student': '学生信息',
           'teacher_detail.label.student': '学生',
-          'teacher_detail.group.sessions': '课时信息',
-          'teacher_detail.label.sessions': '课时',
+          'teacher_detail.group.schedule': '课表信息',
+          'teacher_detail.label.schedule': '课表',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -395,8 +395,8 @@ class Messages extends Translations {
           'teacher_detail.label.class': 'Class',
           'teacher_detail.group.student': 'Student Information',
           'teacher_detail.label.student': 'Student',
-          'teacher_detail.group.sessions': 'Sessions Information',
-          'teacher_detail.label.sessions': 'Sessions',
+          'teacher_detail.group.schedule': 'Schedule Information',
+          'teacher_detail.label.schedule': 'Schedule',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

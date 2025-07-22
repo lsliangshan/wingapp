@@ -40,6 +40,10 @@ class AddClassFormData {
 }
 
 class AddClassController extends GetxController {
+  // 如果有 teacherId，则表示是老师添加班级，老师信息不能修改;否则是管理员添加班级
+  final String? teacherId;
+  AddClassController({this.teacherId});
+
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
   TeacherService teacherService = Get.find<TeacherService>();
@@ -64,6 +68,8 @@ class AddClassController extends GetxController {
 
   Rx<XFile> classIcon = XFile('').obs;
 
+  late Future<void> initAddClassFuture;
+
   @override
   void onInit() {
     super.onInit();
@@ -71,6 +77,26 @@ class AddClassController extends GetxController {
       formData.value.name = nameController.text;
       update(['update-form-data']);
     });
+
+    initAddClassFuture = initData();
+  }
+
+  Future<void> initData() async {
+    await initTeacherInfo();
+  }
+
+  Future<void> initTeacherInfo() async {
+    if (teacherId != null && teacherId!.isNotEmpty) {
+      NormalResponse normalResponse = await teacherService.getTeacherDetail(
+        id: teacherId!,
+      );
+      if (normalResponse.code == 200) {
+        formData.value.teacherId = normalResponse.data['id'];
+        formData.value.teacherName = normalResponse.data['name'];
+        formData.value.teacherEnName = normalResponse.data['enName'];
+        formData.value.teacherUnionId = normalResponse.data['unionId'];
+      }
+    }
   }
 
   Future<void> chooseTeacher() async {

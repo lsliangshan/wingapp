@@ -66,10 +66,20 @@ class ClassService extends GetxService {
     int pageIndex = 1,
     int pageSize = 20,
     String? teacherId,
+    bool? ignoreAdmin,
   }) async {
+    String queryStr = 'pageIndex=$pageIndex&pageSize=$pageSize';
+    if (teacherId != null && teacherId.isNotEmpty) {
+      queryStr += '&teacherId=$teacherId';
+    }
+    if (ignoreAdmin == null || ignoreAdmin == false) {
+      queryStr += '&ignoreAdmin=0';
+    } else {
+      queryStr += '&ignoreAdmin=1';
+    }
+
     http.Response response = await http.get(
-      Uri.parse(
-          'https://wf.liangqy.com/webhook/get-classes?pageIndex=$pageIndex&pageSize=$pageSize${teacherId != null ? '&teacherId=$teacherId' : ''}'),
+      Uri.parse('https://wf.liangqy.com/webhook/get-classes?$queryStr'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

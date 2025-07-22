@@ -31,6 +31,21 @@ class TeacherService extends GetxService {
     return NormalResponse.fromJson(data);
   }
 
+  Future<NormalResponse> getTeacherCounts({
+    required String teacherId,
+  }) async {
+    http.Response response = await http.get(
+      Uri.parse(
+          'https://wf.liangqy.com/webhook/get-teacher-counts?teacherId=$teacherId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    final data = json.decode(response.body);
+    return NormalResponse.fromJson(data);
+  }
+
   Future<NormalResponse> getTeachers({
     int pageIndex = 1,
     int pageSize = 20,

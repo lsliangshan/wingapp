@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/components/empty_result/empty_result.dart';
@@ -92,7 +93,7 @@ class StudentDetailView extends GetView<StudentDetailController> {
 
                 return Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       width: Get.width,
                       height: 230,
                       child: _buildAvatar(
@@ -462,6 +463,16 @@ class StudentDetailView extends GetView<StudentDetailController> {
                         ],
                       ),
                     ),
+                    Positioned(
+                      left: 0,
+                      top: Get.statusBarHeight / Get.pixelRatio,
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        alignment: Alignment.center,
+                        child: CustomBackwardView(),
+                      ),
+                    )
                   ],
                 );
               },

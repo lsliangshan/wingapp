@@ -15,11 +15,14 @@ class StudentService extends GetxService {
     int pageIndex = 1,
     int pageSize = 20,
     String? classId,
+    String? teacherId,
     String? status,
   }) async {
     String queryStr = 'pageIndex=$pageIndex&pageSize=$pageSize';
     if (classId != null && classId.isNotEmpty) {
       queryStr += '&classId=$classId';
+    } else if (teacherId != null && teacherId.isNotEmpty) {
+      queryStr += '&teacherId=$teacherId';
     }
     if (status != null && status.isNotEmpty) {
       queryStr += '&status=$status';

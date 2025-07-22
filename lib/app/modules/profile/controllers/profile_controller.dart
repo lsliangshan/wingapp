@@ -2,6 +2,8 @@ import 'package:dingtalk_auth/dingtalk_auth.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
+import 'package:wingapp/app/modules/class/views/class_view.dart';
+import 'package:wingapp/app/modules/student/views/student_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/events/events.dart';
 import 'package:wingapp/models/login_info.model.dart';
@@ -170,7 +172,11 @@ class ProfileController extends GetxController {
   }
 
   void navigateToClassManage() async {
-    await Get.toNamed(Routes.CLASS);
+    await Get.to(
+      () => ClassView(
+        teacherId: loginInfo.value?.id ?? '',
+      ),
+    );
     initSummaryCounts();
   }
 
@@ -184,10 +190,18 @@ class ProfileController extends GetxController {
         Get.toNamed(Routes.TEACHER);
         break;
       case 'student':
-        Get.toNamed(Routes.STUDENT);
+        Get.to(
+          () => StudentView(
+            teacherId: loginInfo.value?.id ?? '',
+          ),
+        );
         break;
       case 'class':
-        Get.toNamed(Routes.CLASS);
+        Get.to(
+          () => ClassView(
+            teacherId: loginInfo.value?.id ?? '',
+          ),
+        );
         break;
       default:
         break;

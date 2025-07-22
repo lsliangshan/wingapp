@@ -48,35 +48,6 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
         ),
       ),
     );
-
-    return Obx(
-      () => avatar != null && avatar.isNotEmpty
-          ? Container(
-              width: width ?? Get.width,
-              height: height ?? 230,
-              padding: EdgeInsets.zero,
-              alignment: Alignment.center,
-              child: CachedNetworkImage(
-                imageUrl: controller.teacher.value.avatar!,
-                width: Get.width,
-                fit: BoxFit.cover,
-              ),
-            )
-          : Container(
-              width: width ?? Get.width,
-              height: height ?? 230,
-              padding: EdgeInsets.zero,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/profile_bg.jpeg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-    );
   }
 
   @override
@@ -275,7 +246,7 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 leading: SvgPicture.asset(
-                                  'assets/svgs/tab_schedule_unselected.svg',
+                                  'assets/svgs/tab_profile_unselected.svg',
                                   width: 24,
                                   height: 24,
                                 ),
@@ -318,7 +289,7 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 leading: SvgPicture.asset(
-                                  'assets/svgs/tab_schedule_unselected.svg',
+                                  'assets/svgs/icon_document.svg',
                                   width: 24,
                                   height: 24,
                                 ),
@@ -367,6 +338,9 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                               ),
                               elevation: 0,
                               child: ListTile(
+                                onTap: () {
+                                  controller.gotoClasses();
+                                },
                                 tileColor:
                                     Get.theme.hintColor.withValues(alpha: 0.03),
                                 shape: RoundedRectangleBorder(
@@ -378,15 +352,29 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                                   height: 24,
                                 ),
                                 title: Text("teacher_detail.label.class".tr),
-                                // trailing: Text(
-                                //   controller.teacher.value.classInfo?.name ??
-                                //       '',
-                                //   style:
-                                //       Get.theme.textTheme.bodyMedium?.copyWith(
-                                //     color: Get.theme.hintColor
-                                //         .withValues(alpha: 0.5),
-                                //   ),
-                                // ),
+                                trailing: Obx(() => Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${controller.teacherCount.value.classCount}",
+                                          style: Get.theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Get.theme.hintColor
+                                                .withValues(alpha: 0.5),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        SvgPicture.asset(
+                                          'assets/svgs/icon_arrow_right.svg',
+                                          width: 20,
+                                          height: 20,
+                                          colorFilter: const ColorFilter.mode(
+                                            Colors.grey,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ),
                           ),
@@ -409,26 +397,41 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 leading: SvgPicture.asset(
-                                  'assets/svgs/icon_bag.svg',
+                                  'assets/svgs/tab_student_unselected.svg',
                                   width: 24,
                                   height: 24,
                                 ),
                                 title: Text("teacher_detail.label.student".tr),
-                                // trailing: Text(
-                                //   '${controller.student.value.totalSessions ?? 0}',
-                                //   style:
-                                //       Get.theme.textTheme.bodyMedium?.copyWith(
-                                //     color: Get.theme.hintColor
-                                //         .withValues(alpha: 0.5),
-                                //   ),
-                                // ),
+                                trailing: Obx(() => Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${controller.teacherCount.value.studentCount}",
+                                          style: Get.theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Get.theme.hintColor
+                                                .withValues(alpha: 0.5),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        SvgPicture.asset(
+                                          'assets/svgs/icon_arrow_right.svg',
+                                          width: 20,
+                                          height: 20,
+                                          colorFilter: const ColorFilter.mode(
+                                            Colors.grey,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ),
                           ),
                           SliverToBoxAdapter(
                             child: ListTile(
                               subtitle:
-                                  Text('teacher_detail.group.sessions'.tr),
+                                  Text('teacher_detail.group.schedule'.tr),
                             ),
                           ),
                           SliverToBoxAdapter(
@@ -445,19 +448,34 @@ class TeacherDetailView extends GetView<TeacherDetailController> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 leading: SvgPicture.asset(
-                                  'assets/svgs/icon_bag.svg',
+                                  'assets/svgs/tab_schedule_unselected.svg',
                                   width: 24,
                                   height: 24,
                                 ),
-                                title: Text("teacher_detail.label.sessions".tr),
-                                // trailing: Text(
-                                //   '${controller.student.value.totalSessions ?? 0}',
-                                //   style:
-                                //       Get.theme.textTheme.bodyMedium?.copyWith(
-                                //     color: Get.theme.hintColor
-                                //         .withValues(alpha: 0.5),
-                                //   ),
-                                // ),
+                                title: Text("teacher_detail.label.schedule".tr),
+                                trailing: Obx(() => Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${controller.teacherCount.value.scheduleCount}",
+                                          style: Get.theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Get.theme.hintColor
+                                                .withValues(alpha: 0.5),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        SvgPicture.asset(
+                                          'assets/svgs/icon_arrow_right.svg',
+                                          width: 20,
+                                          height: 20,
+                                          colorFilter: const ColorFilter.mode(
+                                            Colors.grey,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ),
                           ),

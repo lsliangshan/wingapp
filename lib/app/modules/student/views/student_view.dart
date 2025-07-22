@@ -14,21 +14,26 @@ import '../controllers/student_controller.dart';
 // ignore: must_be_immutable
 class StudentView extends GetView {
   String? classId;
-  StudentView({super.key, this.classId}) {
-    if (classId != null) {
+  String? teacherId;
+  StudentView({super.key, this.classId, this.teacherId}) {
+    if ((classId != null && classId!.isNotEmpty) ||
+        (teacherId != null && teacherId!.isNotEmpty)) {
       Get.put<StudentController>(
         StudentController(
           classId: classId ?? '',
+          teacherId: teacherId ?? '',
         ),
-        tag: 'student-$classId',
+        tag: 'student-$classId-$teacherId',
       );
     }
   }
 
   @override
-  StudentController get controller => classId != null
-      ? Get.find<StudentController>(tag: 'student-$classId')
-      : Get.find<StudentController>();
+  StudentController get controller =>
+      ((classId != null && classId!.isNotEmpty) ||
+              (teacherId != null && teacherId!.isNotEmpty))
+          ? Get.find<StudentController>(tag: 'student-$classId-$teacherId')
+          : Get.find<StudentController>();
 
   Widget _buildAvatar(String avatar) {
     return Container(
@@ -106,12 +111,13 @@ class StudentView extends GetView {
         subtitle: Row(
           spacing: 8,
           children: [
-            Text(
-              controller.students[index].classInfo?.name ?? '',
-              style: Get.theme.textTheme.bodySmall?.copyWith(
-                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+            if (classId != null && classId!.isNotEmpty)
+              Text(
+                controller.students[index].classInfo?.name ?? '',
+                style: Get.theme.textTheme.bodySmall?.copyWith(
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
               ),
-            ),
             Text(
               controller.students[index].classInfo?.teacherName ?? '',
               style: Get.theme.textTheme.bodySmall?.copyWith(
@@ -120,7 +126,16 @@ class StudentView extends GetView {
             )
           ],
         ),
-        contentPadding: EdgeInsets.only(left: 16, right: 0),
+        trailing: SvgPicture.asset(
+          'assets/svgs/icon_arrow_right.svg',
+          width: 20,
+          height: 20,
+          colorFilter: ColorFilter.mode(
+            Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+            BlendMode.srcIn,
+          ),
+        ),
+        contentPadding: EdgeInsets.only(left: 16, right: 12),
       ),
     );
   }

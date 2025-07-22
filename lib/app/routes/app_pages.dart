@@ -56,7 +56,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CLASS,
-      page: () => const ClassView(),
+      page: () => ClassView(),
       binding: ClassBinding(),
     ),
     GetPage(
@@ -91,7 +91,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_CLASS,
-      page: () => const AddClassView(),
+      page: () => AddClassView(),
       binding: AddClassBinding(),
     ),
     GetPage(

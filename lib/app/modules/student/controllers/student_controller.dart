@@ -8,8 +8,9 @@ import 'package:wingapp/services/toast.dart';
 
 class StudentController extends GetxController {
   final String? classId;
+  final String? teacherId;
 
-  StudentController({this.classId});
+  StudentController({this.classId, this.teacherId});
 
   ToastService toastService = Get.find<ToastService>();
 
@@ -42,6 +43,7 @@ class StudentController extends GetxController {
   Future<void> initStudents() async {
     NormalResponse normalResponse = await studentService.getStudents(
       classId: classId,
+      teacherId: teacherId,
       pageIndex: pageIndex.value,
       pageSize: pageSize.value,
       status: 'active',
@@ -55,7 +57,6 @@ class StudentController extends GetxController {
           std.classInfo = Class.fromJson(e['classInfo']);
           return std;
         }).toList();
-        print('>>>>>>>>>>>...... ${students.map((itm) => itm.toJson())}');
       } else {
         // 无数据
         students.clear();

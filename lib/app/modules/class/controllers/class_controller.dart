@@ -1,5 +1,6 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
+import 'package:wingapp/app/modules/add_class/views/add_class_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/events/events.dart';
@@ -10,6 +11,9 @@ import 'package:wingapp/services/toast.dart';
 import 'package:wingapp/services/user.dart';
 
 class ClassController extends GetxController {
+  final String? teacherId;
+  ClassController({this.teacherId});
+
   final EventBus eventBus = Get.find<EventBus>();
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
@@ -77,8 +81,10 @@ class ClassController extends GetxController {
     NormalResponse normalResponse = await classService.getClasses(
       pageIndex: pageIndex.value,
       pageSize: pageSize.value,
-      teacherId: loginInfo.value?.id,
+      teacherId: teacherId ?? loginInfo.value?.id,
+      ignoreAdmin: teacherId != null && teacherId!.isNotEmpty,
     );
+
     if (normalResponse.code == 200 && normalResponse.data != null) {
       if (pageIndex.value == 1) {
         if (normalResponse.data!['list'] != null &&
@@ -127,8 +133,10 @@ class ClassController extends GetxController {
   }
 
   void gotoAddClass() async {
-    var newClasses = await Get.toNamed(
-      Routes.ADD_CLASS,
+    var newClasses = await Get.to(
+      () => AddClassView(
+        teacherId: loginInfo.value?.id ?? '',
+      ),
     );
     if (newClasses != null && newClasses.isNotEmpty) {
       classes.insertAll(0, newClasses);
