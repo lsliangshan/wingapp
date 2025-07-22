@@ -1,5 +1,8 @@
 import 'package:dingtalk_auth/dingtalk_auth.dart';
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/modules/class/views/class_view.dart';
@@ -32,9 +35,13 @@ class ProfileController extends GetxController {
 
   Rx<Map<String, dynamic>?> summaryCounts = Rx<Map<String, dynamic>?>(null);
 
+  RxString currentLanguage = 'zh_CN'.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    initLanguage();
 
     initData();
 
@@ -76,6 +83,13 @@ class ProfileController extends GetxController {
     isLoggedIn.value = await teacherService.isLoggedIn();
 
     update(['update-login-info']);
+  }
+
+  Future<void> initLanguage() async {
+    String localLanguage =
+        (await localstorageService.getString(LocalLanguageKey)) ?? '';
+    currentLanguage.value =
+        (localLanguage != '') ? localLanguage : languages[0]['value']!;
   }
 
   Future<void> initSummaryCounts() async {
@@ -206,5 +220,87 @@ class ProfileController extends GetxController {
       default:
         break;
     }
+  }
+
+  void switchLanguage() {
+    Get.bottomSheet(
+      SafeArea(
+        child: Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('bottom_sheet.choose_language.title'.tr),
+                trailing: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: SvgPicture.asset(
+                    'assets/svgs/icon_close.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      Get.theme.hintColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              Divider(
+                height: 1,
+                color: Get.theme.dividerColor.withValues(alpha: 0.1),
+              ),
+              Container(
+                height: 132,
+                padding: const EdgeInsets.only(bottom: 32),
+                child: ListView.builder(
+                  itemCount: languages.length,
+                  itemExtent: 48,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(languages[index]['label'] ?? ''),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 24),
+                      trailing:
+                          currentLanguage.value == languages[index]['value']
+                              ? SvgPicture.asset(
+                                  'assets/svgs/icon_checked.svg',
+                                  width: 24,
+                                  height: 24,
+                                  colorFilter: ColorFilter.mode(
+                                    Get.theme.primaryColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                )
+                              : null,
+                      onTap: () {
+                        if (languages[index]['value'] != null) {
+                          var locale = Locale(
+                              languages[index]['value']!.split('_')[0],
+                              languages[index]['value']!.split('_')[1]);
+                          Get.updateLocale(locale);
+                          currentLanguage.value = languages[index]['value']!;
+                          localstorageService.setString(
+                              LocalLanguageKey, languages[index]['value']!);
+                          Get.back();
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

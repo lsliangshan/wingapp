@@ -113,6 +113,7 @@ class ProfileView extends GetView<ProfileController> {
     required String title,
     required String iconPath,
     required VoidCallback onTap,
+    String? trailingText,
   }) {
     return Card(
       elevation: 0,
@@ -135,10 +136,23 @@ class ProfileView extends GetView<ProfileController> {
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12,
         ),
-        trailing: SvgPicture.asset(
-          'assets/svgs/icon_arrow_right.svg',
-          width: 20,
-          height: 20,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 4,
+          children: [
+            if (trailingText != null)
+              Text(
+                trailingText,
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                  color: Get.theme.hintColor.withValues(alpha: 0.3),
+                ),
+              ),
+            SvgPicture.asset(
+              'assets/svgs/icon_arrow_right.svg',
+              width: 20,
+              height: 20,
+            ),
+          ],
         ),
         onTap: onTap,
       ),
@@ -341,7 +355,7 @@ class ProfileView extends GetView<ProfileController> {
                       vertical: 0,
                     ),
                     title: Text(
-                      'profile.setting.general.function'.tr,
+                      'profile.setting.business.function'.tr,
                       style: Get.theme.textTheme.titleMedium?.copyWith(
                         fontSize: 14,
                         color: Get.theme.disabledColor,
@@ -379,23 +393,32 @@ class ProfileView extends GetView<ProfileController> {
                     color: Color(0xFFF8F8F8),
                   ),
                   _buildSettingItem(
-                    title: 'profile.setting.identity.switch'.tr,
-                    iconPath: 'assets/svgs/icon_swap.svg',
-                    onTap: () {
-                      // TODO: 跳转老师管理页
-                    },
-                  ),
-                  const Divider(
-                    height: 1,
-                    indent: 30,
-                    endIndent: 30,
-                    color: Color(0xFFF8F8F8),
-                  ),
-                  _buildSettingItem(
                     title: 'profile.setting.schedule.manage'.tr,
                     iconPath: 'assets/svgs/tab_schedule_selected.svg',
                     onTap: () {
                       // TODO: 跳转老师管理页
+                    },
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 0,
+                    ),
+                    title: Text(
+                      'profile.setting.general.function'.tr,
+                      style: Get.theme.textTheme.titleMedium?.copyWith(
+                        fontSize: 14,
+                        color: Get.theme.disabledColor,
+                      ),
+                    ),
+                  ),
+                  _buildSettingItem(
+                    title: 'profile.setting.language.switch'.tr,
+                    iconPath: 'assets/svgs/icon_swap.svg',
+                    trailingText:
+                        Get.locale?.languageCode == 'zh' ? '中文' : 'English',
+                    onTap: () {
+                      controller.switchLanguage();
                     },
                   ),
                   GetBuilder(

@@ -355,7 +355,6 @@ class AddStudentController extends GetxController {
         message: 'toast.add_student.save.success'.tr,
       );
 
-      print('>>>>>>>>>>> formData.value: ${formData.value.toJson()}');
       newStudents.add(Student.fromJson(formData.value.toJson()));
 
       if (back) {

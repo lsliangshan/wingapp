@@ -19,15 +19,20 @@ class Messages extends Translations {
           'profile.summary.teacher': '老师总数',
           'profile.summary.teacher.short': '老师',
           'profile.setting.general.function': '通用功能',
+          'profile.setting.business.function': '业务功能',
           'profile.setting.teacher.manage': '老师管理',
           'profile.setting.schedule.manage': '课表管理',
           'profile.setting.class.manage': '班级管理',
           'profile.setting.student.manage': '学生管理',
           'profile.setting.identity.switch': '身份切换',
+          'profile.setting.language.switch': '语言',
           'profile.setting.logout': '退出登录',
           'profile.setting.login.with.dingtalk': '钉钉授权登录',
           'profile.setting.login.not.logged.in': '未登录',
           'profile.setting.personal.center': '个人中心',
+          'profile.language': '语言',
+          'profile.language.en_US': '英语',
+          'profile.language.zh_CN': '简体中文',
 
           // 老师管理页面
           'teacher.title': '老师管理',
@@ -200,6 +205,7 @@ class Messages extends Translations {
           'bottom_sheet.choose_gender.title': '选择性别',
           'bottom_sheet.choose_type.title': '选择老师类型',
           'bottom_sheet.choose_teacher.title': '选择老师',
+          'bottom_sheet.choose_language.title': '选择语言',
 
           // 性别
           'gender.male': '男',
@@ -232,22 +238,27 @@ class Messages extends Translations {
           'tab.profile': 'Profile',
 
           // 我的页面
-          'profile.summary.class': 'Class Total',
+          'profile.summary.class': 'Class',
           'profile.summary.class.short': 'Class',
-          'profile.summary.student': 'Student Total',
+          'profile.summary.student': 'Student',
           'profile.summary.student.short': 'Student',
-          'profile.summary.teacher': 'Teacher Total',
+          'profile.summary.teacher': 'Teacher',
           'profile.summary.teacher.short': 'Teacher',
           'profile.setting.general.function': 'General Settings',
+          'profile.setting.business.function': 'Business Settings',
           'profile.setting.teacher.manage': 'Teacher Management',
           'profile.setting.schedule.manage': 'Schedule Management',
           'profile.setting.class.manage': 'Class Management',
           'profile.setting.student.manage': 'Student Management',
           'profile.setting.identity.switch': 'Identity Switch',
+          'profile.setting.language.switch': 'Language',
           'profile.setting.logout': 'Logout',
           'profile.setting.login.with.dingtalk': 'Dingtalk Authorization Login',
           'profile.setting.login.not.logged.in': 'Not Logged In',
           'profile.setting.personal.center': 'Personal Center',
+          'profile.language': 'Language',
+          'profile.language.en_US': 'English',
+          'profile.language.zh_CN': 'Simplified Chinese',
 
           // 老师管理页面
           'teacher.title': 'Teacher Management',
@@ -430,6 +441,7 @@ class Messages extends Translations {
           'bottom_sheet.choose_gender.title': 'Choose Gender',
           'bottom_sheet.choose_type.title': 'Choose Teacher Type',
           'bottom_sheet.choose_teacher.title': 'Choose Teacher',
+          'bottom_sheet.choose_language.title': 'Choose Language',
 
           // 性别
           'gender.male': 'Male',

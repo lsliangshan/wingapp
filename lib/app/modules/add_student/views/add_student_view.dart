@@ -43,7 +43,7 @@ class AddStudentView extends GetView<AddStudentController> {
                     tileColor: Colors.white,
                     dense: true,
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
@@ -136,7 +136,7 @@ class AddStudentView extends GetView<AddStudentController> {
                     tileColor: Colors.white,
                     dense: true,
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
@@ -232,7 +232,7 @@ class AddStudentView extends GetView<AddStudentController> {
                       controller.chooseClass();
                     },
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
@@ -270,23 +270,28 @@ class AddStudentView extends GetView<AddStudentController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      controller.formData.value.className !=
-                                                  null &&
-                                              controller.formData.value
-                                                  .className!.isNotEmpty
-                                          ? controller.formData.value.className!
-                                          : 'add_student.form_data.class.hint'
-                                              .tr,
-                                      style: Get.theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                        color: controller.formData.value
-                                                        .className !=
+                                    Expanded(
+                                      child: Text(
+                                        controller.formData.value.className !=
                                                     null &&
                                                 controller.formData.value
                                                     .className!.isNotEmpty
-                                            ? Get.theme.hintColor
-                                            : Get.theme.disabledColor,
+                                            ? controller
+                                                .formData.value.className!
+                                            : 'add_student.form_data.class.hint'
+                                                .tr,
+                                        style: Get.theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: controller.formData.value
+                                                          .className !=
+                                                      null &&
+                                                  controller.formData.value
+                                                      .className!.isNotEmpty
+                                              ? Get.theme.hintColor
+                                              : Get.theme.disabledColor,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ),
                                     SvgPicture.asset(
@@ -316,7 +321,7 @@ class AddStudentView extends GetView<AddStudentController> {
                       controller.chooseGender();
                     },
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
@@ -401,7 +406,7 @@ class AddStudentView extends GetView<AddStudentController> {
                       controller.setBirthday();
                     },
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
@@ -439,23 +444,28 @@ class AddStudentView extends GetView<AddStudentController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      controller.formData.value.birthday !=
-                                                  null &&
-                                              controller.formData.value
-                                                  .birthday!.isNotEmpty
-                                          ? controller.formData.value.birthday!
-                                          : 'add_student.form_data.birthday.hint'
-                                              .tr,
-                                      style: Get.theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                        color: controller.formData.value
-                                                        .birthday !=
+                                    Expanded(
+                                      child: Text(
+                                        controller.formData.value.birthday !=
                                                     null &&
                                                 controller.formData.value
                                                     .birthday!.isNotEmpty
-                                            ? Get.theme.hintColor
-                                            : Get.theme.disabledColor,
+                                            ? controller
+                                                .formData.value.birthday!
+                                            : 'add_student.form_data.birthday.hint'
+                                                .tr,
+                                        style: Get.theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: controller.formData.value
+                                                          .birthday !=
+                                                      null &&
+                                                  controller.formData.value
+                                                      .birthday!.isNotEmpty
+                                              ? Get.theme.hintColor
+                                              : Get.theme.disabledColor,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                     SvgPicture.asset(
@@ -483,7 +493,7 @@ class AddStudentView extends GetView<AddStudentController> {
                     dense: true,
                     titleAlignment: ListTileTitleAlignment.top,
                     leading: SizedBox(
-                      width: 100,
+                      width: 110,
                       height: 48,
                       child: Row(
                         children: [
