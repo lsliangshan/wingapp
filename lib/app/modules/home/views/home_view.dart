@@ -64,7 +64,7 @@ class HomeView extends GetView<HomeController> {
                     height: 4,
                   ),
                   Text(
-                    tabs[index]['label'] as String,
+                    (tabs[index]['label'] as String).tr,
                     style: TextStyle(
                       fontSize: 12,
                       color: isActive ? Get.theme.primaryColor : Colors.grey,
