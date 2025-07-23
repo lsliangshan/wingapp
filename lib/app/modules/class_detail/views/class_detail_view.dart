@@ -93,8 +93,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                                       'assets/svgs/icon_arrow_right.svg',
                                       width: 20,
                                       height: 20,
-                                      colorFilter: const ColorFilter.mode(
-                                        Colors.grey,
+                                      colorFilter: ColorFilter.mode(
+                                        Get.theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.18),
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -153,8 +154,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                                 'assets/svgs/icon_arrow_right.svg',
                                 width: 20,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.grey,
+                                colorFilter: ColorFilter.mode(
+                                  Get.theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.18),
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -237,8 +239,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                             'assets/svgs/icon_arrow_right.svg',
                             width: 20,
                             height: 20,
-                            colorFilter: const ColorFilter.mode(
-                              Colors.grey,
+                            colorFilter: ColorFilter.mode(
+                              Get.theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.18),
                               BlendMode.srcIn,
                             ),
                           ),
@@ -283,8 +286,9 @@ class ClassDetailView extends GetView<ClassDetailController> {
                             'assets/svgs/icon_arrow_right.svg',
                             width: 20,
                             height: 20,
-                            colorFilter: const ColorFilter.mode(
-                              Colors.grey,
+                            colorFilter: ColorFilter.mode(
+                              Get.theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.18),
                               BlendMode.srcIn,
                             ),
                           ),

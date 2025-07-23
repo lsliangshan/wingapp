@@ -88,6 +88,10 @@ class TeacherView extends GetView<TeacherController> {
           'assets/svgs/icon_arrow_right.svg',
           width: 20,
           height: 20,
+          colorFilter: ColorFilter.mode(
+            Get.theme.colorScheme.onSurface.withValues(alpha: 0.18),
+            BlendMode.srcIn,
+          ),
         ),
       ),
     );

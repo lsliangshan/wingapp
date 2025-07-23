@@ -79,7 +79,9 @@ class StudentController extends GetxController {
           normalResponse.data!['list'].isNotEmpty) {
         students.value = normalResponse.data!['list'].map<StudentEntity>((e) {
           StudentEntity std = StudentEntity.fromJson(e);
-          std.classInfo = Class.fromJson(e['classInfo']);
+          if (e['classInfo'] != null && e['classInfo']['id'] != null) {
+            std.classInfo = Class.fromJson(e['classInfo']);
+          }
           return std;
         }).toList();
       } else {

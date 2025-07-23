@@ -114,13 +114,6 @@ class StudentDetailView extends GetView<StudentDetailController> {
                       child: CustomScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                         slivers: [
-                          // SliverAppBar(
-                          //   backgroundColor: Colors.transparent,
-                          //   leading: CustomBackwardView(
-                          //     color: Colors.black,
-                          //     size: 24,
-                          //   ),
-                          // ),
                           SliverToBoxAdapter(
                             child: SizedBox(
                               height: 200,
@@ -275,7 +268,6 @@ class StudentDetailView extends GetView<StudentDetailController> {
                               ),
                             ),
                           ),
-
                           SliverToBoxAdapter(
                             child: ListTile(
                               onTap: () {
@@ -311,6 +303,17 @@ class StudentDetailView extends GetView<StudentDetailController> {
                               ),
                               elevation: 0,
                               child: ListTile(
+                                onTap: controller.student.value.classInfo !=
+                                            null &&
+                                        controller.student.value.classInfo!
+                                                .name !=
+                                            null &&
+                                        controller.student.value.classInfo!
+                                            .name!.isNotEmpty
+                                    ? null
+                                    : () {
+                                        controller.gotoChooseClass();
+                                      },
                                 tileColor:
                                     Get.theme.hintColor.withValues(alpha: 0.03),
                                 shape: RoundedRectangleBorder(
@@ -324,11 +327,21 @@ class StudentDetailView extends GetView<StudentDetailController> {
                                 title: Text("student_detail.label.class".tr),
                                 trailing: Text(
                                   controller.student.value.classInfo?.name ??
-                                      '',
+                                      'no_class'.tr,
                                   style:
                                       Get.theme.textTheme.bodyMedium?.copyWith(
-                                    color: Get.theme.hintColor
-                                        .withValues(alpha: 0.5),
+                                    color:
+                                        controller.student.value.classInfo !=
+                                                    null &&
+                                                controller.student.value
+                                                        .classInfo!.name !=
+                                                    null &&
+                                                controller.student.value
+                                                    .classInfo!.name!.isNotEmpty
+                                            ? Get.theme.hintColor
+                                                .withValues(alpha: 0.5)
+                                            : Get.theme.colorScheme.error
+                                                .withValues(alpha: 0.5),
                                   ),
                                 ),
                               ),
@@ -352,6 +365,17 @@ class StudentDetailView extends GetView<StudentDetailController> {
                               ),
                               elevation: 0,
                               child: ListTile(
+                                onTap: controller.student.value.classInfo !=
+                                            null &&
+                                        controller.student.value.classInfo!
+                                                .teacherName !=
+                                            null &&
+                                        controller.student.value.classInfo!
+                                            .teacherName!.isNotEmpty
+                                    ? null
+                                    : () {
+                                        controller.gotoChooseClass();
+                                      },
                                 tileColor:
                                     Get.theme.hintColor.withValues(alpha: 0.03),
                                 shape: RoundedRectangleBorder(
@@ -364,17 +388,33 @@ class StudentDetailView extends GetView<StudentDetailController> {
                                 ),
                                 title: Text("student_detail.label.teacher".tr),
                                 trailing: Text(
-                                  '${controller.student.value.classInfo?.teacherName ?? ""} (${controller.student.value.classInfo?.teacherEnName ?? ''})',
+                                  '${controller.student.value.classInfo?.teacherName ?? "no_teacher".tr} ${controller.student.value.classInfo?.teacherEnName != null && controller.student.value.classInfo!.teacherEnName!.isNotEmpty ? '(${controller.student.value.classInfo?.teacherEnName})' : ''}',
                                   style:
                                       Get.theme.textTheme.bodyMedium?.copyWith(
-                                    color: Get.theme.hintColor
-                                        .withValues(alpha: 0.5),
+                                    color:
+                                        controller.student.value.classInfo !=
+                                                    null &&
+                                                controller
+                                                        .student
+                                                        .value
+                                                        .classInfo!
+                                                        .teacherName !=
+                                                    null &&
+                                                controller
+                                                    .student
+                                                    .value
+                                                    .classInfo!
+                                                    .teacherName!
+                                                    .isNotEmpty
+                                            ? Get.theme.hintColor
+                                                .withValues(alpha: 0.5)
+                                            : Get.theme.colorScheme.error
+                                                .withValues(alpha: 0.5),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-
                           SliverToBoxAdapter(
                             child: ListTile(
                               subtitle:
@@ -454,7 +494,6 @@ class StudentDetailView extends GetView<StudentDetailController> {
                               ),
                             ),
                           ),
-
                           SliverToBoxAdapter(
                             child: SizedBox(
                               height: 48,

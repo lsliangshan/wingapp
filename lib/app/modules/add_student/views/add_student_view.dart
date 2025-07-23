@@ -221,95 +221,95 @@ class AddStudentView extends GetView<AddStudentController> {
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     visualDensity: VisualDensity.compact,
                   ),
-                  Divider(
-                    height: 1,
-                    color: Get.theme.dividerColor.withValues(alpha: 0.02),
-                  ),
-                  ListTile(
-                    tileColor: Colors.white,
-                    dense: true,
-                    onTap: () {
-                      controller.chooseClass();
-                    },
-                    leading: SizedBox(
-                      width: 110,
-                      height: 48,
-                      child: Row(
-                        children: [
-                          Text(
-                            'add_student.form_data.class'.tr,
-                            style: Get.theme.textTheme.labelLarge?.copyWith(
-                              color: Get.theme.hintColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            '*',
-                            style: Get.theme.textTheme.labelLarge?.copyWith(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    title: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GetBuilder(
-                          id: 'update-form-data',
-                          init: controller,
-                          builder: (_) {
-                            return Expanded(
-                              child: SizedBox(
-                                height: 40,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        controller.formData.value.className !=
-                                                    null &&
-                                                controller.formData.value
-                                                    .className!.isNotEmpty
-                                            ? controller
-                                                .formData.value.className!
-                                            : 'add_student.form_data.class.hint'
-                                                .tr,
-                                        style: Get.theme.textTheme.titleMedium
-                                            ?.copyWith(
-                                          color: controller.formData.value
-                                                          .className !=
-                                                      null &&
-                                                  controller.formData.value
-                                                      .className!.isNotEmpty
-                                              ? Get.theme.hintColor
-                                              : Get.theme.disabledColor,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/svgs/icon_arrow_right.svg',
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                    visualDensity: VisualDensity.compact,
-                  ),
+                  // Divider(
+                  //   height: 1,
+                  //   color: Get.theme.dividerColor.withValues(alpha: 0.02),
+                  // ),
+                  // ListTile(
+                  //   tileColor: Colors.white,
+                  //   dense: true,
+                  //   onTap: () {
+                  //     controller.chooseClass();
+                  //   },
+                  //   leading: SizedBox(
+                  //     width: 110,
+                  //     height: 48,
+                  //     child: Row(
+                  //       children: [
+                  //         Text(
+                  //           'add_student.form_data.class'.tr,
+                  //           style: Get.theme.textTheme.labelLarge?.copyWith(
+                  //             color: Get.theme.hintColor,
+                  //           ),
+                  //         ),
+                  //         const SizedBox(
+                  //           width: 4,
+                  //         ),
+                  //         Text(
+                  //           '*',
+                  //           style: Get.theme.textTheme.labelLarge?.copyWith(
+                  //             color: Colors.red,
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   title: Row(
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       GetBuilder(
+                  //         id: 'update-form-data',
+                  //         init: controller,
+                  //         builder: (_) {
+                  //           return Expanded(
+                  //             child: SizedBox(
+                  //               height: 40,
+                  //               child: Row(
+                  //                 mainAxisAlignment:
+                  //                     MainAxisAlignment.spaceBetween,
+                  //                 children: [
+                  //                   Expanded(
+                  //                     child: Text(
+                  //                       controller.formData.value.className !=
+                  //                                   null &&
+                  //                               controller.formData.value
+                  //                                   .className!.isNotEmpty
+                  //                           ? controller
+                  //                               .formData.value.className!
+                  //                           : 'add_student.form_data.class.hint'
+                  //                               .tr,
+                  //                       style: Get.theme.textTheme.titleMedium
+                  //                           ?.copyWith(
+                  //                         color: controller.formData.value
+                  //                                         .className !=
+                  //                                     null &&
+                  //                                 controller.formData.value
+                  //                                     .className!.isNotEmpty
+                  //                             ? Get.theme.hintColor
+                  //                             : Get.theme.disabledColor,
+                  //                       ),
+                  //                       overflow: TextOverflow.ellipsis,
+                  //                       maxLines: 1,
+                  //                     ),
+                  //                   ),
+                  //                   SvgPicture.asset(
+                  //                     'assets/svgs/icon_arrow_right.svg',
+                  //                     width: 20,
+                  //                     height: 20,
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           );
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  //   visualDensity: VisualDensity.compact,
+                  // ),
                   Divider(
                     height: 1,
                     color: Get.theme.dividerColor.withValues(alpha: 0.02),
@@ -383,6 +383,11 @@ class AddStudentView extends GetView<AddStudentController> {
                                       'assets/svgs/icon_arrow_right.svg',
                                       width: 20,
                                       height: 20,
+                                      colorFilter: ColorFilter.mode(
+                                        Get.theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.18),
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -472,6 +477,11 @@ class AddStudentView extends GetView<AddStudentController> {
                                       'assets/svgs/icon_arrow_right.svg',
                                       width: 20,
                                       height: 20,
+                                      colorFilter: ColorFilter.mode(
+                                        Get.theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.18),
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                   ],
                                 ),

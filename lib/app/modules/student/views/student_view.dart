@@ -111,19 +111,40 @@ class StudentView extends GetView {
         subtitle: Row(
           spacing: 8,
           children: [
-            if (classId != null && classId!.isNotEmpty)
+            if (controller.students[index].classInfo != null &&
+                controller.students[index].classInfo!.id.isNotEmpty)
               Text(
-                controller.students[index].classInfo?.name ?? '',
+                '${"class".tr}: ${controller.students[index].classInfo?.name ?? ''}',
                 style: Get.theme.textTheme.bodySmall?.copyWith(
                   color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
+              )
+            else
+              Container(
+                height: 16,
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.error,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'no_class'.tr,
+                  style: Get.theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 10,
+                    color: Get.theme.colorScheme.onError,
+                    height: 1.6,
+                  ),
+                ),
               ),
-            Text(
-              controller.students[index].classInfo?.teacherName ?? '',
-              style: Get.theme.textTheme.bodySmall?.copyWith(
-                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
-              ),
-            )
+            if (controller.students[index].classInfo != null &&
+                controller.students[index].classInfo!.id.isNotEmpty)
+              Text(
+                '${"teacher".tr}: ${controller.students[index].classInfo?.teacherName ?? ''} ${controller.students[index].classInfo?.teacherEnName != null && controller.students[index].classInfo!.teacherEnName!.isNotEmpty ? '(${controller.students[index].classInfo?.teacherEnName})' : ''}',
+                style: Get.theme.textTheme.bodySmall?.copyWith(
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                ),
+              )
           ],
         ),
         trailing: SvgPicture.asset(
@@ -131,7 +152,7 @@ class StudentView extends GetView {
           width: 20,
           height: 20,
           colorFilter: ColorFilter.mode(
-            Get.theme.colorScheme.onSurface.withValues(alpha: 0.5),
+            Get.theme.colorScheme.onSurface.withValues(alpha: 0.18),
             BlendMode.srcIn,
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
+import 'package:wingapp/models/student_entity.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/date.dart';
 import 'package:wingapp/services/student.dart';
@@ -90,11 +91,11 @@ class AddStudentController extends GetxController {
   Rx<AddStudentFormData> formData = AddStudentFormData(
     gender: genders[0]['value'],
     genderName: genders[0]['label'],
-    mobile: '',
-    unionId: '',
-    openId: '',
+    mobile: '17319138715',
+    unionId: 'lZ0iiKmh8gdN9XWafHBYMiPQiEiE',
+    openId: 'hsMwUhlAwbBjjpAziSgcAwgiEiE',
     avatar: '',
-    id: '',
+    id: '0326286829462575714',
     classId: '',
     className: '',
     teacherId: '',
@@ -103,7 +104,7 @@ class AddStudentController extends GetxController {
     birthday: '',
   ).obs;
 
-  List<Student> newStudents = [];
+  List<StudentEntity> newStudents = [];
 
   RxList<Class> classes = RxList<Class>();
 
@@ -355,7 +356,7 @@ class AddStudentController extends GetxController {
         message: 'toast.add_student.save.success'.tr,
       );
 
-      newStudents.add(Student.fromJson(formData.value.toJson()));
+      newStudents.add(StudentEntity.fromJson(response.data));
 
       if (back) {
         Get.back(result: newStudents);

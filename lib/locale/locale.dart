@@ -215,6 +215,7 @@ class Messages extends Translations {
           'type.full_time': '全职老师',
           'type.part_time': '兼职老师',
 
+          'class': '班级',
           'teacher': '老师',
           'student': '学生',
           'schedule': '课表',
@@ -228,6 +229,9 @@ class Messages extends Translations {
           'datetime.locale.now': '现在',
 
           'btn.save': '保存',
+
+          'no_class': '还未分配班级',
+          'no_teacher': '还未分配老师',
         },
         'en_US': {
           // 页面
@@ -451,6 +455,7 @@ class Messages extends Translations {
           'type.full_time': 'Full-time Teacher',
           'type.part_time': 'Part-time Teacher',
 
+          'class': 'Class',
           'teacher': 'Teacher',
           'student': 'Student',
           'schedule': 'Schedule',
@@ -464,6 +469,9 @@ class Messages extends Translations {
           'datetime.locale.now': 'Now',
 
           'btn.save': 'Save',
+
+          'no_class': 'No Class',
+          'no_teacher': 'No Teacher',
         }
       };
 }

@@ -27,13 +27,21 @@ class StudentService extends GetxService {
     if (status != null && status.isNotEmpty) {
       queryStr += '&status=$status';
     }
-
+    print('>>>>>>>>>>> queryStr: $queryStr');
     http.Response response = await http.get(
       Uri.parse('https://wf.liangqy.com/webhook/get-students?$queryStr'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+
+    if (response.body.isEmpty) {
+      return NormalResponse(
+        code: 1001,
+        message: '网络异常',
+        data: {},
+      );
+    }
 
     final data = json.decode(response.body);
 
@@ -109,7 +117,7 @@ class StudentService extends GetxService {
     String? avatar,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('https://wf.liangqy.com/webhook-test/add-student'),
+      Uri.parse('https://wf.liangqy.com/webhooktest/add-student'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
