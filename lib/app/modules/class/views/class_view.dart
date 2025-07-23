@@ -18,14 +18,14 @@ class ClassView extends GetView {
     if (teacherId != null && teacherId!.isNotEmpty) {
       Get.put<ClassController>(
         ClassController(teacherId: teacherId),
-        tag: 'class-$teacherId',
+        tag: 'class-${teacherId ?? ''}',
       );
     }
   }
 
   @override
   ClassController get controller => teacherId != null
-      ? Get.find<ClassController>(tag: 'class-$teacherId')
+      ? Get.find<ClassController>(tag: 'class-${teacherId ?? ''}')
       : Get.find<ClassController>();
 
   Widget _buildItemData(BuildContext context, int index) {

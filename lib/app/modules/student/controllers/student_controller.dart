@@ -1,4 +1,5 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
@@ -23,6 +24,8 @@ class StudentController extends GetxController {
   StudentService studentService = Get.find<StudentService>();
   TeacherService teacherService = Get.find<TeacherService>();
 
+  ScrollController scrollController = ScrollController();
+
   RxList<StudentEntity> students = <StudentEntity>[].obs;
 
   late Future<void> initStudentsFuture;
@@ -31,6 +34,8 @@ class StudentController extends GetxController {
   Rx<int> pageSize = 10.obs;
   Rx<int> totalCount = 0.obs;
   Rx<int> totalPage = 0.obs;
+
+  Rx<bool> isLoadingMore = false.obs;
 
   Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
 
@@ -51,6 +56,13 @@ class StudentController extends GetxController {
     });
 
     initStudentsFuture = initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        loadMore();
+      }
+    });
   }
 
   Future<void> initData() async {
@@ -77,26 +89,49 @@ class StudentController extends GetxController {
     if (normalResponse.code == 200 && normalResponse.data != null) {
       if (normalResponse.data!['list'] != null &&
           normalResponse.data!['list'].isNotEmpty) {
-        students.value = normalResponse.data!['list'].map<StudentEntity>((e) {
+        if (pageIndex.value == 1) {
+          students.clear();
+        }
+        final stds = normalResponse.data!['list'].map<StudentEntity>((e) {
           StudentEntity std = StudentEntity.fromJson(e);
           if (e['classInfo'] != null && e['classInfo']['id'] != null) {
             std.classInfo = Class.fromJson(e['classInfo']);
           }
           return std;
         }).toList();
+
+        students.addAll(stds);
+        totalCount.value = normalResponse.data!['totalCount'];
+        totalPage.value = normalResponse.data!['totalPage'];
+        update(['update-students']);
       } else {
         // 无数据
-        students.clear();
       }
-
-      update(['update-students']);
     }
   }
 
   Future<void> onRefresh() async {
+    pageIndex.value = 1;
     await initData();
     toastService.showSuccess(message: 'toast.refresh.success'.tr);
     return await Future.delayed(const Duration(milliseconds: 1000));
+  }
+
+  Future<void> loadMore() async {
+    if (isLoadingMore.value) {
+      return;
+    }
+
+    if (pageIndex.value >= totalPage.value) {
+      return;
+    }
+
+    isLoadingMore.value = true;
+
+    pageIndex.value++;
+    await initStudents();
+
+    isLoadingMore.value = false;
   }
 
   void gotoStudentDetail({required String id}) {

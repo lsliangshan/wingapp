@@ -1,4 +1,5 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wingapp/app/modules/add_class/views/add_class_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
@@ -19,6 +20,8 @@ class ClassController extends GetxController {
   ClassService classService = Get.find<ClassService>();
   UserService userService = Get.find<UserService>();
 
+  ScrollController scrollController = ScrollController();
+
   RxList<Class> classes = RxList<Class>();
 
   Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
@@ -27,6 +30,8 @@ class ClassController extends GetxController {
   RxInt pageSize = 20.obs;
   RxInt totalCount = 0.obs;
   RxInt totalPage = 1.obs;
+
+  Rx<bool> isLoadingMore = false.obs;
 
   late Future<void> initClassesFuture;
 
@@ -52,6 +57,13 @@ class ClassController extends GetxController {
     });
 
     initClassesFuture = initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        loadMoreClasses();
+      }
+    });
   }
 
   void needLogin() {
@@ -86,28 +98,21 @@ class ClassController extends GetxController {
     );
 
     if (normalResponse.code == 200 && normalResponse.data != null) {
-      if (pageIndex.value == 1) {
-        if (normalResponse.data!['list'] != null &&
-            normalResponse.data!['list'].isNotEmpty) {
-          classes.value = normalResponse.data!['list']
-              .map<Class>((e) => Class.fromJson(e))
-              .toList();
-        } else {
-          // 无数据
+      if (normalResponse.data!['list'] != null &&
+          normalResponse.data!['list'].isNotEmpty) {
+        if (pageIndex.value == 1) {
+          classes.clear();
         }
-      } else {
-        if (normalResponse.data!['list'] != null &&
-            normalResponse.data!['list'].isNotEmpty) {
-          classes.addAll(normalResponse.data!['list']
-              .map<Class>((e) => Class.fromJson(e))
-              .toList());
-        } else {
-          // 无数据
-        }
-      }
 
-      totalCount.value = normalResponse.data!['totalCount'];
-      totalPage.value = normalResponse.data!['totalPage'];
+        final cls = normalResponse.data!['list']
+            .map<Class>((e) => Class.fromJson(e))
+            .toList();
+        classes.addAll(cls);
+        totalCount.value = normalResponse.data!['totalCount'];
+        totalPage.value = normalResponse.data!['totalPage'];
+      } else {
+        // 无数据
+      }
     }
 
     update(['update-classes']);
@@ -126,10 +131,19 @@ class ClassController extends GetxController {
   }
 
   Future<void> loadMoreClasses() async {
-    if (pageIndex.value < totalPage.value) {
-      pageIndex.value++;
-      getClasses();
+    if (isLoadingMore.value) {
+      return;
     }
+
+    if (pageIndex.value >= totalPage.value) {
+      return;
+    }
+
+    isLoadingMore.value = true;
+    pageIndex.value++;
+    await getClasses();
+
+    isLoadingMore.value = false;
   }
 
   void gotoAddClass() async {

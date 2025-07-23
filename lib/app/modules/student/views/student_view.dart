@@ -23,7 +23,7 @@ class StudentView extends GetView {
           classId: classId ?? '',
           teacherId: teacherId ?? '',
         ),
-        tag: 'student-$classId-$teacherId',
+        tag: 'student-${classId ?? ''}-${teacherId ?? ''}',
       );
     }
   }
@@ -32,7 +32,8 @@ class StudentView extends GetView {
   StudentController get controller =>
       ((classId != null && classId!.isNotEmpty) ||
               (teacherId != null && teacherId!.isNotEmpty))
-          ? Get.find<StudentController>(tag: 'student-$classId-$teacherId')
+          ? Get.find<StudentController>(
+              tag: 'student-${classId ?? ''}-${teacherId ?? ''}')
           : Get.find<StudentController>();
 
   Widget _buildAvatar(String avatar) {
@@ -166,17 +167,27 @@ class StudentView extends GetView {
       return Column(
         children: [
           _buildItemData(context, index),
-          Container(
-            width: Get.width,
-            height: 40,
-            alignment: Alignment.center,
-            child: Text(
-              'load_more.tips.no_more'.tr,
-              style: Get.theme.textTheme.bodySmall?.copyWith(
-                color: Color(0xFF888888),
+          if (controller.pageIndex.value >= controller.totalPage.value)
+            Container(
+              width: Get.width,
+              height: 64,
+              alignment: Alignment.center,
+              child: Text(
+                'load_more.tips.no_more'.tr,
+                style: Get.theme.textTheme.bodySmall?.copyWith(
+                  color: Color(0xFF888888),
+                ),
+              ),
+            )
+          else
+            Container(
+              width: Get.width,
+              height: 64,
+              alignment: Alignment.center,
+              child: CustomLoader(
+                size: 10,
               ),
             ),
-          ),
         ],
       );
     }
@@ -215,7 +226,7 @@ class StudentView extends GetView {
         child: GetBuilder(
           init: controller,
           id: 'update-students',
-          tag: classId != null ? 'student-$classId' : '',
+          tag: 'student-${classId ?? ''}-${teacherId ?? ''}',
           builder: (_) {
             return FutureBuilder(
               future: controller.initStudentsFuture,
@@ -262,6 +273,7 @@ class StudentView extends GetView {
                 }
                 return CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
+                  controller: controller.scrollController,
                   slivers: [
                     SliverList.builder(
                       itemCount: controller.students.length,
