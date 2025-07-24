@@ -354,6 +354,7 @@ class AddStudentController extends GetxController {
     if (response.code == 200) {
       toastService.showSuccess(
         message: 'toast.add_student.save.success'.tr,
+        duration: const Duration(seconds: 8),
       );
 
       newStudents.add(StudentEntity.fromJson(response.data));

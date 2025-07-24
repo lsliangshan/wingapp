@@ -117,7 +117,7 @@ class StudentService extends GetxService {
     String? avatar,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('https://wf.liangqy.com/webhooktest/add-student'),
+      Uri.parse('https://wf.liangqy.com/webhook/add-student'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

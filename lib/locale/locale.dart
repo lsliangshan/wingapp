@@ -193,7 +193,7 @@ class Messages extends Translations {
           'toast.add_class.save.success': '保存成功',
           'toast.add_class.save.fail': '保存失败',
           'toast.uploading': '上传中...',
-          'toast.add_student.save.success': '添加成功',
+          'toast.add_student.save.success': '已发出邀请，对方同意后即可加入组织',
           'toast.add_student.save.fail': '添加失败',
           'toast.update.success': '更新成功',
           'toast.update.failed': '更新失败',
@@ -433,7 +433,8 @@ class Messages extends Translations {
           'toast.add_class.save.success': 'Save Success',
           'toast.add_class.save.fail': 'Save Failed',
           'toast.uploading': 'Uploading...',
-          'toast.add_student.save.success': 'Create Success',
+          'toast.add_student.save.success':
+              'Invitation sent, the other party will join the organization after approval',
           'toast.add_student.save.fail': 'Create Failed',
           'toast.update.success': 'Update Success',
           'toast.update.failed': 'Update Failed',
