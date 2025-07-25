@@ -92,8 +92,8 @@ class ScheduleView extends GetView {
                         availableGestures: AvailableGestures.horizontalSwipe,
                         availableCalendarFormats: {
                           CalendarFormat.month: 'calendar.month'.tr,
-                          // CalendarFormat.twoWeeks: 'calendar.twoWeeks'.tr,
-                          // CalendarFormat.week: 'calendar.week'.tr,
+                          CalendarFormat.twoWeeks: 'calendar.twoWeeks'.tr,
+                          CalendarFormat.week: 'calendar.week'.tr,
                         },
                         calendarBuilders: CalendarBuilders(
                           markerBuilder: (context, day, events) {
