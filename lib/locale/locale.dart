@@ -174,6 +174,9 @@ class Messages extends Translations {
           'teacher_detail.group.schedule': '课表信息',
           'teacher_detail.label.schedule': '课表',
 
+          // 课表页面
+          'schedule.title': '课表管理',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -232,6 +235,13 @@ class Messages extends Translations {
 
           'no_class': '还未分配班级',
           'no_teacher': '还未分配老师',
+
+          'language': 'zh_CN',
+          'language.short': 'zh',
+
+          'calendar.month': '月',
+          'calendar.twoWeeks': '双周',
+          'calendar.week': '周',
         },
         'en_US': {
           // 页面
@@ -413,6 +423,9 @@ class Messages extends Translations {
           'teacher_detail.group.schedule': 'Schedule Information',
           'teacher_detail.label.schedule': 'Schedule',
 
+          // 课表页面
+          'schedule.title': 'Schedule Management',
+
           // 未登录页面
           'need_login.tip': 'Need Login',
           'need_login.btn.login': 'Dingtalk Authorization Login',
@@ -473,6 +486,13 @@ class Messages extends Translations {
 
           'no_class': 'No Class',
           'no_teacher': 'No Teacher',
+
+          'language': 'zh_CN',
+          'language.short': 'zh',
+
+          'calendar.month': 'Month',
+          'calendar.twoWeeks': 'Two Weeks',
+          'calendar.week': 'Week',
         }
       };
 }

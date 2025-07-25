@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/modules/class/controllers/class_controller.dart';
 import 'package:wingapp/app/modules/profile/controllers/profile_controller.dart';
+import 'package:wingapp/app/modules/schedule/controllers/schedule_controller.dart';
 import 'package:wingapp/app/modules/student/controllers/student_controller.dart';
 import 'package:wingapp/events/events.dart';
 import 'package:wingapp/services/message.dart';
@@ -75,24 +76,12 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
         StudentController(),
       );
     }
-    // if (!initialedView.contains("EventsView")) {
-    //   initialedView.add('EventsView');
-    //   Get.put<EventsController>(
-    //     EventsController(),
-    //   );
-    // }
-    // if (!initialedView.contains("ContactView")) {
-    //   initialedView.add('ContactView');
-    //   Get.put<ContactController>(
-    //     ContactController(),
-    //   );
-    // }
-    // if (!initialedView.contains("ProfileView")) {
-    //   initialedView.add('ProfileView');
-    //   Get.put<ProfileController>(
-    //     ProfileController(),
-    //   );
-    // }
+    if (!initialedView.contains("ScheduleView")) {
+      initialedView.add('ScheduleView');
+      Get.put<ScheduleController>(
+        ScheduleController(),
+      );
+    }
   }
 
   void gotoCreateSpeech() {

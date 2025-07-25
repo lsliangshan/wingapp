@@ -35,7 +35,7 @@ List tabs = [
     "icon_selected": "assets/svgs/tab_schedule_selected.svg",
     "label": 'tab.schedule',
     "name": TabName.schedule,
-    "page": const ScheduleView(),
+    "page": ScheduleView(),
   },
   {
     "icon": "assets/svgs/tab_profile_unselected.svg",
