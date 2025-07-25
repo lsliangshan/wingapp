@@ -204,7 +204,10 @@ class StudentView extends GetView {
         ),
         centerTitle: true,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
-        leading: const CustomBackwardView(),
+        leading: ((classId != null && classId!.isNotEmpty) ||
+                (teacherId != null && teacherId!.isNotEmpty))
+            ? const CustomBackwardView()
+            : const SizedBox.shrink(),
         actions: [
           IconButton(
             onPressed: () {

@@ -100,7 +100,7 @@ class MessageService extends GetxService {
 
   Future<void> initMessageService() async {
     final request = SSERequest(
-      url: "http://frp.liangqy.com/on/all/wing/robot/message",
+      url: "http://api.liangqy.com/on/all/wing/robot/message",
       headers: {
         "Cache-Control": "no-cache",
       },

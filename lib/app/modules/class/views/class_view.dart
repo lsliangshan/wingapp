@@ -154,7 +154,9 @@ class ClassView extends GetView {
         ),
         centerTitle: true,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
-        leading: const CustomBackwardView(),
+        leading: teacherId != null
+            ? const CustomBackwardView()
+            : const SizedBox.shrink(),
         actions: [
           IconButton(
             onPressed: () {
