@@ -129,6 +129,33 @@ class Messages extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('Schedule')
+class Schedules extends Table {
+  // 课程 ID
+  TextColumn get id => text()();
+  // 班级 ID
+  TextColumn get classId => text()();
+  TextColumn get className => text()();
+  TextColumn get teacherId => text()();
+  TextColumn get teacherName => text()();
+  TextColumn get teacherEnName => text()();
+  TextColumn get teacherUnionId => text()();
+  TextColumn get start => text().nullable()();
+  TextColumn get end => text().nullable()();
+  TextColumn get title => text().nullable()();
+  TextColumn get content => text().nullable()();
+  TextColumn get reminders => text().nullable()();
+  TextColumn get repeats => text().nullable()();
+
+  TextColumn get createAt => text().nullable().withDefault(
+      Constant(DateTime.now().millisecondsSinceEpoch.toString()))();
+  TextColumn get updateAt => text().nullable().withDefault(
+      Constant(DateTime.now().millisecondsSinceEpoch.toString()))();
+
+  // 对应 google 或钉钉 calendar 的 eventId
+  TextColumn get calendarEventId => text().nullable()();
+}
+
 @DataClassName('Student')
 class Students extends Table {
   // 学生 ID、绑定钉钉的userid

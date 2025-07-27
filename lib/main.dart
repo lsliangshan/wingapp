@@ -17,6 +17,7 @@ import 'package:wingapp/services/date.dart';
 import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/localstorage.dart';
 import 'package:wingapp/services/message.dart';
+import 'package:wingapp/services/schedule.dart';
 import 'package:wingapp/services/student.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
@@ -99,6 +100,9 @@ Future<void> initServices() async {
 
   ClassService classService = ClassService();
   Get.put<ClassService>(classService);
+
+  ScheduleService scheduleService = ScheduleService();
+  Get.put<ScheduleService>(scheduleService);
 
   MessageService messageService = MessageService();
   Get.put<MessageService>(messageService);

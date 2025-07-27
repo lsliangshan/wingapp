@@ -3205,6 +3205,777 @@ class StudentsCompanion extends UpdateCompanion<Student> {
   }
 }
 
+class $SchedulesTable extends Schedules
+    with TableInfo<$SchedulesTable, Schedule> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SchedulesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _classIdMeta =
+      const VerificationMeta('classId');
+  @override
+  late final GeneratedColumn<String> classId = GeneratedColumn<String>(
+      'class_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _classNameMeta =
+      const VerificationMeta('className');
+  @override
+  late final GeneratedColumn<String> className = GeneratedColumn<String>(
+      'class_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _teacherIdMeta =
+      const VerificationMeta('teacherId');
+  @override
+  late final GeneratedColumn<String> teacherId = GeneratedColumn<String>(
+      'teacher_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _teacherNameMeta =
+      const VerificationMeta('teacherName');
+  @override
+  late final GeneratedColumn<String> teacherName = GeneratedColumn<String>(
+      'teacher_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _teacherEnNameMeta =
+      const VerificationMeta('teacherEnName');
+  @override
+  late final GeneratedColumn<String> teacherEnName = GeneratedColumn<String>(
+      'teacher_en_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _teacherUnionIdMeta =
+      const VerificationMeta('teacherUnionId');
+  @override
+  late final GeneratedColumn<String> teacherUnionId = GeneratedColumn<String>(
+      'teacher_union_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _startMeta = const VerificationMeta('start');
+  @override
+  late final GeneratedColumn<String> start = GeneratedColumn<String>(
+      'start', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _endMeta = const VerificationMeta('end');
+  @override
+  late final GeneratedColumn<String> end = GeneratedColumn<String>(
+      'end', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
+  @override
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _remindersMeta =
+      const VerificationMeta('reminders');
+  @override
+  late final GeneratedColumn<String> reminders = GeneratedColumn<String>(
+      'reminders', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _repeatsMeta =
+      const VerificationMeta('repeats');
+  @override
+  late final GeneratedColumn<String> repeats = GeneratedColumn<String>(
+      'repeats', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createAtMeta =
+      const VerificationMeta('createAt');
+  @override
+  late final GeneratedColumn<String> createAt = GeneratedColumn<String>(
+      'create_at', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().millisecondsSinceEpoch.toString()));
+  static const VerificationMeta _updateAtMeta =
+      const VerificationMeta('updateAt');
+  @override
+  late final GeneratedColumn<String> updateAt = GeneratedColumn<String>(
+      'update_at', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.now().millisecondsSinceEpoch.toString()));
+  static const VerificationMeta _calendarEventIdMeta =
+      const VerificationMeta('calendarEventId');
+  @override
+  late final GeneratedColumn<String> calendarEventId = GeneratedColumn<String>(
+      'calendar_event_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        classId,
+        className,
+        teacherId,
+        teacherName,
+        teacherEnName,
+        teacherUnionId,
+        start,
+        end,
+        title,
+        content,
+        reminders,
+        repeats,
+        createAt,
+        updateAt,
+        calendarEventId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'schedules';
+  @override
+  VerificationContext validateIntegrity(Insertable<Schedule> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('class_id')) {
+      context.handle(_classIdMeta,
+          classId.isAcceptableOrUnknown(data['class_id']!, _classIdMeta));
+    } else if (isInserting) {
+      context.missing(_classIdMeta);
+    }
+    if (data.containsKey('class_name')) {
+      context.handle(_classNameMeta,
+          className.isAcceptableOrUnknown(data['class_name']!, _classNameMeta));
+    } else if (isInserting) {
+      context.missing(_classNameMeta);
+    }
+    if (data.containsKey('teacher_id')) {
+      context.handle(_teacherIdMeta,
+          teacherId.isAcceptableOrUnknown(data['teacher_id']!, _teacherIdMeta));
+    } else if (isInserting) {
+      context.missing(_teacherIdMeta);
+    }
+    if (data.containsKey('teacher_name')) {
+      context.handle(
+          _teacherNameMeta,
+          teacherName.isAcceptableOrUnknown(
+              data['teacher_name']!, _teacherNameMeta));
+    } else if (isInserting) {
+      context.missing(_teacherNameMeta);
+    }
+    if (data.containsKey('teacher_en_name')) {
+      context.handle(
+          _teacherEnNameMeta,
+          teacherEnName.isAcceptableOrUnknown(
+              data['teacher_en_name']!, _teacherEnNameMeta));
+    } else if (isInserting) {
+      context.missing(_teacherEnNameMeta);
+    }
+    if (data.containsKey('teacher_union_id')) {
+      context.handle(
+          _teacherUnionIdMeta,
+          teacherUnionId.isAcceptableOrUnknown(
+              data['teacher_union_id']!, _teacherUnionIdMeta));
+    } else if (isInserting) {
+      context.missing(_teacherUnionIdMeta);
+    }
+    if (data.containsKey('start')) {
+      context.handle(
+          _startMeta, start.isAcceptableOrUnknown(data['start']!, _startMeta));
+    }
+    if (data.containsKey('end')) {
+      context.handle(
+          _endMeta, end.isAcceptableOrUnknown(data['end']!, _endMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    }
+    if (data.containsKey('reminders')) {
+      context.handle(_remindersMeta,
+          reminders.isAcceptableOrUnknown(data['reminders']!, _remindersMeta));
+    }
+    if (data.containsKey('repeats')) {
+      context.handle(_repeatsMeta,
+          repeats.isAcceptableOrUnknown(data['repeats']!, _repeatsMeta));
+    }
+    if (data.containsKey('create_at')) {
+      context.handle(_createAtMeta,
+          createAt.isAcceptableOrUnknown(data['create_at']!, _createAtMeta));
+    }
+    if (data.containsKey('update_at')) {
+      context.handle(_updateAtMeta,
+          updateAt.isAcceptableOrUnknown(data['update_at']!, _updateAtMeta));
+    }
+    if (data.containsKey('calendar_event_id')) {
+      context.handle(
+          _calendarEventIdMeta,
+          calendarEventId.isAcceptableOrUnknown(
+              data['calendar_event_id']!, _calendarEventIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  Schedule map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Schedule(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      classId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}class_id'])!,
+      className: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}class_name'])!,
+      teacherId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_id'])!,
+      teacherName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}teacher_name'])!,
+      teacherEnName: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}teacher_en_name'])!,
+      teacherUnionId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}teacher_union_id'])!,
+      start: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}start']),
+      end: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}end']),
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title']),
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content']),
+      reminders: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reminders']),
+      repeats: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}repeats']),
+      createAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}create_at']),
+      updateAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}update_at']),
+      calendarEventId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}calendar_event_id']),
+    );
+  }
+
+  @override
+  $SchedulesTable createAlias(String alias) {
+    return $SchedulesTable(attachedDatabase, alias);
+  }
+}
+
+class Schedule extends DataClass implements Insertable<Schedule> {
+  final String id;
+  final String classId;
+  final String className;
+  final String teacherId;
+  final String teacherName;
+  final String teacherEnName;
+  final String teacherUnionId;
+  final String? start;
+  final String? end;
+  final String? title;
+  final String? content;
+  final String? reminders;
+  final String? repeats;
+  final String? createAt;
+  final String? updateAt;
+  final String? calendarEventId;
+  const Schedule(
+      {required this.id,
+      required this.classId,
+      required this.className,
+      required this.teacherId,
+      required this.teacherName,
+      required this.teacherEnName,
+      required this.teacherUnionId,
+      this.start,
+      this.end,
+      this.title,
+      this.content,
+      this.reminders,
+      this.repeats,
+      this.createAt,
+      this.updateAt,
+      this.calendarEventId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['class_id'] = Variable<String>(classId);
+    map['class_name'] = Variable<String>(className);
+    map['teacher_id'] = Variable<String>(teacherId);
+    map['teacher_name'] = Variable<String>(teacherName);
+    map['teacher_en_name'] = Variable<String>(teacherEnName);
+    map['teacher_union_id'] = Variable<String>(teacherUnionId);
+    if (!nullToAbsent || start != null) {
+      map['start'] = Variable<String>(start);
+    }
+    if (!nullToAbsent || end != null) {
+      map['end'] = Variable<String>(end);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || content != null) {
+      map['content'] = Variable<String>(content);
+    }
+    if (!nullToAbsent || reminders != null) {
+      map['reminders'] = Variable<String>(reminders);
+    }
+    if (!nullToAbsent || repeats != null) {
+      map['repeats'] = Variable<String>(repeats);
+    }
+    if (!nullToAbsent || createAt != null) {
+      map['create_at'] = Variable<String>(createAt);
+    }
+    if (!nullToAbsent || updateAt != null) {
+      map['update_at'] = Variable<String>(updateAt);
+    }
+    if (!nullToAbsent || calendarEventId != null) {
+      map['calendar_event_id'] = Variable<String>(calendarEventId);
+    }
+    return map;
+  }
+
+  SchedulesCompanion toCompanion(bool nullToAbsent) {
+    return SchedulesCompanion(
+      id: Value(id),
+      classId: Value(classId),
+      className: Value(className),
+      teacherId: Value(teacherId),
+      teacherName: Value(teacherName),
+      teacherEnName: Value(teacherEnName),
+      teacherUnionId: Value(teacherUnionId),
+      start:
+          start == null && nullToAbsent ? const Value.absent() : Value(start),
+      end: end == null && nullToAbsent ? const Value.absent() : Value(end),
+      title:
+          title == null && nullToAbsent ? const Value.absent() : Value(title),
+      content: content == null && nullToAbsent
+          ? const Value.absent()
+          : Value(content),
+      reminders: reminders == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminders),
+      repeats: repeats == null && nullToAbsent
+          ? const Value.absent()
+          : Value(repeats),
+      createAt: createAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createAt),
+      updateAt: updateAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updateAt),
+      calendarEventId: calendarEventId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarEventId),
+    );
+  }
+
+  factory Schedule.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Schedule(
+      id: serializer.fromJson<String>(json['id']),
+      classId: serializer.fromJson<String>(json['classId']),
+      className: serializer.fromJson<String>(json['className']),
+      teacherId: serializer.fromJson<String>(json['teacherId']),
+      teacherName: serializer.fromJson<String>(json['teacherName']),
+      teacherEnName: serializer.fromJson<String>(json['teacherEnName']),
+      teacherUnionId: serializer.fromJson<String>(json['teacherUnionId']),
+      start: serializer.fromJson<String?>(json['start']),
+      end: serializer.fromJson<String?>(json['end']),
+      title: serializer.fromJson<String?>(json['title']),
+      content: serializer.fromJson<String?>(json['content']),
+      reminders: serializer.fromJson<String?>(json['reminders']),
+      repeats: serializer.fromJson<String?>(json['repeats']),
+      createAt: serializer.fromJson<String?>(json['createAt']),
+      updateAt: serializer.fromJson<String?>(json['updateAt']),
+      calendarEventId: serializer.fromJson<String?>(json['calendarEventId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'classId': serializer.toJson<String>(classId),
+      'className': serializer.toJson<String>(className),
+      'teacherId': serializer.toJson<String>(teacherId),
+      'teacherName': serializer.toJson<String>(teacherName),
+      'teacherEnName': serializer.toJson<String>(teacherEnName),
+      'teacherUnionId': serializer.toJson<String>(teacherUnionId),
+      'start': serializer.toJson<String?>(start),
+      'end': serializer.toJson<String?>(end),
+      'title': serializer.toJson<String?>(title),
+      'content': serializer.toJson<String?>(content),
+      'reminders': serializer.toJson<String?>(reminders),
+      'repeats': serializer.toJson<String?>(repeats),
+      'createAt': serializer.toJson<String?>(createAt),
+      'updateAt': serializer.toJson<String?>(updateAt),
+      'calendarEventId': serializer.toJson<String?>(calendarEventId),
+    };
+  }
+
+  Schedule copyWith(
+          {String? id,
+          String? classId,
+          String? className,
+          String? teacherId,
+          String? teacherName,
+          String? teacherEnName,
+          String? teacherUnionId,
+          Value<String?> start = const Value.absent(),
+          Value<String?> end = const Value.absent(),
+          Value<String?> title = const Value.absent(),
+          Value<String?> content = const Value.absent(),
+          Value<String?> reminders = const Value.absent(),
+          Value<String?> repeats = const Value.absent(),
+          Value<String?> createAt = const Value.absent(),
+          Value<String?> updateAt = const Value.absent(),
+          Value<String?> calendarEventId = const Value.absent()}) =>
+      Schedule(
+        id: id ?? this.id,
+        classId: classId ?? this.classId,
+        className: className ?? this.className,
+        teacherId: teacherId ?? this.teacherId,
+        teacherName: teacherName ?? this.teacherName,
+        teacherEnName: teacherEnName ?? this.teacherEnName,
+        teacherUnionId: teacherUnionId ?? this.teacherUnionId,
+        start: start.present ? start.value : this.start,
+        end: end.present ? end.value : this.end,
+        title: title.present ? title.value : this.title,
+        content: content.present ? content.value : this.content,
+        reminders: reminders.present ? reminders.value : this.reminders,
+        repeats: repeats.present ? repeats.value : this.repeats,
+        createAt: createAt.present ? createAt.value : this.createAt,
+        updateAt: updateAt.present ? updateAt.value : this.updateAt,
+        calendarEventId: calendarEventId.present
+            ? calendarEventId.value
+            : this.calendarEventId,
+      );
+  Schedule copyWithCompanion(SchedulesCompanion data) {
+    return Schedule(
+      id: data.id.present ? data.id.value : this.id,
+      classId: data.classId.present ? data.classId.value : this.classId,
+      className: data.className.present ? data.className.value : this.className,
+      teacherId: data.teacherId.present ? data.teacherId.value : this.teacherId,
+      teacherName:
+          data.teacherName.present ? data.teacherName.value : this.teacherName,
+      teacherEnName: data.teacherEnName.present
+          ? data.teacherEnName.value
+          : this.teacherEnName,
+      teacherUnionId: data.teacherUnionId.present
+          ? data.teacherUnionId.value
+          : this.teacherUnionId,
+      start: data.start.present ? data.start.value : this.start,
+      end: data.end.present ? data.end.value : this.end,
+      title: data.title.present ? data.title.value : this.title,
+      content: data.content.present ? data.content.value : this.content,
+      reminders: data.reminders.present ? data.reminders.value : this.reminders,
+      repeats: data.repeats.present ? data.repeats.value : this.repeats,
+      createAt: data.createAt.present ? data.createAt.value : this.createAt,
+      updateAt: data.updateAt.present ? data.updateAt.value : this.updateAt,
+      calendarEventId: data.calendarEventId.present
+          ? data.calendarEventId.value
+          : this.calendarEventId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Schedule(')
+          ..write('id: $id, ')
+          ..write('classId: $classId, ')
+          ..write('className: $className, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('teacherName: $teacherName, ')
+          ..write('teacherEnName: $teacherEnName, ')
+          ..write('teacherUnionId: $teacherUnionId, ')
+          ..write('start: $start, ')
+          ..write('end: $end, ')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('reminders: $reminders, ')
+          ..write('repeats: $repeats, ')
+          ..write('createAt: $createAt, ')
+          ..write('updateAt: $updateAt, ')
+          ..write('calendarEventId: $calendarEventId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      classId,
+      className,
+      teacherId,
+      teacherName,
+      teacherEnName,
+      teacherUnionId,
+      start,
+      end,
+      title,
+      content,
+      reminders,
+      repeats,
+      createAt,
+      updateAt,
+      calendarEventId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Schedule &&
+          other.id == this.id &&
+          other.classId == this.classId &&
+          other.className == this.className &&
+          other.teacherId == this.teacherId &&
+          other.teacherName == this.teacherName &&
+          other.teacherEnName == this.teacherEnName &&
+          other.teacherUnionId == this.teacherUnionId &&
+          other.start == this.start &&
+          other.end == this.end &&
+          other.title == this.title &&
+          other.content == this.content &&
+          other.reminders == this.reminders &&
+          other.repeats == this.repeats &&
+          other.createAt == this.createAt &&
+          other.updateAt == this.updateAt &&
+          other.calendarEventId == this.calendarEventId);
+}
+
+class SchedulesCompanion extends UpdateCompanion<Schedule> {
+  final Value<String> id;
+  final Value<String> classId;
+  final Value<String> className;
+  final Value<String> teacherId;
+  final Value<String> teacherName;
+  final Value<String> teacherEnName;
+  final Value<String> teacherUnionId;
+  final Value<String?> start;
+  final Value<String?> end;
+  final Value<String?> title;
+  final Value<String?> content;
+  final Value<String?> reminders;
+  final Value<String?> repeats;
+  final Value<String?> createAt;
+  final Value<String?> updateAt;
+  final Value<String?> calendarEventId;
+  final Value<int> rowid;
+  const SchedulesCompanion({
+    this.id = const Value.absent(),
+    this.classId = const Value.absent(),
+    this.className = const Value.absent(),
+    this.teacherId = const Value.absent(),
+    this.teacherName = const Value.absent(),
+    this.teacherEnName = const Value.absent(),
+    this.teacherUnionId = const Value.absent(),
+    this.start = const Value.absent(),
+    this.end = const Value.absent(),
+    this.title = const Value.absent(),
+    this.content = const Value.absent(),
+    this.reminders = const Value.absent(),
+    this.repeats = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.updateAt = const Value.absent(),
+    this.calendarEventId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SchedulesCompanion.insert({
+    required String id,
+    required String classId,
+    required String className,
+    required String teacherId,
+    required String teacherName,
+    required String teacherEnName,
+    required String teacherUnionId,
+    this.start = const Value.absent(),
+    this.end = const Value.absent(),
+    this.title = const Value.absent(),
+    this.content = const Value.absent(),
+    this.reminders = const Value.absent(),
+    this.repeats = const Value.absent(),
+    this.createAt = const Value.absent(),
+    this.updateAt = const Value.absent(),
+    this.calendarEventId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        classId = Value(classId),
+        className = Value(className),
+        teacherId = Value(teacherId),
+        teacherName = Value(teacherName),
+        teacherEnName = Value(teacherEnName),
+        teacherUnionId = Value(teacherUnionId);
+  static Insertable<Schedule> custom({
+    Expression<String>? id,
+    Expression<String>? classId,
+    Expression<String>? className,
+    Expression<String>? teacherId,
+    Expression<String>? teacherName,
+    Expression<String>? teacherEnName,
+    Expression<String>? teacherUnionId,
+    Expression<String>? start,
+    Expression<String>? end,
+    Expression<String>? title,
+    Expression<String>? content,
+    Expression<String>? reminders,
+    Expression<String>? repeats,
+    Expression<String>? createAt,
+    Expression<String>? updateAt,
+    Expression<String>? calendarEventId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (classId != null) 'class_id': classId,
+      if (className != null) 'class_name': className,
+      if (teacherId != null) 'teacher_id': teacherId,
+      if (teacherName != null) 'teacher_name': teacherName,
+      if (teacherEnName != null) 'teacher_en_name': teacherEnName,
+      if (teacherUnionId != null) 'teacher_union_id': teacherUnionId,
+      if (start != null) 'start': start,
+      if (end != null) 'end': end,
+      if (title != null) 'title': title,
+      if (content != null) 'content': content,
+      if (reminders != null) 'reminders': reminders,
+      if (repeats != null) 'repeats': repeats,
+      if (createAt != null) 'create_at': createAt,
+      if (updateAt != null) 'update_at': updateAt,
+      if (calendarEventId != null) 'calendar_event_id': calendarEventId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SchedulesCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? classId,
+      Value<String>? className,
+      Value<String>? teacherId,
+      Value<String>? teacherName,
+      Value<String>? teacherEnName,
+      Value<String>? teacherUnionId,
+      Value<String?>? start,
+      Value<String?>? end,
+      Value<String?>? title,
+      Value<String?>? content,
+      Value<String?>? reminders,
+      Value<String?>? repeats,
+      Value<String?>? createAt,
+      Value<String?>? updateAt,
+      Value<String?>? calendarEventId,
+      Value<int>? rowid}) {
+    return SchedulesCompanion(
+      id: id ?? this.id,
+      classId: classId ?? this.classId,
+      className: className ?? this.className,
+      teacherId: teacherId ?? this.teacherId,
+      teacherName: teacherName ?? this.teacherName,
+      teacherEnName: teacherEnName ?? this.teacherEnName,
+      teacherUnionId: teacherUnionId ?? this.teacherUnionId,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      reminders: reminders ?? this.reminders,
+      repeats: repeats ?? this.repeats,
+      createAt: createAt ?? this.createAt,
+      updateAt: updateAt ?? this.updateAt,
+      calendarEventId: calendarEventId ?? this.calendarEventId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (classId.present) {
+      map['class_id'] = Variable<String>(classId.value);
+    }
+    if (className.present) {
+      map['class_name'] = Variable<String>(className.value);
+    }
+    if (teacherId.present) {
+      map['teacher_id'] = Variable<String>(teacherId.value);
+    }
+    if (teacherName.present) {
+      map['teacher_name'] = Variable<String>(teacherName.value);
+    }
+    if (teacherEnName.present) {
+      map['teacher_en_name'] = Variable<String>(teacherEnName.value);
+    }
+    if (teacherUnionId.present) {
+      map['teacher_union_id'] = Variable<String>(teacherUnionId.value);
+    }
+    if (start.present) {
+      map['start'] = Variable<String>(start.value);
+    }
+    if (end.present) {
+      map['end'] = Variable<String>(end.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (reminders.present) {
+      map['reminders'] = Variable<String>(reminders.value);
+    }
+    if (repeats.present) {
+      map['repeats'] = Variable<String>(repeats.value);
+    }
+    if (createAt.present) {
+      map['create_at'] = Variable<String>(createAt.value);
+    }
+    if (updateAt.present) {
+      map['update_at'] = Variable<String>(updateAt.value);
+    }
+    if (calendarEventId.present) {
+      map['calendar_event_id'] = Variable<String>(calendarEventId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SchedulesCompanion(')
+          ..write('id: $id, ')
+          ..write('classId: $classId, ')
+          ..write('className: $className, ')
+          ..write('teacherId: $teacherId, ')
+          ..write('teacherName: $teacherName, ')
+          ..write('teacherEnName: $teacherEnName, ')
+          ..write('teacherUnionId: $teacherUnionId, ')
+          ..write('start: $start, ')
+          ..write('end: $end, ')
+          ..write('title: $title, ')
+          ..write('content: $content, ')
+          ..write('reminders: $reminders, ')
+          ..write('repeats: $repeats, ')
+          ..write('createAt: $createAt, ')
+          ..write('updateAt: $updateAt, ')
+          ..write('calendarEventId: $calendarEventId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3212,6 +3983,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ClassesTable classes = $ClassesTable(this);
   late final $MessagesTable messages = $MessagesTable(this);
   late final $StudentsTable students = $StudentsTable(this);
+  late final $SchedulesTable schedules = $SchedulesTable(this);
   late final TeacherDao teacherDao = TeacherDao(this as AppDatabase);
   late final ClassDao classDao = ClassDao(this as AppDatabase);
   late final MessageDao messageDao = MessageDao(this as AppDatabase);
@@ -3220,7 +3992,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [teachers, classes, messages, students];
+      [teachers, classes, messages, students, schedules];
 }
 
 typedef $$TeachersTableCreateCompanionBuilder = TeachersCompanion Function({
@@ -4599,6 +5371,341 @@ typedef $$StudentsTableProcessedTableManager = ProcessedTableManager<
     (Student, BaseReferences<_$AppDatabase, $StudentsTable, Student>),
     Student,
     PrefetchHooks Function()>;
+typedef $$SchedulesTableCreateCompanionBuilder = SchedulesCompanion Function({
+  required String id,
+  required String classId,
+  required String className,
+  required String teacherId,
+  required String teacherName,
+  required String teacherEnName,
+  required String teacherUnionId,
+  Value<String?> start,
+  Value<String?> end,
+  Value<String?> title,
+  Value<String?> content,
+  Value<String?> reminders,
+  Value<String?> repeats,
+  Value<String?> createAt,
+  Value<String?> updateAt,
+  Value<String?> calendarEventId,
+  Value<int> rowid,
+});
+typedef $$SchedulesTableUpdateCompanionBuilder = SchedulesCompanion Function({
+  Value<String> id,
+  Value<String> classId,
+  Value<String> className,
+  Value<String> teacherId,
+  Value<String> teacherName,
+  Value<String> teacherEnName,
+  Value<String> teacherUnionId,
+  Value<String?> start,
+  Value<String?> end,
+  Value<String?> title,
+  Value<String?> content,
+  Value<String?> reminders,
+  Value<String?> repeats,
+  Value<String?> createAt,
+  Value<String?> updateAt,
+  Value<String?> calendarEventId,
+  Value<int> rowid,
+});
+
+class $$SchedulesTableFilterComposer
+    extends Composer<_$AppDatabase, $SchedulesTable> {
+  $$SchedulesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get className => $composableBuilder(
+      column: $table.className, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get start => $composableBuilder(
+      column: $table.start, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get end => $composableBuilder(
+      column: $table.end, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get reminders => $composableBuilder(
+      column: $table.reminders, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get repeats => $composableBuilder(
+      column: $table.repeats, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get updateAt => $composableBuilder(
+      column: $table.updateAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get calendarEventId => $composableBuilder(
+      column: $table.calendarEventId,
+      builder: (column) => ColumnFilters(column));
+}
+
+class $$SchedulesTableOrderingComposer
+    extends Composer<_$AppDatabase, $SchedulesTable> {
+  $$SchedulesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get classId => $composableBuilder(
+      column: $table.classId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get className => $composableBuilder(
+      column: $table.className, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherId => $composableBuilder(
+      column: $table.teacherId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get start => $composableBuilder(
+      column: $table.start, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get end => $composableBuilder(
+      column: $table.end, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get reminders => $composableBuilder(
+      column: $table.reminders, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get repeats => $composableBuilder(
+      column: $table.repeats, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get createAt => $composableBuilder(
+      column: $table.createAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get updateAt => $composableBuilder(
+      column: $table.updateAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get calendarEventId => $composableBuilder(
+      column: $table.calendarEventId,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$SchedulesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SchedulesTable> {
+  $$SchedulesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get classId =>
+      $composableBuilder(column: $table.classId, builder: (column) => column);
+
+  GeneratedColumn<String> get className =>
+      $composableBuilder(column: $table.className, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherId =>
+      $composableBuilder(column: $table.teacherId, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherName => $composableBuilder(
+      column: $table.teacherName, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherEnName => $composableBuilder(
+      column: $table.teacherEnName, builder: (column) => column);
+
+  GeneratedColumn<String> get teacherUnionId => $composableBuilder(
+      column: $table.teacherUnionId, builder: (column) => column);
+
+  GeneratedColumn<String> get start =>
+      $composableBuilder(column: $table.start, builder: (column) => column);
+
+  GeneratedColumn<String> get end =>
+      $composableBuilder(column: $table.end, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<String> get reminders =>
+      $composableBuilder(column: $table.reminders, builder: (column) => column);
+
+  GeneratedColumn<String> get repeats =>
+      $composableBuilder(column: $table.repeats, builder: (column) => column);
+
+  GeneratedColumn<String> get createAt =>
+      $composableBuilder(column: $table.createAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updateAt =>
+      $composableBuilder(column: $table.updateAt, builder: (column) => column);
+
+  GeneratedColumn<String> get calendarEventId => $composableBuilder(
+      column: $table.calendarEventId, builder: (column) => column);
+}
+
+class $$SchedulesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SchedulesTable,
+    Schedule,
+    $$SchedulesTableFilterComposer,
+    $$SchedulesTableOrderingComposer,
+    $$SchedulesTableAnnotationComposer,
+    $$SchedulesTableCreateCompanionBuilder,
+    $$SchedulesTableUpdateCompanionBuilder,
+    (Schedule, BaseReferences<_$AppDatabase, $SchedulesTable, Schedule>),
+    Schedule,
+    PrefetchHooks Function()> {
+  $$SchedulesTableTableManager(_$AppDatabase db, $SchedulesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SchedulesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SchedulesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SchedulesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> classId = const Value.absent(),
+            Value<String> className = const Value.absent(),
+            Value<String> teacherId = const Value.absent(),
+            Value<String> teacherName = const Value.absent(),
+            Value<String> teacherEnName = const Value.absent(),
+            Value<String> teacherUnionId = const Value.absent(),
+            Value<String?> start = const Value.absent(),
+            Value<String?> end = const Value.absent(),
+            Value<String?> title = const Value.absent(),
+            Value<String?> content = const Value.absent(),
+            Value<String?> reminders = const Value.absent(),
+            Value<String?> repeats = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> updateAt = const Value.absent(),
+            Value<String?> calendarEventId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              SchedulesCompanion(
+            id: id,
+            classId: classId,
+            className: className,
+            teacherId: teacherId,
+            teacherName: teacherName,
+            teacherEnName: teacherEnName,
+            teacherUnionId: teacherUnionId,
+            start: start,
+            end: end,
+            title: title,
+            content: content,
+            reminders: reminders,
+            repeats: repeats,
+            createAt: createAt,
+            updateAt: updateAt,
+            calendarEventId: calendarEventId,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String classId,
+            required String className,
+            required String teacherId,
+            required String teacherName,
+            required String teacherEnName,
+            required String teacherUnionId,
+            Value<String?> start = const Value.absent(),
+            Value<String?> end = const Value.absent(),
+            Value<String?> title = const Value.absent(),
+            Value<String?> content = const Value.absent(),
+            Value<String?> reminders = const Value.absent(),
+            Value<String?> repeats = const Value.absent(),
+            Value<String?> createAt = const Value.absent(),
+            Value<String?> updateAt = const Value.absent(),
+            Value<String?> calendarEventId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              SchedulesCompanion.insert(
+            id: id,
+            classId: classId,
+            className: className,
+            teacherId: teacherId,
+            teacherName: teacherName,
+            teacherEnName: teacherEnName,
+            teacherUnionId: teacherUnionId,
+            start: start,
+            end: end,
+            title: title,
+            content: content,
+            reminders: reminders,
+            repeats: repeats,
+            createAt: createAt,
+            updateAt: updateAt,
+            calendarEventId: calendarEventId,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$SchedulesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $SchedulesTable,
+    Schedule,
+    $$SchedulesTableFilterComposer,
+    $$SchedulesTableOrderingComposer,
+    $$SchedulesTableAnnotationComposer,
+    $$SchedulesTableCreateCompanionBuilder,
+    $$SchedulesTableUpdateCompanionBuilder,
+    (Schedule, BaseReferences<_$AppDatabase, $SchedulesTable, Schedule>),
+    Schedule,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4611,4 +5718,6 @@ class $AppDatabaseManager {
       $$MessagesTableTableManager(_db, _db.messages);
   $$StudentsTableTableManager get students =>
       $$StudentsTableTableManager(_db, _db.students);
+  $$SchedulesTableTableManager get schedules =>
+      $$SchedulesTableTableManager(_db, _db.schedules);
 }

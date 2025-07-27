@@ -16,7 +16,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   late PageController pageController;
 
-  Rx<int> selectedTabIndex = 4.obs;
+  Rx<int> selectedTabIndex = 3.obs;
 
   RxList<String> initialedView = <String>[].obs;
 
