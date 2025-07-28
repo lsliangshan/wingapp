@@ -21,9 +21,10 @@ class AddClassView extends GetView {
   }
 
   @override
-  AddClassController get controller => teacherId != null
-      ? Get.find<AddClassController>(tag: 'add-class-$teacherId')
-      : Get.find<AddClassController>();
+  AddClassController get controller =>
+      teacherId != null && teacherId!.isNotEmpty
+          ? Get.find<AddClassController>(tag: 'add-class-$teacherId')
+          : Get.find<AddClassController>();
 
   @override
   Widget build(BuildContext context) {

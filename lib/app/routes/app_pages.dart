@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-import 'package:wingapp/app/modules/choose_class/bindings/choose_class_binding.dart';
-import 'package:wingapp/app/modules/choose_class/views/choose_class_view.dart';
-import 'package:wingapp/app/modules/teacher_detail/bindings/teacher_detail_binding.dart';
-import 'package:wingapp/app/modules/teacher_detail/views/teacher_detail_view.dart';
 
 import '../modules/add_class/bindings/add_class_binding.dart';
 import '../modules/add_class/views/add_class_view.dart';
+import '../modules/add_schedule/bindings/add_schedule_binding.dart';
+import '../modules/add_schedule/views/add_schedule_view.dart';
 import '../modules/add_student/bindings/add_student_binding.dart';
 import '../modules/add_student/views/add_student_view.dart';
 import '../modules/add_teacher/bindings/add_teacher_binding.dart';
 import '../modules/add_teacher/views/add_teacher_view.dart';
 import '../modules/choose_at_users/bindings/choose_at_users_binding.dart';
 import '../modules/choose_at_users/views/choose_at_users_view.dart';
+import '../modules/choose_class/bindings/choose_class_binding.dart';
+import '../modules/choose_class/views/choose_class_view.dart';
 import '../modules/choose_teacher/bindings/choose_teacher_binding.dart';
 import '../modules/choose_teacher/views/choose_teacher_view.dart';
 import '../modules/class/bindings/class_binding.dart';
@@ -40,6 +40,8 @@ import '../modules/student_detail/bindings/student_detail_binding.dart';
 import '../modules/student_detail/views/student_detail_view.dart';
 import '../modules/teacher/bindings/teacher_binding.dart';
 import '../modules/teacher/views/teacher_view.dart';
+import '../modules/teacher_detail/bindings/teacher_detail_binding.dart';
+import '../modules/teacher_detail/views/teacher_detail_view.dart';
 
 part 'app_routes.dart';
 
@@ -168,6 +170,11 @@ class AppPages {
         id: Get.arguments['id'] ?? '',
       ),
       binding: TeacherDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_SCHEDULE,
+      page: () => const AddScheduleView(),
+      binding: AddScheduleBinding(),
     ),
   ];
 }

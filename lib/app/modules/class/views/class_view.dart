@@ -24,7 +24,7 @@ class ClassView extends GetView {
   }
 
   @override
-  ClassController get controller => teacherId != null
+  ClassController get controller => teacherId != null && teacherId!.isNotEmpty
       ? Get.find<ClassController>(tag: 'class-${teacherId ?? ''}')
       : Get.find<ClassController>();
 
@@ -179,6 +179,7 @@ class ClassView extends GetView {
         child: GetBuilder(
           id: 'update-classes',
           init: controller,
+          tag: 'class-${teacherId ?? ''}',
           builder: (_) {
             return FutureBuilder(
               future: controller.initClassesFuture,

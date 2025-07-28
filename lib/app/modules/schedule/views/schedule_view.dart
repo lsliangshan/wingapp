@@ -10,7 +10,6 @@ import 'package:wingapp/components/custom_backward_view/custom_backward_view.dar
 import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
 import 'package:wingapp/components/custom_loader/custom_loader.dart';
 import 'package:wingapp/database/database.dart';
-import 'package:wingapp/utils/util.dart';
 
 import '../controllers/schedule_controller.dart';
 
@@ -268,7 +267,9 @@ class ScheduleView extends GetView {
             : const SizedBox.shrink(),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.gotoAddSchedule();
+            },
             icon: SvgPicture.asset(
               'assets/svgs/icon_plus.svg',
               width: 24,

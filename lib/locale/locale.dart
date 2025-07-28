@@ -177,6 +177,9 @@ class Messages extends Translations {
           // 课表页面
           'schedule.title': '课表管理',
 
+          // 添加课表页面
+          'add_schedule.title': '添加课表',
+
           // 未登录页面
           'need_login.tip': '需要登录',
           'need_login.btn.login': '钉钉授权登录',
@@ -427,6 +430,9 @@ class Messages extends Translations {
 
           // 课表页面
           'schedule.title': 'Schedule Management',
+
+          // 添加课表页面
+          'add_schedule.title': 'Add Schedule',
 
           // 未登录页面
           'need_login.tip': 'Need Login',

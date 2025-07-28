@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/schedule.dart';
@@ -281,5 +282,9 @@ class ScheduleController extends GetxController {
       getScheduleCountsMonthly(date: prevMonth),
       getScheduleCountsMonthly(date: nextMonth),
     ]);
+  }
+
+  void gotoAddSchedule() {
+    Get.toNamed(Routes.ADD_SCHEDULE);
   }
 }
