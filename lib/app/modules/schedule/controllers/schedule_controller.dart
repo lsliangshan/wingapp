@@ -199,10 +199,19 @@ class ScheduleController extends GetxController {
     String shortDate = dateFormat(
         timestamp: focusedDay.value.millisecondsSinceEpoch.toString(),
         format: 'yyyy-MM');
+    String midiumDate = dateFormat(
+        timestamp: focusedDay.value.millisecondsSinceEpoch.toString(),
+        format: 'yyyy-MM-dd');
 
     if (dateScheduleCounts.containsKey(shortDate) &&
-        dateScheduleCounts[shortDate]!.isEmpty) {
+        dateScheduleCounts[shortDate]!.isNotEmpty) {
       dateScheduleCounts.remove(shortDate);
+      update(['update-schedules']);
+    }
+    int index = dateSchedules.indexWhere((e) => e.start == midiumDate);
+
+    if (index != -1) {
+      dateSchedules.removeAt(index);
       update(['update-schedules']);
     }
   }
@@ -210,6 +219,7 @@ class ScheduleController extends GetxController {
   Future<void> onRefresh() async {
     await resetFocusedDayData();
     await initData(isInit: false);
+    updateCurrentSchedules();
   }
 
   EScheduleStatus getScheduleStatus({
@@ -243,6 +253,7 @@ class ScheduleController extends GetxController {
     } else {
       currentScheduleItems.value = [];
     }
+    update(['update-schedules']);
   }
 
   Future<void> onDaySelected({
@@ -253,7 +264,6 @@ class ScheduleController extends GetxController {
     this.focusedDay.value = focusedDay;
     await getSchedules();
     updateCurrentSchedules();
-    update(['update-schedules']);
   }
 
   void onFormatChanged(CalendarFormat format) {
