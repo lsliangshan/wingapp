@@ -242,6 +242,8 @@ class Messages extends Translations {
           'calendar.month': '月',
           'calendar.twoWeeks': '双周',
           'calendar.week': '周',
+
+          'no_data': '暂无数据',
         },
         'en_US': {
           // 页面
@@ -493,6 +495,8 @@ class Messages extends Translations {
           'calendar.month': 'Month',
           'calendar.twoWeeks': 'Two Weeks',
           'calendar.week': 'Week',
+
+          'no_data': 'No Data',
         }
       };
 }

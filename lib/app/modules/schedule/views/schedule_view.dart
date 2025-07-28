@@ -1,8 +1,10 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wingapp/components/custom_backward_view/custom_backward_view.dart';
 import 'package:wingapp/components/custom_indicator_builder/custom_indicator_builder.dart';
@@ -37,9 +39,220 @@ class ScheduleView extends GetView {
               tag: 'schedule-${classId ?? ''}-${teacherId ?? ''}')
           : Get.find<ScheduleController>();
 
+  Widget _buildScheduleItem(BuildContext context, Schedule item) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 12,
+        ),
+        child: Column(
+          children: [
+            Container(
+              // height: 20,
+              padding: EdgeInsets.zero,
+              child: Row(
+                spacing: 6,
+                children: [
+                  Container(
+                    height: 20,
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F8F8),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      item.className,
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F8F8),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      item.teacherName,
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 48,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                item.title ?? '',
+                style: Get.theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                item.content ?? '',
+                style: Get.theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            Container(
+              height: 24,
+              margin: EdgeInsets.only(
+                top: 12,
+              ),
+              alignment: Alignment.centerLeft,
+              child: Row(
+                spacing: 6,
+                children: [
+                  Icon(
+                    Icons.access_time,
+                    size: 14,
+                    color: Colors.black54,
+                  ),
+                  Text(
+                    DateFormat('HH:mm').format(
+                      DateTime.parse(item.start ?? ''),
+                    ),
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Text(
+                    '-',
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.black38,
+                    ),
+                  ),
+                  Text(
+                    DateFormat('HH:mm').format(
+                      DateTime.parse(item.end ?? ''),
+                    ),
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSchedules(ScheduleItem item) {
+    EScheduleStatus status = controller.getScheduleStatus(
+      start: item.list.first.start!,
+      end: item.list.first.end!,
+    );
+    Color color = switch (status) {
+      EScheduleStatus.pending => Colors.white,
+      EScheduleStatus.active => Color(0xFF31D98D),
+      EScheduleStatus.completed => Colors.white54,
+    };
+    Color textColor = switch (status) {
+      EScheduleStatus.pending => Colors.black54,
+      EScheduleStatus.active => Colors.white,
+      EScheduleStatus.completed => Colors.black38,
+    };
+    return SliverStickyHeader(
+      overlapsContent: true,
+      header: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 16,
+        ),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: UnconstrainedBox(
+            child: Container(
+              height: 32,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                item.start.split(" ").last,
+                style: TextStyle(
+                  color: textColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      sliver: SliverPadding(
+        padding: const EdgeInsets.only(
+          left: 86,
+          top: 12,
+          right: 12,
+        ),
+        sliver: SliverList.builder(
+          itemBuilder: (context, index) => _buildScheduleItem(
+            context,
+            item.list[index],
+          ),
+          itemCount: item.list.length,
+        ),
+        // sliver: SliverToBoxAdapter(
+        //   child: Card(
+        //     elevation: 0,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(4),
+        //     ),
+        //     child: Stack(
+        //       children: [
+        //         Container(
+        //           height: 50,
+        //           child: Row(
+        //             children: [
+        //               Container(
+        //                 height: 32,
+        //                 padding: EdgeInsets.symmetric(horizontal: 4),
+        //                 alignment: Alignment.center,
+        //                 decoration: BoxDecoration(
+        //                   color: Colors.green,
+        //                   borderRadius: BorderRadius.circular(4),
+        //                 ),
+        //                 child: Text(
+        //                   '${item.list.first.start?.split(" ").last}',
+        //                   style: TextStyle(
+        //                     color: Colors.white,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           'schedule.title'.tr,
@@ -77,15 +290,15 @@ class ScheduleView extends GetView {
                 child: CustomLoader(),
               );
             }
-            return CustomScrollView(
-              controller: controller.scrollController,
-              physics: AlwaysScrollableScrollPhysics(),
-              slivers: [
-                GetBuilder(
-                  id: 'update-calendar',
-                  init: controller,
-                  builder: (_) {
-                    return SliverAppBar(
+            return GetBuilder(
+              id: 'update-schedules',
+              init: controller,
+              builder: (_) {
+                return CustomScrollView(
+                  controller: controller.scrollController,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
                       pinned: true,
                       shadowColor: Colors.transparent,
                       surfaceTintColor: Colors.transparent,
@@ -146,7 +359,7 @@ class ScheduleView extends GetView {
                                     horizontal: 5,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.black,
+                                    color: Colors.black54,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
@@ -161,6 +374,7 @@ class ScheduleView extends GetView {
                             },
                           ),
                           calendarStyle: CalendarStyle(
+                            cellMargin: EdgeInsets.all(10),
                             todayDecoration: isSameDay(
                                     controller.selectedDay.value,
                                     DateTime.now())
@@ -170,7 +384,7 @@ class ScheduleView extends GetView {
                                   )
                                 : BoxDecoration(
                                     color: Get.theme.primaryColor.withValues(
-                                      alpha: 0.5,
+                                      alpha: 0.3,
                                     ),
                                     shape: BoxShape.circle,
                                   ),
@@ -191,64 +405,40 @@ class ScheduleView extends GetView {
                           onPageChanged: controller.onPageChanged,
                           onFormatChanged: controller.onFormatChanged,
                           // eventLoader: controller.getEventsForDaySync,
-                          eventLoader: (day) {
-                            return controller.dateSchedules[dateFormat(
-                                  timestamp:
-                                      day.millisecondsSinceEpoch.toString(),
-                                  format: 'yyyy-MM-dd',
-                                )] ??
-                                [];
-                          },
+                          // eventLoader: (day) {
+                          //   String shortDate = dateFormat(
+                          //     timestamp: day.millisecondsSinceEpoch.toString(),
+                          //     format: 'yyyy-MM-dd hh:mm:ss',
+                          //   );
+                          //   int index = controller.dateSchedules.indexWhere(
+                          //     (e) => e.start == shortDate,
+                          //   );
+                          //   if (index != -1) {
+                          //     return controller.dateSchedules[index].list;
+                          //   }
+                          //   return [];
+                          // },
                         ),
                       ),
-                    );
-                  },
-                ),
-                GetBuilder(
-                  id: 'update-schedules',
-                  init: controller,
-                  builder: (_) {
-                    return SliverList.builder(
-                      itemCount: controller
-                              .dateSchedules[dateFormat(
-                            timestamp: controller
-                                .selectedDay.value.millisecondsSinceEpoch
-                                .toString(),
-                            format: 'yyyy-MM-dd',
-                          )]
-                              ?.length ??
-                          0,
-                      itemBuilder: (context, index) {
-                        Schedule schedule = controller.dateSchedules[dateFormat(
-                          timestamp: controller
-                              .selectedDay.value.millisecondsSinceEpoch
-                              .toString(),
-                          format: 'yyyy-MM-dd',
-                        )]![index];
-                        return Container(
+                    ),
+                    for (ScheduleItem item in controller.currentScheduleItems)
+                      _buildSchedules(item),
+                    if (controller.currentScheduleItems.isEmpty)
+                      SliverToBoxAdapter(
+                        child: SizedBox(
                           width: Get.width,
-                          color: Colors.red,
-                          child: Text(schedule.title!),
-                        );
-                      },
-                    );
-                  },
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    width: Get.width,
-                    height: 1000,
-                    color: Colors.white,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    width: Get.width,
-                    height: 1000,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'no_data'.tr,
+                              style: Get.theme.textTheme.bodySmall,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
             );
           },
         ),

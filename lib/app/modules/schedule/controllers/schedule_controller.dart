@@ -6,6 +6,41 @@ import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/schedule.dart';
 import 'package:wingapp/utils/util.dart';
 
+class ScheduleItem {
+  String start;
+  List<Schedule> list;
+
+  ScheduleItem({
+    required this.start,
+    required this.list,
+  });
+
+  // 将 Model 转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'start': start,
+      'list': list.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
+enum EScheduleStatus {
+  // 未开始
+  pending,
+  // 进行中
+  active,
+  // 已完成
+  completed,
+}
+
+extension DateWithTimeString on DateTime {
+  DateTime withTimeFromString(String timeString) {
+    final t = DateTime.parse(timeString);
+    return DateTime(year, month, day, t.hour, t.minute, t.second, t.millisecond,
+        t.microsecond);
+  }
+}
+
 class ScheduleController extends GetxController {
   String? classId;
   String? teacherId;
@@ -26,7 +61,7 @@ class ScheduleController extends GetxController {
   // 日期对应的课程
   // key 是日期 如 2025-07-01
   // value 是课程列表
-  RxMap<String, List<Schedule>> dateSchedules = RxMap<String, List<Schedule>>();
+  RxList<ScheduleItem> dateSchedules = RxList<ScheduleItem>();
 
   // 日期对应的课程数量
   // key 是月份 如 2025-07
@@ -34,6 +69,8 @@ class ScheduleController extends GetxController {
   RxMap<String, List<int>> dateScheduleCounts = RxMap<String, List<int>>();
 
   late Future<void> initScheduleFuture;
+
+  RxList<ScheduleItem> currentScheduleItems = RxList<ScheduleItem>();
 
   @override
   void onInit() {
@@ -45,25 +82,48 @@ class ScheduleController extends GetxController {
     initScheduleFuture = initData(isInit: true);
   }
 
-  List<Map<String, dynamic>> groupByStartFold(
-      List<Map<String, dynamic>> items) {
-    final map = items.fold<Map<String, List<Map<String, dynamic>>>>(
-      {},
+  List<ScheduleItem> groupByStartFold({
+    // date 如 2025-07-01
+    required String date,
+    required List<dynamic> items,
+  }) {
+    List<ScheduleItem> map = items.fold<List<ScheduleItem>>(
+      [],
       (acc, item) {
-        final key = item['start'] as String;
-        acc.putIfAbsent(key, () => []).add(item);
+        final index = acc.indexWhere((e) => e.start == date);
+        if (index != -1) {
+          acc[index].list.add(Schedule.fromJson(item));
+        } else {
+          acc.add(ScheduleItem(
+            start: date,
+            list: [Schedule.fromJson(item)],
+          ));
+        }
         return acc;
       },
     );
-    final result = map.entries
-        .map((e) => {
-              'start': e.key,
-              'list': e.value,
-            })
-        .toList();
-    result
-        .sort((a, b) => (a['start'] as String).compareTo(b['start'] as String));
-    return result;
+    return map;
+  }
+
+  List<ScheduleItem> groupByList({
+    required List<dynamic> items,
+  }) {
+    List<ScheduleItem> map = items.fold<List<ScheduleItem>>(
+      [],
+      (acc, item) {
+        final index = acc.indexWhere((e) => e.start == item.start);
+        if (index != -1) {
+          acc[index].list.add(item);
+        } else {
+          acc.add(ScheduleItem(
+            start: item.start,
+            list: [item],
+          ));
+        }
+        return acc;
+      },
+    );
+    return map;
   }
 
   Future<void> getSchedules() async {
@@ -71,26 +131,22 @@ class ScheduleController extends GetxController {
         timestamp: selectedDay.value.millisecondsSinceEpoch.toString(),
         format: 'yyyy-MM-dd');
 
-    if (dateSchedules.containsKey(shortDate)) {
+    if (dateSchedules.any((e) => e.start == shortDate)) {
       return;
     }
 
     NormalResponse response = await scheduleService.getSchedules(
       classId: classId,
       teacherId: teacherId,
-      date: dateFormat(
-          timestamp: selectedDay.value.millisecondsSinceEpoch.toString(),
-          format: 'yyyy-MM-dd hh:mm:ss'),
+      date: shortDate,
     );
-
-    print(
-        '>>>>>>>>>>> response: ${groupByStartFold(response.data!['list']).map((e) => Map<String, dynamic>.from(e))}');
 
     if (response.code == 200 && response.data != null) {
       if (response.data!['list'] != null && response.data!['list'].isNotEmpty) {
-        dateSchedules[shortDate] = response.data!['list']
-            .map<Schedule>((e) => Schedule.fromJson(e))
-            .toList();
+        dateSchedules.addAll(groupByStartFold(
+          date: shortDate,
+          items: response.data!['list'],
+        ));
       }
       update(['update-schedules']);
     }
@@ -117,7 +173,7 @@ class ScheduleController extends GetxController {
           .map<int>((e) => int.tryParse('$e') ?? 0)
           .toList();
 
-      update(['update-calendar']);
+      update(['update-schedules']);
     }
   }
 
@@ -147,13 +203,46 @@ class ScheduleController extends GetxController {
     if (dateScheduleCounts.containsKey(shortDate) &&
         dateScheduleCounts[shortDate]!.isEmpty) {
       dateScheduleCounts.remove(shortDate);
-      update(['update-calendar']);
+      update(['update-schedules']);
     }
   }
 
   Future<void> onRefresh() async {
     await resetFocusedDayData();
     await initData(isInit: false);
+  }
+
+  EScheduleStatus getScheduleStatus({
+    required String start,
+    required String end,
+  }) {
+    DateTime now = DateTime.now();
+    DateTime startDate = selectedDay.value.withTimeFromString(start);
+    DateTime endDate = selectedDay.value.withTimeFromString(end);
+
+    if (now.isBefore(startDate)) {
+      return EScheduleStatus.pending;
+    } else if (now.isAfter(startDate) && now.isBefore(endDate)) {
+      return EScheduleStatus.active;
+    } else {
+      return EScheduleStatus.completed;
+    }
+  }
+
+  void updateCurrentSchedules() {
+    String shortDate = dateFormat(
+        timestamp: selectedDay.value.millisecondsSinceEpoch.toString(),
+        format: 'yyyy-MM-dd');
+
+    int index = dateSchedules.indexWhere((e) => e.start == shortDate);
+
+    if (index != -1) {
+      currentScheduleItems.value = groupByList(
+        items: dateSchedules[index].list,
+      );
+    } else {
+      currentScheduleItems.value = [];
+    }
   }
 
   Future<void> onDaySelected({
@@ -163,12 +252,13 @@ class ScheduleController extends GetxController {
     this.selectedDay.value = selectedDay;
     this.focusedDay.value = focusedDay;
     await getSchedules();
-    update(['update-calendar', 'update-schedules']);
+    updateCurrentSchedules();
+    update(['update-schedules']);
   }
 
   void onFormatChanged(CalendarFormat format) {
     calendarFormat.value = format;
-    update(['update-calendar']);
+    update(['update-schedules']);
   }
 
   Future<void> onPageChanged(DateTime focusedDay) async {
