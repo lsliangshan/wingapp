@@ -9,32 +9,74 @@ import 'package:wingapp/services/dingtalk.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
 
-class AddClassFormData {
-  String? name;
-  String? icon;
-  String? teacherId;
-  String? teacherName;
-  String? teacherEnName;
-  String? teacherUnionId;
+class ScheduleEntity {
+  DateTime date;
+  List<DateTime> range;
+  bool repeats;
 
-  AddClassFormData({
-    this.name,
-    this.icon,
-    this.teacherId,
-    this.teacherName,
-    this.teacherEnName,
-    this.teacherUnionId,
+  ScheduleEntity({
+    required this.date,
+    required this.range,
+    required this.repeats,
   });
 
   // 将 Model 转换为 JSON
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'icon': icon,
-      'teacherId': teacherId,
-      'teacherName': teacherName,
-      'teacherEnName': teacherEnName,
+      'date': date,
+      'range': range,
+      'repeats': repeats,
+    };
+  }
+}
+
+class ReminderEntity {
+  int before;
+  String unit;
+
+  ReminderEntity({
+    required this.before,
+    required this.unit,
+  });
+
+  // 将 Model 转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'before': before,
+      'unit': unit,
+    };
+  }
+}
+
+class AddScheduleFormData {
+  String classId;
+  String className;
+  String teacherUnionId;
+  String title;
+  String content;
+  List<ScheduleEntity> schedule;
+  List<ReminderEntity> reminders;
+
+  AddScheduleFormData({
+    required this.classId,
+    required this.className,
+    required this.teacherUnionId,
+    required this.title,
+    required this.content,
+    required this.schedule,
+    required this.reminders,
+  });
+
+  // 将 Model 转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'classId': classId,
+      'className': className,
       'teacherUnionId': teacherUnionId,
+      'title': title,
+      'content': content,
+      'schedule': schedule.map((e) => e.toJson()).toList(),
+      'reminders': reminders.map((e) => e.toJson()).toList(),
     };
   }
 }
@@ -51,17 +93,20 @@ class AddScheduleController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController nameController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
 
-  FocusNode nameFocusNode = FocusNode();
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode contentFocusNode = FocusNode();
 
-  Rx<AddClassFormData> formData = AddClassFormData(
-    name: '',
-    icon: '',
-    teacherId: '',
-    teacherName: '',
-    teacherEnName: '',
+  Rx<AddScheduleFormData> formData = AddScheduleFormData(
+    classId: '',
+    className: '',
     teacherUnionId: '',
+    title: '',
+    content: '',
+    schedule: [],
+    reminders: [],
   ).obs;
 
   List<Class> newClasses = [];
@@ -73,117 +118,110 @@ class AddScheduleController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    nameController.addListener(() {
-      formData.value.name = nameController.text;
+    titleController.addListener(() {
+      formData.value.title = titleController.text;
+      update(['update-form-data']);
+    });
+
+    contentController.addListener(() {
+      formData.value.content = contentController.text;
       update(['update-form-data']);
     });
 
     initAddClassFuture = initData();
   }
 
-  Future<void> initData() async {
-    await initTeacherInfo();
-  }
-
-  Future<void> initTeacherInfo() async {
-    if (teacherId != null && teacherId!.isNotEmpty) {
-      NormalResponse normalResponse = await teacherService.getTeacherDetail(
-        id: teacherId!,
-      );
-      if (normalResponse.code == 200) {
-        formData.value.teacherId = normalResponse.data['id'];
-        formData.value.teacherName = normalResponse.data['name'];
-        formData.value.teacherEnName = normalResponse.data['enName'];
-        formData.value.teacherUnionId = normalResponse.data['unionId'];
-      }
-    }
-  }
-
-  Future<void> chooseTeacher() async {
-    final result = await Get.toNamed(Routes.CHOOSE_TEACHER, arguments: {
-      'teacherId': formData.value.teacherId,
-    });
-    if (result != null) {
-      formData.value.teacherId = result.id;
-      formData.value.teacherName = result.name;
-      formData.value.teacherEnName = result.enName;
-      formData.value.teacherUnionId = result.unionId;
-      update(['update-form-data']);
-    }
-  }
+  Future<void> initData() async {}
 
   void clearFormData() {
-    nameController.clear();
-    formData.value = AddClassFormData(
-      name: '',
-      icon: '',
-      teacherId: '',
-      teacherName: '',
-      teacherEnName: '',
+    titleController.clear();
+    contentController.clear();
+    formData.value = AddScheduleFormData(
+      classId: '',
+      className: '',
       teacherUnionId: '',
+      title: '',
+      content: '',
+      schedule: [],
+      reminders: [],
     );
     update(['update-form-data']);
   }
 
-  Future<void> saveClass({
+  Future<void> saveSchedule({
     bool back = false,
   }) async {
-    if (formData.value.name == null || formData.value.name!.isEmpty) {
+    if (formData.value.title.isEmpty) {
       toastService.showError(
-        message: 'toast.add_class.name_required'.tr,
+        message: 'toast.add_schedule.title_required'.tr,
       );
-      nameFocusNode.requestFocus();
+      titleFocusNode.requestFocus();
       return;
     }
 
-    NormalResponse response = await classService.addClass(
-      name: formData.value.name!,
-      icon: formData.value.icon,
-      teacherId: formData.value.teacherId!,
-      teacherName: formData.value.teacherName!,
-      teacherEnName: formData.value.teacherEnName!,
-      teacherUnionId: formData.value.teacherUnionId!,
-    );
-
-    if (response.code == 200) {
-      toastService.showSuccess(
-        message: 'toast.add_class.save.success'.tr,
-      );
-      newClasses.add(Class.fromJson(response.data));
-
-      if (back) {
-        Get.back(result: newClasses);
-      } else {
-        clearFormData();
-      }
-    } else {
+    if (formData.value.content.isEmpty) {
       toastService.showError(
-        message: response.message ?? 'toast.add_class.save.fail'.tr,
+        message: 'toast.add_schedule.content_required'.tr,
       );
-      if (response.code == 1002) {
-        nameFocusNode.requestFocus();
-      }
+      contentFocusNode.requestFocus();
+      return;
+    }
+
+    // NormalResponse response = await classService.addClass(
+    //   name: formData.value.name!,
+    //   icon: formData.value.icon,
+    //   teacherId: formData.value.teacherId!,
+    //   teacherName: formData.value.teacherName!,
+    //   teacherEnName: formData.value.teacherEnName!,
+    //   teacherUnionId: formData.value.teacherUnionId!,
+    // );
+
+    // if (response.code == 200) {
+    //   toastService.showSuccess(
+    //     message: 'toast.add_class.save.success'.tr,
+    //   );
+    //   newClasses.add(Class.fromJson(response.data));
+
+    //   if (back) {
+    //     Get.back(result: newClasses);
+    //   } else {
+    //     clearFormData();
+    //   }
+    // } else {
+    //   toastService.showError(
+    //     message: response.message ?? 'toast.add_class.save.fail'.tr,
+    //   );
+    //   if (response.code == 1002) {
+    //     nameFocusNode.requestFocus();
+    //   }
+    // }
+  }
+
+  Future<void> chooseClass() async {
+    final result = await Get.toNamed(
+      Routes.CHOOSE_CLASS,
+      arguments: {
+        'classId': formData.value.classId,
+      },
+    );
+    if (result != null && result['classInfo'] != null) {
+      print('>>>>>>>>> chooseClass: ${result["classInfo"]}');
+      formData.value.classId = result['classInfo'].id;
+      formData.value.className = result['classInfo'].name;
+      formData.value.teacherUnionId = result['classInfo'].teacherUnionId;
+      update(['update-form-data']);
     }
   }
 
-  Future<void> uploadClassIcon() async {
-    final result = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (result != null) {
-      classIcon.value = result;
-      NormalResponse response = await dingtalkService.uploadFile(
-        file: classIcon.value,
-      );
-
-      if (response.code == 200) {
-        formData.value.icon = response.data['mediaId'];
-        update(['update-form-data']);
-      }
-    }
+  void clearTitle() {
+    titleController.clear();
+    formData.value.title = '';
+    update(['update-form-data']);
   }
 
-  void clearName() {
-    nameController.clear();
-    formData.value.name = '';
+  void clearContent() {
+    contentController.clear();
+    formData.value.content = '';
     update(['update-form-data']);
   }
 }

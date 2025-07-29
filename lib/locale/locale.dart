@@ -179,6 +179,14 @@ class Messages extends Translations {
 
           // 添加课表页面
           'add_schedule.title': '添加课表',
+          'add_schedule.form_data.class': '班级',
+          'add_schedule.form_data.class.hint': '请选择班级',
+          'add_schedule.form_data.time': '上课时间',
+          'add_schedule.form_data.title': '标题',
+          'add_schedule.form_data.title.hint': '请输入通知标题',
+          'add_schedule.form_data.content': '内容',
+          'add_schedule.form_data.content.hint': '请输入通知内容',
+          'add_schedule.form_data.reminder': '提醒',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -433,6 +441,16 @@ class Messages extends Translations {
 
           // 添加课表页面
           'add_schedule.title': 'Add Schedule',
+          'add_schedule.form_data.class': 'Class',
+          'add_schedule.form_data.class.hint': 'Please select the class',
+          'add_schedule.form_data.time': 'Class Time',
+          'add_schedule.form_data.title': 'Title',
+          'add_schedule.form_data.title.hint':
+              'Please enter the notification title',
+          'add_schedule.form_data.content': 'Content',
+          'add_schedule.form_data.content.hint':
+              'Please enter the notification content',
+          'add_schedule.form_data.reminder': 'Reminder',
 
           // 未登录页面
           'need_login.tip': 'Need Login',
