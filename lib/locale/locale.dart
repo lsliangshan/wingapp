@@ -187,6 +187,9 @@ class Messages extends Translations {
           'add_schedule.form_data.content': '内容',
           'add_schedule.form_data.content.hint': '请输入通知内容',
           'add_schedule.form_data.reminder': '提醒',
+          'add_schedule.form_data.add_time': '添加上课时间',
+          'add_schedule.form_data.add_reminder': '添加提醒',
+          'add_schedule.form_data.insert_time': '插入上课时间',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -211,6 +214,9 @@ class Messages extends Translations {
           'toast.add_student.save.fail': '添加失败',
           'toast.update.success': '更新成功',
           'toast.update.failed': '更新失败',
+          'toast.add_schedule.class_required': '请先选择班级',
+          'toast.add_schedule.title_required': '标题不能为空',
+          'toast.add_schedule.content_required': '内容不能为空',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -220,6 +226,7 @@ class Messages extends Translations {
           'bottom_sheet.choose_type.title': '选择老师类型',
           'bottom_sheet.choose_teacher.title': '选择老师',
           'bottom_sheet.choose_language.title': '选择语言',
+          'bottom_sheet.choose_reminder_unit.title': '选择提醒时间单位',
 
           // 性别
           'gender.male': '男',
@@ -243,6 +250,7 @@ class Messages extends Translations {
           'datetime.locale.now': '现在',
 
           'btn.save': '保存',
+          'btn.saveAndBack': '保存并返回',
 
           'no_class': '还未分配班级',
           'no_teacher': '还未分配老师',
@@ -255,6 +263,13 @@ class Messages extends Translations {
           'calendar.week': '周',
 
           'no_data': '暂无数据',
+
+          'minute': '分钟',
+          'hour': '小时',
+          'day': '天',
+          'week': '周',
+          'month': '月',
+          'year': '年',
         },
         'en_US': {
           // 页面
@@ -451,6 +466,9 @@ class Messages extends Translations {
           'add_schedule.form_data.content.hint':
               'Please enter the notification content',
           'add_schedule.form_data.reminder': 'Reminder',
+          'add_schedule.form_data.add_time': 'Add Time',
+          'add_schedule.form_data.add_reminder': 'Add Reminder',
+          'add_schedule.form_data.insert_time': 'Insert Time',
 
           // 未登录页面
           'need_login.tip': 'Need Login',
@@ -477,6 +495,9 @@ class Messages extends Translations {
           'toast.add_student.save.fail': 'Create Failed',
           'toast.update.success': 'Update Success',
           'toast.update.failed': 'Update Failed',
+          'toast.add_schedule.class_required': 'Please select the class',
+          'toast.add_schedule.title_required': 'Title cannot be empty',
+          'toast.add_schedule.content_required': 'Content cannot be empty',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',
@@ -486,6 +507,7 @@ class Messages extends Translations {
           'bottom_sheet.choose_type.title': 'Choose Teacher Type',
           'bottom_sheet.choose_teacher.title': 'Choose Teacher',
           'bottom_sheet.choose_language.title': 'Choose Language',
+          'bottom_sheet.choose_reminder_unit.title': 'Choose Reminder Unit',
 
           // 性别
           'gender.male': 'Male',
@@ -509,6 +531,7 @@ class Messages extends Translations {
           'datetime.locale.now': 'Now',
 
           'btn.save': 'Save',
+          'btn.saveAndBack': 'Save and Back',
 
           'no_class': 'No Class',
           'no_teacher': 'No Teacher',
@@ -521,6 +544,13 @@ class Messages extends Translations {
           'calendar.week': 'Week',
 
           'no_data': 'No Data',
+
+          'minute': 'Minute',
+          'hour': 'Hour',
+          'day': 'Day',
+          'week': 'Week',
+          'month': 'Month',
+          'year': 'Year',
         }
       };
 }

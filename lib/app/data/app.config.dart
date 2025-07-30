@@ -87,3 +87,22 @@ List<Map<String, String>> teacherTypes = [
     "value": TeacherType.partTime,
   },
 ];
+
+List<Map<String, String>> reminderUnits = [
+  {
+    "label": "minute",
+    "value": 'minute',
+  },
+  {
+    "label": "hour",
+    "value": 'hour',
+  },
+  {
+    "label": "day",
+    "value": 'day',
+  },
+  {
+    "label": "week",
+    "value": 'week',
+  },
+];
