@@ -179,17 +179,18 @@ class Messages extends Translations {
 
           // 添加课表页面
           'add_schedule.title': '添加课表',
+          'add_schedule.create.title': '编辑课表',
           'add_schedule.form_data.class': '班级',
           'add_schedule.form_data.class.hint': '请选择班级',
-          'add_schedule.form_data.time': '上课时间',
+          'add_schedule.form_data.time': '时间',
           'add_schedule.form_data.title': '标题',
           'add_schedule.form_data.title.hint': '请输入通知标题',
           'add_schedule.form_data.content': '内容',
           'add_schedule.form_data.content.hint': '请输入通知内容',
           'add_schedule.form_data.reminder': '提醒',
-          'add_schedule.form_data.add_time': '添加上课时间',
+          'add_schedule.form_data.add_time': '添加时间',
           'add_schedule.form_data.add_reminder': '添加提醒',
-          'add_schedule.form_data.insert_time': '插入上课时间',
+          'add_schedule.form_data.insert_time': '插入时间',
 
           // 未登录页面
           'need_login.tip': '需要登录',
@@ -217,6 +218,8 @@ class Messages extends Translations {
           'toast.add_schedule.class_required': '请先选择班级',
           'toast.add_schedule.title_required': '标题不能为空',
           'toast.add_schedule.content_required': '内容不能为空',
+          'toast.add_schedule.save.success': '保存成功',
+          'toast.add_schedule.save.fail': '保存失败',
 
           // 加载更多
           'load_more.tips.no_more': '没有更多数据了',
@@ -456,9 +459,10 @@ class Messages extends Translations {
 
           // 添加课表页面
           'add_schedule.title': 'Add Schedule',
+          'add_schedule.create.title': 'Edit Schedule',
           'add_schedule.form_data.class': 'Class',
           'add_schedule.form_data.class.hint': 'Please select the class',
-          'add_schedule.form_data.time': 'Class Time',
+          'add_schedule.form_data.time': 'Time',
           'add_schedule.form_data.title': 'Title',
           'add_schedule.form_data.title.hint':
               'Please enter the notification title',
@@ -498,6 +502,8 @@ class Messages extends Translations {
           'toast.add_schedule.class_required': 'Please select the class',
           'toast.add_schedule.title_required': 'Title cannot be empty',
           'toast.add_schedule.content_required': 'Content cannot be empty',
+          'toast.add_schedule.save.success': 'Save Success',
+          'toast.add_schedule.save.fail': 'Save Failed',
 
           // 加载更多
           'load_more.tips.no_more': 'No More Data',

@@ -27,6 +27,12 @@ class ScheduleView extends GetView {
         ),
         tag: 'student-${classId ?? ''}-${teacherId ?? ''}',
       );
+    } else {
+      if (!Get.isRegistered<ScheduleController>()) {
+        Get.put<ScheduleController>(
+          ScheduleController(),
+        );
+      }
     }
   }
 

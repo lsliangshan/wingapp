@@ -20,6 +20,12 @@ class ClassView extends GetView {
         ClassController(teacherId: teacherId),
         tag: 'class-${teacherId ?? ''}',
       );
+    } else {
+      if (!Get.isRegistered<ClassController>()) {
+        Get.put<ClassController>(
+          ClassController(),
+        );
+      }
     }
   }
 

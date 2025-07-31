@@ -173,7 +173,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_SCHEDULE,
-      page: () => const AddScheduleView(),
+      page: () => AddScheduleView(),
       binding: AddScheduleBinding(),
     ),
   ];

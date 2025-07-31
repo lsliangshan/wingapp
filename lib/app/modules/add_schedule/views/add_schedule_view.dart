@@ -11,7 +11,34 @@ import 'package:wingapp/input_formatter/pure_number_input_formatter.dart';
 import '../controllers/add_schedule_controller.dart';
 
 class AddScheduleView extends GetView<AddScheduleController> {
-  const AddScheduleView({super.key});
+  final String? classId;
+  final String? formId;
+  AddScheduleView({super.key, this.classId, this.formId}) {
+    if ((classId != null && classId!.isNotEmpty) ||
+        (formId != null && formId!.isNotEmpty)) {
+      Get.put<AddScheduleController>(
+        AddScheduleController(
+          classId: classId ?? '',
+          formId: formId ?? '',
+        ),
+        tag: 'add-schedule-${classId ?? ''}-${formId ?? ''}',
+      );
+    } else {
+      if (!Get.isRegistered<AddScheduleController>()) {
+        Get.put<AddScheduleController>(
+          AddScheduleController(),
+        );
+      }
+    }
+  }
+
+  @override
+  AddScheduleController get controller =>
+      ((classId != null && classId!.isNotEmpty) ||
+              (formId != null && formId!.isNotEmpty))
+          ? Get.find<AddScheduleController>(
+              tag: 'add-schedule-${classId ?? ''}-${formId ?? ''}')
+          : Get.find<AddScheduleController>();
 
   Widget _buildSchedules() {
     return Column(
@@ -366,7 +393,10 @@ class AddScheduleView extends GetView<AddScheduleController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'add_schedule.title'.tr,
+          (classId != null && classId!.isNotEmpty) ||
+                  (formId != null && formId!.isNotEmpty)
+              ? 'add_schedule.create.title'.tr
+              : 'add_schedule.title'.tr,
           style: Get.theme.textTheme.titleMedium,
         ),
         centerTitle: true,
@@ -393,9 +423,12 @@ class AddScheduleView extends GetView<AddScheduleController> {
                     children: [
                       ListTile(
                         dense: true,
-                        onTap: () {
-                          controller.chooseClass();
-                        },
+                        onTap: (classId != null && classId!.isNotEmpty) ||
+                                (formId != null && formId!.isNotEmpty)
+                            ? null
+                            : () {
+                                controller.chooseClass();
+                              },
                         leading: SizedBox(
                           width: 80,
                           height: 48,
@@ -446,16 +479,19 @@ class AddScheduleView extends GetView<AddScheduleController> {
                                                 : Get.theme.disabledColor,
                                           ),
                                         ),
-                                        SvgPicture.asset(
-                                          'assets/svgs/icon_arrow_right.svg',
-                                          width: 20,
-                                          height: 20,
-                                          colorFilter: ColorFilter.mode(
-                                            Get.theme.colorScheme.onSurface
-                                                .withValues(alpha: 0.18),
-                                            BlendMode.srcIn,
+                                        if ((classId == null ||
+                                                classId!.isEmpty) &&
+                                            (formId == null || formId!.isEmpty))
+                                          SvgPicture.asset(
+                                            'assets/svgs/icon_arrow_right.svg',
+                                            width: 20,
+                                            height: 20,
+                                            colorFilter: ColorFilter.mode(
+                                              Get.theme.colorScheme.onSurface
+                                                  .withValues(alpha: 0.18),
+                                              BlendMode.srcIn,
+                                            ),
                                           ),
-                                        ),
                                       ],
                                     ),
                                   ),

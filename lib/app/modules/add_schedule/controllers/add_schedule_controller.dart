@@ -9,6 +9,7 @@ import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/date.dart';
 import 'package:wingapp/services/dingtalk.dart';
+import 'package:wingapp/services/schedule.dart';
 import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/services/toast.dart';
 
@@ -55,6 +56,7 @@ class ReminderEntity {
 }
 
 class AddScheduleFormData {
+  String formId;
   String classId;
   String className;
   String teacherUnionId;
@@ -64,6 +66,7 @@ class AddScheduleFormData {
   List<ReminderEntity> reminders;
 
   AddScheduleFormData({
+    required this.formId,
     required this.classId,
     required this.className,
     required this.teacherUnionId,
@@ -76,6 +79,7 @@ class AddScheduleFormData {
   // 将 Model 转换为 JSON
   Map<String, dynamic> toJson() {
     return {
+      'formId': formId,
       'classId': classId,
       'className': className,
       'teacherUnionId': teacherUnionId,
@@ -88,15 +92,17 @@ class AddScheduleFormData {
 }
 
 class AddScheduleController extends GetxController {
-  // 如果有 teacherId，则表示是老师添加班级，老师信息不能修改;否则是管理员添加班级
-  final String? teacherId;
-  AddScheduleController({this.teacherId});
+  // 如果有 classId，则表示是添加班级，老师信息不能修改;否则是管理员添加班级
+  final String? classId;
+  final String? formId;
+  AddScheduleController({this.classId, this.formId});
 
   DateService dateService = Get.find<DateService>();
   ToastService toastService = Get.find<ToastService>();
   ClassService classService = Get.find<ClassService>();
   TeacherService teacherService = Get.find<TeacherService>();
   DingtalkService dingtalkService = Get.find<DingtalkService>();
+  ScheduleService scheduleService = Get.find<ScheduleService>();
 
   final formKey = GlobalKey<FormState>();
 
@@ -110,6 +116,7 @@ class AddScheduleController extends GetxController {
   Map<String, FocusNode> reminderFocusNodes = {};
 
   Rx<AddScheduleFormData> formData = AddScheduleFormData(
+    formId: '',
     classId: '',
     className: '',
     teacherUnionId: '',
@@ -148,6 +155,12 @@ class AddScheduleController extends GetxController {
       update(['update-form-data']);
     });
 
+    if (formId != null && formId!.isNotEmpty) {
+      formData.value.formId = formId!;
+    } else {
+      formData.value.formId = Uuid().v4();
+    }
+
     initAddClassFuture = initData();
   }
 
@@ -182,12 +195,22 @@ class AddScheduleController extends GetxController {
 
   Future<void> initData() async {
     initReminderControllers();
+
+    if (classId != null && classId!.isNotEmpty) {
+      formData.value.classId = classId!;
+      await getClassInfo();
+    }
+
+    if (formId != null && formId!.isNotEmpty) {
+      await initScheduleDetail(id: formId!);
+    }
   }
 
   void clearFormData() {
     titleController.clear();
     contentController.clear();
     formData.value = AddScheduleFormData(
+      formId: Uuid().v4(),
       classId: '',
       className: '',
       teacherUnionId: '',
@@ -197,6 +220,65 @@ class AddScheduleController extends GetxController {
       reminders: [],
     );
     update(['update-form-data']);
+  }
+
+  Future<void> getClassInfo() async {
+    NormalResponse response = await classService.getClassDetailByClassId(
+      classId: formData.value.classId,
+    );
+
+    if (response.code == 200) {
+      formData.value.className = response.data['name'];
+    }
+  }
+
+  Future<void> initScheduleDetail({
+    required String id,
+  }) async {
+    NormalResponse response = await scheduleService.getScheduleDetailByFormId(
+      formId: id,
+    );
+
+    if (response.code == 200 &&
+        response.data != null &&
+        response.data["list"] != null &&
+        response.data["list"].length > 0) {
+      try {
+        formData.value = AddScheduleFormData(
+          formId: response.data['list'][0]['formId'],
+          classId: response.data['list'][0]['classId'],
+          className: response.data['list'][0]['className'],
+          teacherUnionId: response.data['list'][0]['teacherUnionId'],
+          title: response.data['list'][0]['title'],
+          content: response.data['list'][0]['content'],
+          schedule: [],
+          reminders: response.data['list'][0]['reminders']
+              .split(';')
+              .map<ReminderEntity>((e) => ReminderEntity(
+                    before: int.tryParse(e.split('-').first) ?? 30,
+                    unit: e.split('-').last,
+                    id: Uuid().v4(),
+                  ))
+              .toList(),
+        );
+        formData.value.schedule = response.data['list']
+            .map<ScheduleEntity>((e) => ScheduleEntity(
+                  date: DateTime.parse(e['start']),
+                  range: [
+                    DateTime.parse(e['start']),
+                    DateTime.parse(e['end']),
+                  ],
+                  repeats: e['repeats'] == '1',
+                ))
+            .toList();
+      } catch (_) {}
+
+      titleController.text = formData.value.title;
+      contentController.text = formData.value.content;
+
+      initReminderControllers();
+      update(['update-form-data']);
+    }
   }
 
   Future<void> saveSchedule({
@@ -226,6 +308,33 @@ class AddScheduleController extends GetxController {
     }
 
     print('>>>>>>>>>>>>>>>>>>>> ${formData.value.toJson()}');
+    NormalResponse response = await scheduleService.addSchedules(
+      formId: Uuid().v4(),
+      classId: formData.value.classId,
+      className: formData.value.className,
+      teacherUnionId: formData.value.teacherUnionId,
+      title: formData.value.title,
+      content: formData.value.content,
+      schedule: formData.value.schedule.map((e) {
+        return {
+          'start': e.range[0].millisecondsSinceEpoch,
+          'end': e.range[1].millisecondsSinceEpoch,
+          'repeats': e.repeats,
+          'dayOfWeek': e.date.weekday,
+        };
+      }).toList(),
+      reminders: formData.value.reminders.map((e) => e.toJson()).toList(),
+    );
+
+    if (response.code == 200) {
+      toastService.showSuccess(
+        message: 'toast.add_schedule.save.success'.tr,
+      );
+    } else {
+      toastService.showError(
+        message: response.message ?? 'toast.add_schedule.save.fail'.tr,
+      );
+    }
 
     // NormalResponse response = await classService.addClass(
     //   name: formData.value.name!,
@@ -265,7 +374,6 @@ class AddScheduleController extends GetxController {
       },
     );
     if (result != null && result['classInfo'] != null) {
-      print('>>>>>>>>> chooseClass: ${result["classInfo"]}');
       formData.value.classId = result['classInfo'].id;
       formData.value.className = result['classInfo'].name;
       formData.value.teacherUnionId = result['classInfo'].teacherUnionId;

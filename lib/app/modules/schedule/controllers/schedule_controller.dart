@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:wingapp/app/modules/add_schedule/views/add_schedule_view.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
@@ -285,6 +286,9 @@ class ScheduleController extends GetxController {
   }
 
   void gotoAddSchedule() {
-    Get.toNamed(Routes.ADD_SCHEDULE);
+    Get.to(() => AddScheduleView(
+          // classId: "39a1e196-71ad-4698-8d5b-2f7719968839",
+          formId: '456766a7-438e-4b80-9b55-3c6f1ab93321',
+        ));
   }
 }
