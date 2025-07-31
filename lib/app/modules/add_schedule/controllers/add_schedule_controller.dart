@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wingapp/app/data/app.config.dart';
 import 'package:wingapp/app/routes/app_pages.dart';
-import 'package:wingapp/database/database.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/class.dart';
 import 'package:wingapp/services/date.dart';
@@ -32,6 +32,14 @@ class ScheduleEntity {
       'repeats': repeats,
     };
   }
+
+  static ScheduleEntity fromJson(Map<String, dynamic> json) {
+    return ScheduleEntity(
+      date: DateTime.parse(json['date'] ?? json['start']),
+      range: [DateTime.parse(json['start']), DateTime.parse(json['end'])],
+      repeats: json['repeats'],
+    );
+  }
 }
 
 class ReminderEntity {
@@ -52,6 +60,14 @@ class ReminderEntity {
       'unit': unit,
       'id': id,
     };
+  }
+
+  static ReminderEntity fromJson(Map<String, dynamic> json) {
+    return ReminderEntity(
+      before: json['before'],
+      unit: json['unit'],
+      id: json['id'],
+    );
   }
 }
 
@@ -88,6 +104,21 @@ class AddScheduleFormData {
       'schedule': schedule.map((e) => e.toJson()).toList(),
       'reminders': reminders.map((e) => e.toJson()).toList(),
     };
+  }
+
+  static AddScheduleFormData fromJson(Map<String, dynamic> json) {
+    return AddScheduleFormData(
+      formId: json['formId'],
+      classId: json['classId'],
+      className: json['className'],
+      teacherUnionId: json['teacherUnionId'],
+      title: json['title'],
+      content: json['content'],
+      schedule:
+          json['schedule'].map((e) => ScheduleEntity.fromJson(e)).toList(),
+      reminders:
+          json['reminders'].map((e) => ReminderEntity.fromJson(e)).toList(),
+    );
   }
 }
 
@@ -138,7 +169,7 @@ class AddScheduleController extends GetxController {
     ],
   ).obs;
 
-  List<Class> newClasses = [];
+  // List<ScheduleEntity> newSchedules = [];
 
   late Future<void> initAddClassFuture;
 
@@ -307,8 +338,7 @@ class AddScheduleController extends GetxController {
       return;
     }
 
-    print('>>>>>>>>>>>>>>>>>>>> ${formData.value.toJson()}');
-    NormalResponse response = await scheduleService.addSchedules(
+    NormalResponse response = await scheduleService.addSchedule(
       formId: Uuid().v4(),
       classId: formData.value.classId,
       className: formData.value.className,
@@ -317,10 +347,10 @@ class AddScheduleController extends GetxController {
       content: formData.value.content,
       schedule: formData.value.schedule.map((e) {
         return {
-          'start': e.range[0].millisecondsSinceEpoch,
-          'end': e.range[1].millisecondsSinceEpoch,
+          'start': DateFormat('yyyy-MM-dd HH:mm:ss').format(e.range[0]),
+          'end': DateFormat('yyyy-MM-dd HH:mm:ss').format(e.range[1]),
           'repeats': e.repeats,
-          'dayOfWeek': e.date.weekday,
+          'dayOfWeek': DateFormat('EEEE', 'en').format(e.date).toLowerCase(),
         };
       }).toList(),
       reminders: formData.value.reminders.map((e) => e.toJson()).toList(),
@@ -330,40 +360,23 @@ class AddScheduleController extends GetxController {
       toastService.showSuccess(
         message: 'toast.add_schedule.save.success'.tr,
       );
+      // newSchedules.add(ScheduleEntity.fromJson(
+      //   Map<String, dynamic>.from(response.data),
+      // ));
+
+      if (back) {
+        Get.back(result: true);
+      } else {
+        clearFormData();
+      }
     } else {
       toastService.showError(
         message: response.message ?? 'toast.add_schedule.save.fail'.tr,
       );
+      if (response.code == 1002) {
+        titleFocusNode.requestFocus();
+      }
     }
-
-    // NormalResponse response = await classService.addClass(
-    //   name: formData.value.name!,
-    //   icon: formData.value.icon,
-    //   teacherId: formData.value.teacherId!,
-    //   teacherName: formData.value.teacherName!,
-    //   teacherEnName: formData.value.teacherEnName!,
-    //   teacherUnionId: formData.value.teacherUnionId!,
-    // );
-
-    // if (response.code == 200) {
-    //   toastService.showSuccess(
-    //     message: 'toast.add_class.save.success'.tr,
-    //   );
-    //   newClasses.add(Class.fromJson(response.data));
-
-    //   if (back) {
-    //     Get.back(result: newClasses);
-    //   } else {
-    //     clearFormData();
-    //   }
-    // } else {
-    //   toastService.showError(
-    //     message: response.message ?? 'toast.add_class.save.fail'.tr,
-    //   );
-    //   if (response.code == 1002) {
-    //     nameFocusNode.requestFocus();
-    //   }
-    // }
   }
 
   Future<void> chooseClass() async {

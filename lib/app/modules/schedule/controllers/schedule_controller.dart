@@ -1,11 +1,14 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wingapp/app/modules/add_schedule/views/add_schedule_view.dart';
-import 'package:wingapp/app/routes/app_pages.dart';
 import 'package:wingapp/database/database.dart';
+import 'package:wingapp/events/events.dart';
+import 'package:wingapp/models/login_info.model.dart';
 import 'package:wingapp/models/normal_response.model.dart';
 import 'package:wingapp/services/schedule.dart';
+import 'package:wingapp/services/teacher.dart';
 import 'package:wingapp/utils/util.dart';
 
 class ScheduleItem {
@@ -49,7 +52,9 @@ class ScheduleController extends GetxController {
 
   ScheduleController({this.classId, this.teacherId});
 
+  TeacherService teacherService = Get.find<TeacherService>();
   ScheduleService scheduleService = Get.find<ScheduleService>();
+  EventBus eventBus = Get.find<EventBus>();
 
   ScrollController scrollController = ScrollController();
 
@@ -74,14 +79,35 @@ class ScheduleController extends GetxController {
 
   RxList<ScheduleItem> currentScheduleItems = RxList<ScheduleItem>();
 
+  Rx<LoginInfo?> loginInfo = Rx<LoginInfo?>(null);
+
   @override
   void onInit() {
     super.onInit();
+
+    eventBus.on<LoginEvent>().listen((event) {
+      loginInfo.value = event.loginInfo;
+      update(['update-login-info']);
+    });
+
+    eventBus.on<LogoutEvent>().listen((event) {
+      loginInfo.value = null;
+      update(['update-login-info']);
+    });
 
     firstDay.value = DateTime.utc(2019, 1, 29);
     lastDay.value = DateTime.now().add(const Duration(days: 365));
 
     initScheduleFuture = initData(isInit: true);
+  }
+
+  Future<void> initLoginInfo() async {
+    loginInfo.value = await teacherService.getLoginInfo();
+    if (loginInfo.value != null) {
+      eventBus.fire(LoginEvent(loginInfo.value!));
+    }
+
+    update(['update-login-info']);
   }
 
   List<ScheduleItem> groupByStartFold({
@@ -139,7 +165,7 @@ class ScheduleController extends GetxController {
 
     NormalResponse response = await scheduleService.getSchedules(
       classId: classId,
-      teacherId: teacherId,
+      teacherId: teacherId ?? loginInfo.value?.id,
       date: shortDate,
     );
 
@@ -182,6 +208,7 @@ class ScheduleController extends GetxController {
   Future<void> initData({
     bool isInit = true,
   }) async {
+    await initLoginInfo();
     await getScheduleCountsMonthly(date: focusedDay.value);
     if (isInit) {
       DateTime prevMonth =
@@ -285,10 +312,13 @@ class ScheduleController extends GetxController {
     ]);
   }
 
-  void gotoAddSchedule() {
-    Get.to(() => AddScheduleView(
-          // classId: "39a1e196-71ad-4698-8d5b-2f7719968839",
-          formId: '456766a7-438e-4b80-9b55-3c6f1ab93321',
+  Future<void> gotoAddSchedule() async {
+    final result = await Get.to(() => AddScheduleView(
+        // classId: "39a1e196-71ad-4698-8d5b-2f7719968839",
+        // formId: '456766a7-438e-4b80-9b55-3c6f1ab93321',
         ));
+    if (result != null) {
+      await onRefresh();
+    }
   }
 }

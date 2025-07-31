@@ -18,6 +18,11 @@ class ScheduleService extends GetxService {
     String? teacherId,
     String? date,
   }) async {
+    print('>>>>>>>>>>>>>>>>>>>> getSchedules: ${{
+      "classId": classId,
+      "teacherId": teacherId,
+      "date": date
+    }}');
     http.Response response = await http.post(
       Uri.parse('https://wf.liangqy.com/webhook/get-schedules'),
       headers: <String, String>{
@@ -71,7 +76,7 @@ class ScheduleService extends GetxService {
     return NormalResponse.fromJson(data);
   }
 
-  Future<NormalResponse> addSchedules({
+  Future<NormalResponse> addSchedule({
     required String formId,
     required String classId,
     required String className,
@@ -82,7 +87,7 @@ class ScheduleService extends GetxService {
     required List<dynamic> reminders,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('https://wf.liangqy.com/webhook-test/add-schedules'),
+      Uri.parse('https://wf.liangqy.com/webhook/add-schedule'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

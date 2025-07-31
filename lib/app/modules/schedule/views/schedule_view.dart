@@ -44,9 +44,13 @@ class ScheduleView extends GetView {
               tag: 'schedule-${classId ?? ''}-${teacherId ?? ''}')
           : Get.find<ScheduleController>();
 
-  Widget _buildScheduleItem(BuildContext context, Schedule item) {
+  Widget _buildScheduleItem({
+    required Schedule item,
+    required bool isCompleted,
+  }) {
     return Card(
       elevation: 0,
+      color: isCompleted ? Colors.white24 : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -110,6 +114,9 @@ class ScheduleView extends GetView {
               alignment: Alignment.centerLeft,
               child: Text(
                 item.content ?? '',
+                // item.content?.replaceAll('[时间]',
+                //         '${DateFormat('HH:mm').format(DateTime.parse(item.start ?? ''))} - ${DateFormat('HH:mm').format(DateTime.parse(item.end ?? ''))}') ??
+                //     '',
                 style: Get.theme.textTheme.bodySmall?.copyWith(
                   color: Colors.black54,
                 ),
@@ -168,12 +175,12 @@ class ScheduleView extends GetView {
     Color color = switch (status) {
       EScheduleStatus.pending => Colors.white,
       EScheduleStatus.active => Color(0xFF31D98D),
-      EScheduleStatus.completed => Colors.white54,
+      EScheduleStatus.completed => Colors.white30,
     };
     Color textColor = switch (status) {
       EScheduleStatus.pending => Colors.black54,
       EScheduleStatus.active => Colors.white,
-      EScheduleStatus.completed => Colors.black38,
+      EScheduleStatus.completed => Colors.black12,
     };
     return SliverStickyHeader(
       overlapsContent: true,
@@ -211,45 +218,11 @@ class ScheduleView extends GetView {
         ),
         sliver: SliverList.builder(
           itemBuilder: (context, index) => _buildScheduleItem(
-            context,
-            item.list[index],
+            item: item.list[index],
+            isCompleted: status == EScheduleStatus.completed,
           ),
           itemCount: item.list.length,
         ),
-        // sliver: SliverToBoxAdapter(
-        //   child: Card(
-        //     elevation: 0,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(4),
-        //     ),
-        //     child: Stack(
-        //       children: [
-        //         Container(
-        //           height: 50,
-        //           child: Row(
-        //             children: [
-        //               Container(
-        //                 height: 32,
-        //                 padding: EdgeInsets.symmetric(horizontal: 4),
-        //                 alignment: Alignment.center,
-        //                 decoration: BoxDecoration(
-        //                   color: Colors.green,
-        //                   borderRadius: BorderRadius.circular(4),
-        //                 ),
-        //                 child: Text(
-        //                   '${item.list.first.start?.split(" ").last}',
-        //                   style: TextStyle(
-        //                     color: Colors.white,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }
