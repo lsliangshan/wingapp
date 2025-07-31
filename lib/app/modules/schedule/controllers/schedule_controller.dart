@@ -222,6 +222,7 @@ class ScheduleController extends GetxController {
       ]);
     }
     await getSchedules();
+    updateCurrentSchedules();
   }
 
   Future<void> resetFocusedDayData() async {
@@ -248,7 +249,7 @@ class ScheduleController extends GetxController {
   Future<void> onRefresh() async {
     await resetFocusedDayData();
     await initData(isInit: false);
-    updateCurrentSchedules();
+    // updateCurrentSchedules();
   }
 
   EScheduleStatus getScheduleStatus({
