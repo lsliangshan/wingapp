@@ -8,7 +8,7 @@ class Messages extends Translations {
           'tab.home': '首页',
           'tab.class': '班级',
           'tab.student': '学生',
-          'tab.schedule': '课表',
+          'tab.schedule': '日程',
           'tab.profile': '我的',
 
           // 我的页面
@@ -21,7 +21,7 @@ class Messages extends Translations {
           'profile.setting.general.function': '通用功能',
           'profile.setting.business.function': '业务功能',
           'profile.setting.teacher.manage': '老师管理',
-          'profile.setting.schedule.manage': '课表管理',
+          'profile.setting.schedule.manage': '日程管理',
           'profile.setting.class.manage': '班级管理',
           'profile.setting.student.manage': '学生管理',
           'profile.setting.identity.switch': '身份切换',
@@ -171,15 +171,15 @@ class Messages extends Translations {
           'teacher_detail.label.class': '班级',
           'teacher_detail.group.student': '学生信息',
           'teacher_detail.label.student': '学生',
-          'teacher_detail.group.schedule': '课表信息',
-          'teacher_detail.label.schedule': '课表',
+          'teacher_detail.group.schedule': '日程信息',
+          'teacher_detail.label.schedule': '日程',
 
-          // 课表页面
-          'schedule.title': '课表管理',
+          // 日程页面
+          'schedule.title': '日程管理',
 
-          // 添加课表页面
-          'add_schedule.title': '添加课表',
-          'add_schedule.create.title': '编辑课表',
+          // 添加日程页面
+          'add_schedule.title': '添加日程',
+          'add_schedule.create.title': '编辑日程',
           'add_schedule.form_data.class': '班级',
           'add_schedule.form_data.class.hint': '请选择班级',
           'add_schedule.form_data.time': '时间',
@@ -242,7 +242,7 @@ class Messages extends Translations {
           'class': '班级',
           'teacher': '老师',
           'student': '学生',
-          'schedule': '课表',
+          'schedule': '日程',
           'notification': '通知',
           'attachments': '附件',
 
@@ -454,10 +454,10 @@ class Messages extends Translations {
           'teacher_detail.group.schedule': 'Schedule Information',
           'teacher_detail.label.schedule': 'Schedule',
 
-          // 课表页面
+          // 日程页面
           'schedule.title': 'Schedule Management',
 
-          // 添加课表页面
+          // 添加日程页面
           'add_schedule.title': 'Add Schedule',
           'add_schedule.create.title': 'Edit Schedule',
           'add_schedule.form_data.class': 'Class',
